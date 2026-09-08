@@ -11,22 +11,52 @@
 import { submitInquiry } from './api.js';
 import { gaEvent } from './analytics.js';
 
-const WHATSAPP_FALLBACK =
-  'We couldn’t send your inquiry right now — please message us directly on ' +
-  '<a href="https://wa.me/919921000052" target="_blank" rel="noopener">WhatsApp</a> ' +
-  'or call +91 9921000052.';
+const STUDIO_WHATSAPP = '919921000052';
+
+/**
+ * Last resort. If the API could not be reached even after retries, the visitor
+ * must not be left retyping their details into WhatsApp by hand — that is how a
+ * booking gets lost. Hand them a WhatsApp link already carrying everything they
+ * filled in, so one tap still delivers the enquiry.
+ */
+function whatsappHandoff(values) {
+  const lines = [
+    'Hi Amour Affairs, I tried the website enquiry form but it didn’t go through. Here are my details:',
+    '',
+    `Name: ${values.client_name}`,
+    values.phone ? `Phone: ${values.phone}` : '',
+    values.email ? `Email: ${values.email}` : '',
+    values.event_type ? `Event: ${values.event_type}` : '',
+    values.event_date ? `Date: ${values.event_date}` : '',
+    values.venue ? `Venue: ${values.venue}` : '',
+    values.guest_count ? `Guests: ${values.guest_count}` : '',
+    values.budget_range ? `Budget: ${values.budget_range}` : '',
+    values.message ? `\n${values.message}` : '',
+  ].filter(Boolean);
+
+  return `https://wa.me/${STUDIO_WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`;
+}
 
 // Wire every inquiry form on the page. A page may carry more than one
 // (e.g. the Weddings page has a folder-overlay form and a page-foot form);
 // each is bound independently with its own submit button and status line.
+//
+// Safe to call repeatedly: pages call it from their boot sequence, and the
+// module also binds itself on load (see the bottom of this file).
 export function initLeadForm() {
   document.querySelectorAll('form.inquiry__form').forEach(bindLeadForm);
 }
 
 function bindLeadForm(form) {
+  // Idempotent — every page's init() also calls initLeadForm(), and binding a
+  // second handler would submit the enquiry twice.
+  if (form.dataset.leadFormBound === '1') return;
+
   const submitBtn = form.querySelector('.inquiry__submit');
   const status = form.querySelector('.inquiry__status');
   if (!submitBtn || !status) return;
+
+  form.dataset.leadFormBound = '1';
   let isSubmitting = false;
 
   const fieldEl = (input) => input.closest('.inquiry__field');
@@ -112,7 +142,7 @@ function bindLeadForm(form) {
     // never throw here (that would leave the button stuck on "Sending…").
     const val = (name) => (form.elements[name]?.value ?? '');
 
-    const result = await submitInquiry({
+    const values = {
       client_name: val('client_name').trim(),
       phone: val('phone').trim(),
       email: val('email').trim(),
@@ -125,7 +155,9 @@ function bindLeadForm(form) {
       source: form.dataset.source || 'Website', // which page this form sits on
       page: form.dataset.page || '', // exact article path (guide/case-study), if any
       website: val('website'), // honeypot — empty for humans
-    });
+    };
+
+    const result = await submitInquiry(values);
 
     if (result.ok) {
       // GA4 conversion — which page/form produced the enquiry, and for what
@@ -143,9 +175,32 @@ function bindLeadForm(form) {
     submitBtn.innerHTML = originalLabel;
     status.classList.add('is-error');
     if (result.error) {
-      status.textContent = result.error; // server validation message
-    } else {
-      status.innerHTML = WHATSAPP_FALLBACK; // API unreachable
+      status.textContent = result.error; // server validation / rate-limit message
+      return;
     }
+
+    // Unreachable even after retries. The visitor's answers are still in the
+    // form (nothing is cleared), and the WhatsApp link below carries them, so
+    // the enquiry can still reach the studio in one tap.
+    status.innerHTML =
+      'We couldn’t reach our booking system just now. Your details are safe below — ' +
+      `<a class="inquiry__contact-link" href="${whatsappHandoff(values)}" target="_blank" rel="noopener">` +
+      'send them to us on WhatsApp</a> (one tap, already filled in) or call ' +
+      '<a class="inquiry__contact-link" href="tel:+919921000052">+91 99210 00052</a>. ' +
+      'You can also press Send again.';
   });
+}
+
+/* ── Bind as early as the DOM allows ───────────────────────────────────────
+   Every page also calls initLeadForm() from its own boot sequence, but those
+   sit behind `await initPreloader()` and the animation setup. Until the handler
+   is attached, pressing Send performs a NATIVE form submission: the page
+   navigates to itself with the visitor's name, phone and email pasted into the
+   query string, and the enquiry is never sent. Binding here, at module
+   evaluation, closes that window — bindLeadForm() is idempotent, so the later
+   initLeadForm() calls are no-ops. */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLeadForm, { once: true });
+} else {
+  initLeadForm();
 }

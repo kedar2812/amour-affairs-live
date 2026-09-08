@@ -15,6 +15,7 @@
 
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/middleware.php';
+require_once __DIR__ . '/inquiry-store.php';
 
 handleCORS();
 setJSONHeaders();
@@ -29,7 +30,12 @@ $action = $_GET['action'] ?? '';
  * stage/source/assignment fields are forced server-side.
  */
 function handlePublicInquiry(): void {
-    checkRateLimit('lead_inquiry', 5, 600); // 5 inquiries per 10 min per IP
+    // 8 per 10 min per IP. Deliberately not tighter: Indian mobile networks put
+    // thousands of subscribers behind one CGNAT address (the studio's own office
+    // shows up as 45.112.0.16 and 45.112.0.82 on the same day), so a strict
+    // per-IP cap turns into "Too many requests" for a real couple who happen to
+    // share an exit node with someone else who just enquired.
+    checkRateLimit('lead_inquiry', 8, 600);
 
     $body = getJSONBody();
 
@@ -118,35 +124,41 @@ function handlePublicInquiry(): void {
         ];
     }
 
-    $db = getDB();
+    $lead = [
+        'client_name'  => $clientName,
+        'phone'        => $phone,
+        'email'        => sanitize($email),
+        'event_type'   => $eventType,
+        'event_date'   => $eventDate !== '' ? $eventDate : null,
+        'venue'        => $venue !== '' ? $venue : null,
+        'guest_count'  => $guestCount !== '' ? $guestCount : null,
+        'budget_range' => $budgetRange !== '' ? $budgetRange : null,
+        'source'       => $source,
+        'notes'        => $notes,
+    ];
 
-    // Insert with a placeholder ref, then derive the final ref from the
-    // auto-increment id — immune to concurrent-submit collisions.
-    $stmt = $db->prepare(
-        'INSERT INTO leads (lead_ref, client_name, phone, email, event_type, event_date, venue, guest_count, budget_range, source, stage, last_activity, moved_to_stage_at, notes)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)'
-    );
-    $stmt->execute([
-        'tmp-' . bin2hex(random_bytes(8)),
-        $clientName,
-        $phone,
-        sanitize($email),
-        $eventType,
-        $eventDate !== '' ? $eventDate : null,
-        $venue !== '' ? $venue : null,
-        $guestCount !== '' ? $guestCount : null,
-        $budgetRange !== '' ? $budgetRange : null,
-        $source,
-        'New Inquiry',
-        json_encode($notes, JSON_UNESCAPED_UNICODE),
-    ]);
+    // ── The enquiry must survive from here on, whatever the database does ──
+    // This whole block used to be bare: one transient PDOException (a dropped
+    // connection, a lock wait) became a PHP fatal, an empty 500, and a lost
+    // booking that nothing recorded. Now: retry, then park it on disk.
+    try {
+        $leadRef = persistInquiry($lead);
+    } catch (Throwable $e) {
+        error_log('AA-INQUIRY database write failed: ' . $e->getMessage() . ' | ' . json_encode([
+            'name' => $lead['client_name'], 'phone' => $lead['phone'], 'email' => $lead['email'],
+        ], JSON_UNESCAPED_UNICODE));
 
-    $newId = (int)$db->lastInsertId();
-    $leadRef = '#LD-' . (800 + $newId);
-    $stmt = $db->prepare('UPDATE leads SET lead_ref = ? WHERE id = ?');
-    $stmt->execute([$leadRef, $newId]);
+        if (spoolInquiry($lead)) {
+            // Captured on disk and replayed into the CRM by the next healthy
+            // request. From the visitor's side this genuinely did get through,
+            // so tell them so rather than turning a real booking away.
+            sendJSON(['message' => 'Thank you! Your inquiry was sent successfully.', 'lead_ref' => ''], 201);
+        }
 
-    auditLog('create', 'leads', $newId, ['ref' => $leadRef, 'via' => 'website_inquiry'], null);
+        // Disk failed too — now we really cannot hold it. Say so honestly, and
+        // in a shape the website can read, so it shows the WhatsApp handoff.
+        sendError('We could not save your enquiry just now. Please try again in a moment.', 503);
+    }
 
     // Public response stays minimal — never expose the full lead record
     sendJSON(['message' => 'Thank you! Your inquiry was sent successfully.', 'lead_ref' => $leadRef], 201);
@@ -199,9 +211,9 @@ switch ($method) {
         if (empty($clientName)) sendError('Client name is required', 400);
 
         $db = getDB();
-        $stmt = $db->query('SELECT COALESCE(MAX(id), 800) + 1 as next_id FROM leads');
-        $nextId = $stmt->fetch()['next_id'];
-        $leadRef = '#LD-' . $nextId;
+        // Placeholder now, real ref derived from the auto-increment id after the
+        // insert — the same scheme the website form uses, via leadRefForId().
+        $leadRef = 'tmp-' . bin2hex(random_bytes(8));
 
         // Referrer name only meaningful when the source is a referral
         $sourceIn = sanitize($body['source'] ?? 'Website');
@@ -238,7 +250,11 @@ switch ($method) {
             json_encode($body['notes'] ?? [])
         ]);
 
-        $newId = $db->lastInsertId();
+        $newId = (int)$db->lastInsertId();
+        $leadRef = leadRefForId($newId);
+        $stmt = $db->prepare('UPDATE leads SET lead_ref = ? WHERE id = ?');
+        $stmt->execute([$leadRef, $newId]);
+
         auditLog('create', 'leads', $newId, ['ref' => $leadRef], $auth['sub']);
 
         $stmt = $db->prepare('SELECT * FROM leads WHERE id = ?');

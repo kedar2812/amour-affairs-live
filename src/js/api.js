@@ -11,12 +11,20 @@
    For local development set VITE_API_URL in .env.development.
    ============================================================ */
 
+import { postWithRetry } from './submit-retry.js';
+
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 // /uploads/... paths are served by the API host, not the Vite dev server
 const ASSET_ORIGIN = API_BASE.replace(/\/api\/?$/, '');
 
 const FETCH_TIMEOUT_MS = 8000;
+
+// The enquiry POST gets its own, longer budget. Content fetches are allowed to
+// give up quickly because the page has bundled fallbacks; a booking enquiry has
+// no fallback, so it waits — a visitor who pressed "Send" will wait 15s far more
+// happily than they will retype the form.
+const SUBMIT_TIMEOUT_MS = 15000;
 
 /** Resolve an /uploads/... path returned by the API to a full URL. */
 export function assetUrl(path) {
@@ -59,29 +67,45 @@ export async function fetchFromAPI(endpoint) {
 /**
  * Submit a website inquiry to the leads pipeline.
  * Returns { ok: true, leadRef } on success,
- * { ok: false, error } on validation/server errors (error is user-safe),
- * { ok: false, error: null } when the API is unreachable.
+ * { ok: false, error } on validation/rate-limit errors (error is user-safe),
+ * { ok: false, error: null, unreachable: true } when it never landed.
+ *
+ * Transport faults and 5xx get retried with backoff (see submit-retry.js).
+ * The server de-duplicates repeat submissions, so a retry after a response we
+ * never saw returns the original lead rather than filing a second one.
  */
 export async function submitInquiry(payload) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-  try {
-    const response = await fetch(`${API_BASE}/leads.php?action=inquiry`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-    const data = await response.json().catch(() => null);
-    if (response.ok) {
-      return { ok: true, leadRef: data?.lead_ref || '' };
+  const attempt = async () => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+    try {
+      const response = await fetch(`${API_BASE}/leads.php?action=inquiry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      const data = await response.json().catch(() => null);
+
+      if (response.ok) return { kind: 'ok', leadRef: data?.lead_ref || '' };
+
+      // A readable reason from the server is the visitor's answer — show it,
+      // don't retry it. Anything else (5xx, or a body we couldn't parse, which
+      // is what an uncaught PHP fatal looks like) is worth another attempt.
+      if (data && data.error) return { kind: 'rejected', status: response.status, error: data.error };
+      return { kind: 'server-error', status: response.status };
+    } catch {
+      return { kind: 'transport-error' };
+    } finally {
+      clearTimeout(timer);
     }
-    return { ok: false, error: data?.error || null };
-  } catch {
-    return { ok: false, error: null };
-  } finally {
-    clearTimeout(timer);
-  }
+  };
+
+  const outcome = await postWithRetry(attempt);
+
+  if (outcome.kind === 'ok') return { ok: true, leadRef: outcome.leadRef };
+  if (outcome.kind === 'rejected') return { ok: false, error: outcome.error };
+  return { ok: false, error: null, unreachable: true };
 }
 
 /**

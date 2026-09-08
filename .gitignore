@@ -30,3 +30,7 @@ api/_migrate_sections.php
 # JWT/DB/FTP secrets.
 _deploy/
 hosting details (ignore in github)/
+
+# Runtime-only: enquiry spool (unsent leads) and PHP error log. Never committed.
+api/spool/
+api/logs/

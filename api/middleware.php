@@ -202,32 +202,52 @@ function optionalAuth(): ?array {
  */
 function checkRateLimit(string $endpoint, int $maxAttempts, int $windowSeconds): void {
     $ip = getClientIP();
-    $db = getDB();
+    $overLimit = false;
 
-    // Clean old entries — scoped to this endpoint so endpoints with short
-    // windows can't purge another endpoint's (e.g. auth) attempt history
-    $stmt = $db->prepare('DELETE FROM rate_limits WHERE endpoint = ? AND window_start < DATE_SUB(NOW(), INTERVAL ? SECOND)');
-    $stmt->execute([$endpoint, $windowSeconds]);
+    // FAIL OPEN. Rate limiting is an anti-abuse convenience; it is never worth
+    // losing a real customer over. Any database trouble in here used to throw an
+    // uncaught PDOException, which became an empty-bodied 500 — indistinguishable
+    // to the website from "the API is unreachable". A booking enquiry must not
+    // die because the bookkeeping around it stumbled.
+    try {
+        $db = getDB();
 
-    // Count attempts
-    $stmt = $db->prepare(
-        'SELECT SUM(attempts) as total FROM rate_limits WHERE ip_address = ? AND endpoint = ? AND window_start > DATE_SUB(NOW(), INTERVAL ? SECOND)'
-    );
-    $stmt->execute([$ip, $endpoint, $windowSeconds]);
-    $row = $stmt->fetch();
-    $total = (int)($row['total'] ?? 0);
+        // Clean old entries. Scoped by ip_address FIRST so it can use
+        // idx_ip_endpoint(ip_address, endpoint, window_start); the previous
+        // version filtered on endpoint alone, which skipped the index and made
+        // this a full scan with row locks on every single enquiry.
+        $stmt = $db->prepare(
+            'DELETE FROM rate_limits WHERE ip_address = ? AND endpoint = ? AND window_start < DATE_SUB(NOW(), INTERVAL ? SECOND)'
+        );
+        $stmt->execute([$ip, $endpoint, $windowSeconds]);
 
-    if ($total >= $maxAttempts) {
+        // Count attempts
+        $stmt = $db->prepare(
+            'SELECT SUM(attempts) as total FROM rate_limits WHERE ip_address = ? AND endpoint = ? AND window_start > DATE_SUB(NOW(), INTERVAL ? SECOND)'
+        );
+        $stmt->execute([$ip, $endpoint, $windowSeconds]);
+        $row = $stmt->fetch();
+        $total = (int)($row['total'] ?? 0);
+
+        $overLimit = $total >= $maxAttempts;
+
+        if (!$overLimit) {
+            // Record attempt. rate_limits carries no unique key, so this is a
+            // plain insert — one row per attempt, summed above.
+            $stmt = $db->prepare(
+                'INSERT INTO rate_limits (ip_address, endpoint, attempts, window_start) VALUES (?, ?, 1, NOW())'
+            );
+            $stmt->execute([$ip, $endpoint]);
+        }
+    } catch (Throwable $e) {
+        error_log('AA-RATELIMIT degraded (allowing request): ' . $e->getMessage());
+        return;
+    }
+
+    if ($overLimit) {
         header('Retry-After: ' . $windowSeconds);
         sendError('Too many requests. Please try again later.', 429);
     }
-
-    // Record attempt
-    $stmt = $db->prepare(
-        'INSERT INTO rate_limits (ip_address, endpoint, attempts, window_start) VALUES (?, ?, 1, NOW())
-         ON DUPLICATE KEY UPDATE attempts = attempts + 1'
-    );
-    $stmt->execute([$ip, $endpoint]);
 }
 
 /**

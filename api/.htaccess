@@ -5,8 +5,10 @@
 # Place in the /api/ directory.
 # ============================================================
 
-# Deny access to config and internal files
-<FilesMatch "\.(sql|md|txt|log|ini)$">
+# Deny access to config and internal files.
+# `.*\.test\.php` matters: test files must never be executable over HTTP, and
+# `jsonl` keeps the enquiry spool private even if its directory guard is missing.
+<FilesMatch "(\.(sql|md|txt|log|ini|jsonl)|\.test\.php)$">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
