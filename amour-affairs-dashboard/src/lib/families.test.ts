@@ -28,6 +28,10 @@ const mkFamily = (over: Partial<Family> = {}): Family => ({
   anniversary_date: "2018-12-05",
   anniversary_year_known: 1,
   notes: null,
+  album_given: 0,
+  album_given_at: null,
+  testimonial_given: 0,
+  testimonial_given_at: null,
   is_active: 1,
   members: [
     { id: 10, family_id: 1, role: "husband", name: "Vikram", dob: "1988-04-12", dob_year_known: 1, phone: null, whatsapp: "+919876500001" },

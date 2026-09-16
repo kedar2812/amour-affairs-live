@@ -471,3 +471,14 @@ ALTER TABLE `gallery_images`
   ADD CONSTRAINT `fk_gi_section` FOREIGN KEY (`section_id`) REFERENCES `album_sections` (`id`) ON DELETE SET NULL;
 
 COMMIT;
+
+-- ────────────────────────────────────────────────────────────
+-- CRM FAMILY FOLLOW-UPS (2026-09-16)
+-- "Album given?" / "Testimonial given?" per family, with the
+-- date each was first marked. Existing families start as "No".
+-- Live DB: run api/_migrate_family_flags.php (guarded), not this.
+-- ────────────────────────────────────────────────────────────
+ALTER TABLE `families` ADD COLUMN `album_given` TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE `families` ADD COLUMN `album_given_at` DATE DEFAULT NULL;
+ALTER TABLE `families` ADD COLUMN `testimonial_given` TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE `families` ADD COLUMN `testimonial_given_at` DATE DEFAULT NULL;

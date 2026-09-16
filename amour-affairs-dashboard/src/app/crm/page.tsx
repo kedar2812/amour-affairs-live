@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Plus, Loader2, CalendarHeart, Users, Gift, Cake, Heart,
-  Baby, ChevronRight, Pencil, Trash2, Phone,
+  Baby, ChevronRight, Pencil, Trash2, Phone, BookImage, MessageSquareQuote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/Drawer";
@@ -14,6 +14,7 @@ import { formatPhone } from "@/lib/phone";
 import {
   Family, FamilyOccasion, FamilyFestival, FamiliesUpcomingResponse, WishTarget,
   resolveRecipients, daysUntilLabel, occasionTitle, ROLE_LABEL,
+  FollowUpFilter, FOLLOW_UP_FILTERS, matchesFollowUp, formatFlagDate,
 } from "@/lib/families";
 import { WhatsAppIcon } from "@/components/crm/WhatsAppIcon";
 import { WishComposer } from "@/components/crm/WishComposer";
@@ -49,6 +50,7 @@ export default function CrmPage() {
   const [loading, setLoading] = useState(true);
   const [mock, setMock] = useState(false);
   const [search, setSearch] = useState("");
+  const [followUp, setFollowUp] = useState<FollowUpFilter>("all");
 
   // Drawers
   const [wish, setWish] = useState<ActiveWish | null>(null);
@@ -78,9 +80,15 @@ export default function CrmPage() {
 
   const filteredFamilies = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return families;
-    return families.filter((f) => decodeEntities(f.display_name).toLowerCase().includes(q));
-  }, [families, search]);
+    return families.filter((f) =>
+      matchesFollowUp(f, followUp) &&
+      (!q || decodeEntities(f.display_name).toLowerCase().includes(q))
+    );
+  }, [families, search, followUp]);
+
+  const albumsGiven = families.filter((f) => f.album_given === 1).length;
+  const testimonialsGiven = families.filter((f) => f.testimonial_given === 1).length;
+
 
   const occasions = data?.occasions || [];
   const festivals = data?.festivals || [];
@@ -221,6 +229,31 @@ export default function CrmPage() {
             </motion.div>
           ) : (
             <motion.div key="families" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="flex flex-col gap-4 pb-12">
+              {/* Follow-up summary — each card jumps to the families still pending */}
+              {families.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <FollowUpStat
+                    icon={<BookImage className="h-5 w-5" />}
+                    label="Albums given"
+                    done={albumsGiven}
+                    total={families.length}
+                    pendingLabel="still waiting for their album"
+                    active={followUp === "album_pending"}
+                    onClick={() => setFollowUp(followUp === "album_pending" ? "all" : "album_pending")}
+                  />
+                  <FollowUpStat
+                    icon={<MessageSquareQuote className="h-5 w-5" />}
+                    label="Testimonials given"
+                    done={testimonialsGiven}
+                    total={families.length}
+                    pendingLabel="yet to give a testimonial"
+                    active={followUp === "testimonial_pending"}
+                    onClick={() => setFollowUp(followUp === "testimonial_pending" ? "all" : "testimonial_pending")}
+                  />
+                </div>
+              )}
+
+              <div className="flex flex-col md:flex-row md:items-center gap-3">
               <div className="relative w-full md:w-[320px]">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <input
@@ -230,15 +263,35 @@ export default function CrmPage() {
                   className="h-10 w-full pl-9 pr-4 bg-card border border-border/50 rounded-xl text-[14px] text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
                 />
               </div>
+                <div className="flex flex-wrap gap-2">
+                  {FOLLOW_UP_FILTERS.map((opt) => (
+                    <button
+                      key={opt.key}
+                      onClick={() => setFollowUp(opt.key)}
+                      className={`h-8 px-3 rounded-full text-[12px] font-semibold border transition-colors ${
+                        followUp === opt.key
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-card text-muted-foreground border-border/50 hover:text-foreground"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {filteredFamilies.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-center py-20 gap-3">
                   <div className="h-14 w-14 rounded-2xl bg-muted flex items-center justify-center">
                     <Users className="h-7 w-7 text-muted-foreground/50" />
                   </div>
-                  <p className="text-[15px] font-semibold text-foreground">{search ? "No families match your search" : "No families yet"}</p>
+                  <p className="text-[15px] font-semibold text-foreground">
+                    {search || followUp !== "all" ? "No families match" : "No families yet"}
+                  </p>
                   <p className="text-[13px] text-muted-foreground max-w-[340px]">
-                    {search ? "Try a different name." : "Add a family to start tracking birthdays, anniversaries and festival wishes."}
+                    {search || followUp !== "all"
+                      ? "Try a different name or filter."
+                      : "Add a family to start tracking birthdays, anniversaries and festival wishes."}
                   </p>
                 </div>
               ) : (
@@ -261,6 +314,10 @@ export default function CrmPage() {
                             {adults} {adults === 1 ? "adult" : "adults"}{kids > 0 ? ` · ${kids} ${kids === 1 ? "child" : "children"}` : ""}
                             {f.anniversary_date ? " · anniversary set" : ""}
                           </p>
+                          <div className="flex flex-wrap gap-1.5 mt-1.5">
+                            <FlagBadge on={f.album_given === 1} label="Album" />
+                            <FlagBadge on={f.testimonial_given === 1} label="Testimonial" />
+                          </div>
                         </div>
                         <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
                       </button>
@@ -284,6 +341,11 @@ export default function CrmPage() {
               <Button variant="outline" onClick={() => deleteFamily(detail)} className="h-9 px-3 rounded-lg border-red-500/20 text-red-500 text-[13px] hover:bg-red-500/10">
                 <Trash2 className="h-3.5 w-3.5 mr-1.5" /> Delete
               </Button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <FlagDetail icon={<BookImage className="h-4 w-4" />} label="Album given" on={detail.album_given === 1} date={detail.album_given_at} />
+              <FlagDetail icon={<MessageSquareQuote className="h-4 w-4" />} label="Testimonial given" on={detail.testimonial_given === 1} date={detail.testimonial_given_at} />
             </div>
 
             {detail.anniversary_date && (
@@ -410,6 +472,59 @@ function OccasionRow({ o, recipients, skipped, onSend }: {
       >
         <WhatsAppIcon className="h-3.5 w-3.5" /> {o.sent ? "Sent" : "Send"}
       </button>
+    </div>
+  );
+}
+
+function FollowUpStat({ icon, label, done, total, pendingLabel, active, onClick }: {
+  icon: React.ReactNode; label: string; done: number; total: number;
+  pendingLabel: string; active: boolean; onClick: () => void;
+}) {
+  const pending = total - done;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  return (
+    <button
+      onClick={onClick}
+      className={`dash-card p-4 flex items-center gap-4 text-left transition-colors ${active ? "ring-2 ring-primary/40" : "hover:bg-muted/30"}`}
+      title={active ? "Show all families" : `Show families ${pendingLabel}`}
+    >
+      <div className="h-11 w-11 shrink-0 rounded-xl bg-primary/10 text-primary flex items-center justify-center">{icon}</div>
+      <div className="flex-1 min-w-0">
+        <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{label}</p>
+        <p className="text-[20px] font-bold text-foreground leading-tight">
+          {done} <span className="text-[13px] font-medium text-muted-foreground">of {total} · {pct}%</span>
+        </p>
+        <div className="h-1.5 mt-1.5 rounded-full bg-muted overflow-hidden">
+          <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${pct}%` }} />
+        </div>
+        <p className="text-[12px] text-muted-foreground mt-1.5">
+          {pending === 0 ? "All done" : `${pending} ${pending === 1 ? "family" : "families"} ${pendingLabel}`}
+        </p>
+      </div>
+    </button>
+  );
+}
+
+function FlagBadge({ on, label }: { on: boolean; label: string }) {
+  return (
+    <span className={`text-[10px] font-bold uppercase tracking-wide rounded px-1.5 py-0.5 border ${
+      on ? "text-emerald-600 bg-emerald-500/10 border-emerald-500/20"
+         : "text-amber-600 bg-amber-500/10 border-amber-500/20"
+    }`}>
+      {label}: {on ? "Yes" : "No"}
+    </span>
+  );
+}
+
+function FlagDetail({ icon, label, on, date }: { icon: React.ReactNode; label: string; on: boolean; date: string | null }) {
+  return (
+    <div className={`p-3 rounded-xl border flex items-start gap-2.5 ${on ? "bg-emerald-500/10 border-emerald-500/20" : "bg-amber-500/10 border-amber-500/20"}`}>
+      <span className={on ? "text-emerald-600 mt-0.5" : "text-amber-600 mt-0.5"}>{icon}</span>
+      <div className="min-w-0">
+        <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{label}</p>
+        <p className={`text-[14px] font-semibold ${on ? "text-emerald-600" : "text-amber-600"}`}>{on ? "Yes" : "No"}</p>
+        {on && date && <p className="text-[11px] text-muted-foreground">since {formatFlagDate(date)}</p>}
+      </div>
     </div>
   );
 }

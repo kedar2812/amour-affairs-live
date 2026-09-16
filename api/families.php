@@ -36,6 +36,51 @@ $id     = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
 $ROLES = ['husband', 'wife', 'child'];
 
+/** Yes/No follow-ups on a family; each has a companion `<flag>_at` DATE. */
+$FAMILY_FLAGS = ['album_given', 'testimonial_given'];
+
+/**
+ * True once _migrate_family_flags.php has run. Lets this file ship before
+ * the migration without breaking family saves — the flags are just ignored.
+ */
+function familyFlagsSupported(PDO $db): bool {
+    static $supported = null;
+    if ($supported === null) {
+        $stmt = $db->prepare(
+            "SELECT COUNT(*) FROM information_schema.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'families' AND COLUMN_NAME = 'testimonial_given_at'"
+        );
+        $stmt->execute();
+        $supported = (int)$stmt->fetchColumn() > 0;
+    }
+    return $supported;
+}
+
+/**
+ * SET fragments for the posted flags. Marking a flag "yes" stamps today's
+ * date (kept on later saves); marking it "no" clears the date. $current is
+ * the stored row on update, null on create.
+ */
+function familyFlagFields(PDO $db, array $body, $current): array {
+    global $FAMILY_FLAGS;
+    $fields = [];
+    $params = [];
+    if (!familyFlagsSupported($db)) return [$fields, $params];
+    foreach ($FAMILY_FLAGS as $flag) {
+        if (!array_key_exists($flag, $body)) continue;
+        $on = (int)(bool)$body[$flag];
+        $fields[] = "{$flag} = ?";
+        $params[] = $on;
+        $wasOn = $current !== null && (int)$current[$flag] === 1;
+        if (!$on) {
+            $fields[] = "{$flag}_at = ?"; $params[] = null;
+        } elseif (!$wasOn || empty($current[$flag . '_at'])) {
+            $fields[] = "{$flag}_at = ?"; $params[] = date('Y-m-d');
+        }
+    }
+    return [$fields, $params];
+}
+
 /** Occurrence of a month/day in a year; Feb 29 → Feb 28 on non-leap years. */
 function famOccurrenceInYear(int $year, int $month, int $day): DateTime {
     if ($month === 2 && $day === 29 && !checkdate(2, 29, $year)) {
@@ -88,6 +133,10 @@ function shapeFamily(PDO $db, array $f): array {
         'anniversary_date'       => $f['anniversary_date'],
         'anniversary_year_known' => (int)$f['anniversary_year_known'],
         'notes'                  => $f['notes'],
+        'album_given'            => (int)($f['album_given'] ?? 0),
+        'album_given_at'         => $f['album_given_at'] ?? null,
+        'testimonial_given'      => (int)($f['testimonial_given'] ?? 0),
+        'testimonial_given_at'   => $f['testimonial_given_at'] ?? null,
         'is_active'              => (int)$f['is_active'],
         'members'                => loadMembers($db, (int)$f['id']),
     ];
@@ -388,6 +437,13 @@ switch ($action) {
                 ]);
                 $newId = (int)$db->lastInsertId();
 
+                list($flagFields, $flagParams) = familyFlagFields($db, $body, null);
+                if (!empty($flagFields)) {
+                    $flagParams[] = $newId;
+                    $stmt = $db->prepare('UPDATE families SET ' . implode(', ', $flagFields) . ' WHERE id = ?');
+                    $stmt->execute($flagParams);
+                }
+
                 if (isset($body['members']) && is_array($body['members'])) {
                     saveMembers($db, $newId, $body['members']);
                 }
@@ -405,9 +461,10 @@ switch ($action) {
 
         if ($method === 'PUT') {
             if (!$id) sendError('Family ID is required', 400);
-            $stmt = $db->prepare('SELECT id FROM families WHERE id = ?');
+            $stmt = $db->prepare('SELECT * FROM families WHERE id = ?');
             $stmt->execute([$id]);
-            if (!$stmt->fetch()) sendError('Family not found', 404);
+            $current = $stmt->fetch();
+            if (!$current) sendError('Family not found', 404);
 
             $body = getJSONBody();
             $fields = [];
@@ -430,6 +487,9 @@ switch ($action) {
             }
             if (array_key_exists('notes', $body)) { $fields[] = 'notes = ?'; $params[] = sanitize($body['notes']); }
             if (array_key_exists('is_active', $body)) { $fields[] = 'is_active = ?'; $params[] = (int)(bool)$body['is_active']; }
+            list($flagFields, $flagParams) = familyFlagFields($db, $body, $current);
+            $fields = array_merge($fields, $flagFields);
+            $params = array_merge($params, $flagParams);
 
             $db->beginTransaction();
             try {

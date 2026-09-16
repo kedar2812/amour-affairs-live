@@ -33,6 +33,13 @@ export interface Family {
   anniversary_date: string | null;
   anniversary_year_known: number;
   notes: string | null;
+  /** 1 = the family has received their album. */
+  album_given: number;
+  /** Date album_given was marked yes (YYYY-MM-DD). */
+  album_given_at: string | null;
+  /** 1 = the family has given the studio a testimonial. */
+  testimonial_given: number;
+  testimonial_given_at: string | null;
   is_active: number;
   members: FamilyMember[];
 }
@@ -263,4 +270,27 @@ export function occasionTitle(o: FamilyOccasion): string {
   const person = decodeEntities(o.person_name || "");
   if (o.occasion === "anniversary") return "Wedding Anniversary";
   return person ? `${person}'s Birthday` : "Birthday";
+}
+
+/** "3 Sep 2026" from a stored YYYY-MM-DD. */
+export function formatFlagDate(dateStr: string): string {
+  return new Date(dateStr + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+}
+
+// ── Follow-ups (album / testimonial) ──
+
+export type FollowUpFilter = "all" | "album_pending" | "testimonial_pending" | "complete";
+
+export const FOLLOW_UP_FILTERS: { key: FollowUpFilter; label: string }[] = [
+  { key: "all", label: "All" },
+  { key: "album_pending", label: "Album not given" },
+  { key: "testimonial_pending", label: "Testimonial not given" },
+  { key: "complete", label: "Both done" },
+];
+
+export function matchesFollowUp(f: Family, filter: FollowUpFilter): boolean {
+  if (filter === "album_pending") return f.album_given !== 1;
+  if (filter === "testimonial_pending") return f.testimonial_given !== 1;
+  if (filter === "complete") return f.album_given === 1 && f.testimonial_given === 1;
+  return true;
 }
