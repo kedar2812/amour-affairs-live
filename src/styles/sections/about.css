@@ -69,7 +69,9 @@
 /* ── Two-column shell ── */
 .about__inner {
   display: grid;
-  grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  /* Copy column 55%: at 45% the headline broke into four lines. Measured —
+     55% is the narrowest split that holds it to two at 1280–1440px. */
+  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
   align-items: center;
   gap: clamp(32px, 5vw, 72px);
 }
@@ -246,7 +248,7 @@
 /* Tablet landscape — same two columns, everything a step down */
 @media (max-width: 1279px) {
   .about__inner {
-    grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
     gap: clamp(24px, 3.5vw, 48px);
   }
 

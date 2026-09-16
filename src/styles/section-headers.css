@@ -29,9 +29,11 @@
    no matter which media query they sit inside. It is still imported last,
    after buttons.css, so the intent stays obvious in the entry files.
 
-   SCOPE: typography only — family, size, weight, tracking, case, colour,
-   line-height. Margins, max-widths and alignment stay with each section,
-   because those belong to the layout, not the type.
+   SCOPE: typography — family, size, weight, tracking, case, colour,
+   line-height — plus LINE LENGTH (max-width, text-wrap) for the headings
+   and subs, because how many lines a title breaks into is a type decision:
+   it was being set per page, which is how a four-word CTA ended up on three
+   lines. Margins and alignment stay with each section.
 
    TO RETUNE THE WHOLE SITE: edit the --sh-* tokens in variables.css. Every
    rule below reads them, including the phone sizes.
@@ -98,10 +100,7 @@
    ══════════════════════════════════════════════════ */
 
 /* — Section headings: the reference size — */
-:root .about__headline,
 :root .about-cta__heading,
-:root .contact-aside__heading,
-:root .contact-formwrap__title,
 :root .cpage-album__title,
 :root .cpage-archive__heading,
 :root .cpage-session__heading,
@@ -109,9 +108,7 @@
 :root .fpage-cta__heading,
 :root .fpage-gallery__heading,
 :root .gallery__title,
-:root .inquiry__title,
 :root .ipage-cta__heading,
-:root .ipage-split__heading,
 :root .lm-heading,
 :root .ppage-album__title,
 :root .ppage-archive__heading,
@@ -136,6 +133,25 @@
   font-style: normal;
   line-height: 1.1;
   letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+/* — Panel headings: one step down —
+   Same identity, sized for a heading that shares its row with something
+   else (a form, the globe, a paragraph). At full section size these broke
+   into 3–6 lines in their half-width columns. */
+:root .about__headline,
+:root .contact-aside__heading,
+:root .contact-formwrap__title,
+:root .inquiry__title,
+:root .ipage-split__heading {
+  font-family: var(--font-display);
+  font-size: var(--sh-heading-panel);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.12;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
   color: var(--color-text);
 }
@@ -166,19 +182,45 @@
   color: var(--color-text);
 }
 
-/* — Headings that keep their own size —
-   Card and tile titles sit inside a grid where their size is set by the
-   card, not by this system. They still take the case and colour so the
-   family resemblance holds. */
+/* — Card, tile and list-item titles —
+   These used to take case and colour only and keep whatever size their
+   page gave them, which left nine card titles spread across 20–29px. One
+   size now; they sit well below the panel tier so a card can never read
+   as a section. */
 :root .cp-card__title,
 :root .cpage-card__title,
 :root .fpage-card__title,
-:root .hero__headline,
 :root .ipage-term__title,
 :root .ipage-value__title,
 :root .ppage-card__title,
 :root .ppage-craft__title,
 :root .wpage-card__title {
+  font-family: var(--font-display);
+  font-size: var(--sh-card-title);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.25;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--color-text);
+}
+
+/* — Product names: the card size, their own case —
+   Package and lead-magnet names ("The Celebration Collection") are longer
+   than a couple's name and their cards are ~280px wide; in capitals they
+   wrapped. Same size as the card titles, sentence case kept. */
+:root .cpage-session__name,
+:root .lm-card__title,
+:root .wpage-pkg__name {
+  font-family: var(--font-display);
+  font-size: var(--sh-card-title);
+  color: var(--color-text);
+}
+
+/* — The homepage hero keeps its own size —
+   A pinned canvas section with a tight vertical budget; its scale carries
+   a measured vh ceiling (hero.css, commit 4372faa). Case and colour only. */
+:root .hero__headline {
   font-family: var(--font-display);
   font-weight: 400;
   font-style: normal;
@@ -190,7 +232,8 @@
    Same treatment, but these sit on the espresso footer or a photo, so the
    colour above would make them invisible. Case and keyword only. */
 :root .footer__tagline,
-:root .gift__title {
+:root .gift__title,
+:root .service-card__name {
   font-family: var(--font-display);
   font-weight: 400;
   font-style: normal;
@@ -276,6 +319,7 @@
    in the block, and capitalising it would flatten the
    hierarchy the other two tiers just built.
    ══════════════════════════════════════════════════ */
+:root .about__text,
 :root .about-hero__sub,
 :root .contact-hero__sub,
 :root .cp-hero__sub,
@@ -306,4 +350,134 @@
   line-height: 1.65;
   text-transform: none;
   color: var(--color-text-dim);
+}
+
+
+/* ══════════════════════════════════════════════════
+   BODY — running paragraphs
+   One step under the sub. Size and leading only:
+   some of these sit on dark ground and keep their
+   own colour.
+   ══════════════════════════════════════════════════ */
+:root .contact-aside__text,
+:root .founder__body,
+:root .gift__text,
+:root .ipage-block p,
+:root .ipage-faq__a-inner p,
+:root .ipage-split__text {
+  font-size: var(--sh-body);
+  line-height: 1.75;
+}
+
+
+/* ══════════════════════════════════════════════════
+   CARD TEXT — copy inside a card or tile
+   ══════════════════════════════════════════════════ */
+:root .cp-card__excerpt,
+:root .ipage-term__text,
+:root .ipage-value__text,
+:root .lm-card__desc,
+:root .philosophy__desc,
+:root .ppage-craft__text,
+:root .process__step-desc,
+:root .service-card__desc {
+  font-size: var(--sh-card-text);
+  line-height: 1.65;
+}
+
+
+/* ══════════════════════════════════════════════════
+   LINE LENGTH
+   Titles break where the words want to, not where a
+   narrow max-width forces them: `balance` evens the
+   lines out, and the measures below give a centred
+   title room to sit on two. Subs get `pretty`, which
+   stops a lone word dangling on the last line.
+   ══════════════════════════════════════════════════ */
+/* Every element given a max-width in this block is centred on its page,
+   hence margin-inline: auto — a narrowed block would otherwise sit flush
+   left. Vertical margins are untouched. */
+:root .about-hero__title,
+:root .contact-hero__title,
+:root .cp-hero__title,
+:root .cpage-hero__title,
+:root .fpage-hero__title,
+:root .ipage-hero__title,
+:root .page-hero__headline,
+:root .ppage-hero__title,
+:root .tpage-hero__title,
+:root .wpage-hero__title {
+  max-width: var(--sh-hero-measure);
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+:root .about__headline,
+:root .about-cta__heading,
+:root .contact-aside__heading,
+:root .contact-formwrap__title,
+:root .cpage-archive__heading,
+:root .cpage-session__heading,
+:root .cta-banner__title,
+:root .fpage-cta__heading,
+:root .fpage-gallery__heading,
+:root .gallery__title,
+:root .gift__title,
+:root .inquiry__title,
+:root .ipage-cta__heading,
+:root .ipage-split__heading,
+:root .lm-heading,
+:root .ppage-archive__heading,
+:root .ppage-craft__heading,
+:root .ppage-cta__heading,
+:root .press__headline,
+:root .process__title,
+:root .services__title,
+:root .team-section__title,
+:root .testimonials__title,
+:root .tpage-cta__heading,
+:root .wpage-archive__heading,
+:root .wpage-testi__heading,
+:root .wpage-pkg__heading {
+  text-wrap: balance;
+}
+
+/* Centred call-to-action headings were capped at 600px, so a six-word line
+   stacked into three. */
+:root .about-cta__heading,
+:root .fpage-cta__heading,
+:root .ipage-cta__heading,
+:root .ppage-cta__heading,
+:root .tpage-cta__heading {
+  max-width: var(--sh-heading-measure);
+  margin-inline: auto;
+}
+
+:root .about-hero__eyebrow,
+:root .contact-hero__eyebrow,
+:root .cp-hero__eyebrow,
+:root .fpage-hero__eyebrow,
+:root .ipage-hero__eyebrow,
+:root .ppage-hero__eyebrow,
+:root .wpage-hero__eyebrow {
+  text-wrap: balance;
+}
+
+:root .about-hero__sub,
+:root .contact-hero__sub,
+:root .cp-hero__sub,
+:root .cpage-hero__sub,
+:root .fpage-hero__sub,
+:root .ipage-cta__sub,
+:root .ipage-hero__sub,
+:root .lm-sub,
+:root .ppage-hero__sub,
+:root .process__subtitle,
+:root .team-section__sub,
+:root .testimonials__sub,
+:root .tpage-hero__sub,
+:root .wpage-hero__sub {
+  max-width: var(--sh-sub-measure);
+  margin-inline: auto;
+  text-wrap: pretty;
 }

@@ -12,7 +12,10 @@
 
 .inquiry__inner {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  /* 11:13 (was 5:7) gives the invitation column the ~50px its longest title
+     needs to sit on two lines; the form keeps its two field columns and the
+     same row count. */
+  grid-template-columns: minmax(0, 11fr) minmax(0, 13fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }

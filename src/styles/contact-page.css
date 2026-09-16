@@ -21,7 +21,9 @@
 }
 
 .contact-hero__inner {
-  max-width: 820px;
+  /* The title and sub carry their own measures (section-headers.css);
+     at 820px the four-word title stacked into three lines. */
+  max-width: 1200px;
   margin: 0 auto;
 }
 

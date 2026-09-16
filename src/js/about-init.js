@@ -213,40 +213,6 @@ function initPhilosophyReveals() {
 }
 
 
-/* ── 4. Parallax Photo Break ── */
-function initParallax() {
-  const bg = document.getElementById('parallaxBg');
-  if (!bg) return;
-
-  gsap.fromTo(bg,
-    { yPercent: -10 },
-    {
-      yPercent: 10,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.about-parallax',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    }
-  );
-
-  // Quote fade-up
-  gsap.from('.about-parallax__quote', {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: '.about-parallax',
-      start: 'top 70%',
-      toggleActions: 'play none none none',
-    },
-  });
-}
-
-
 /* ── 5. CTA Section ── */
 function initCtaReveal() {
   gsap.from('.about-cta__label, .about-cta__heading, .about-cta__buttons', {
@@ -368,7 +334,6 @@ async function init() {
   initHeroReveal();
   initFounderReveals();
   initPhilosophyReveals();
-  initParallax();
   initCtaReveal();
   initLeadForm();
 

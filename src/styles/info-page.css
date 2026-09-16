@@ -344,9 +344,11 @@
 
 .ipage-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 4vw, 48px);
-  align-items: center;
+  /* Stacked: heading over paragraph. Side by side, each half of the 860px
+     column was ~400px and the heading broke into six lines. */
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2vw, 24px);
+  align-items: start;
   margin-bottom: clamp(40px, 5vw, 56px);
 }
 

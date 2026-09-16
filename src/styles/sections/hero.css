@@ -404,8 +404,11 @@
   font-weight: 400;
   line-height: 1.65;
   color: var(--color-text-dim);
-  max-width: 650px;
+  /* 650px set the two sentences on three lines; this is the site-wide sub
+     measure, which holds them to two. */
+  max-width: var(--sh-sub-measure);
   margin: 24px auto 0;
+  text-wrap: pretty;
 }
 
 /* ── CTA Button ── */
