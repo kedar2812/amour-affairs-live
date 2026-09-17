@@ -18,6 +18,7 @@ import '../styles/service-pages.css';
 import '../styles/contact-page.css';
 import '../styles/buttons.css'; // unified button identity — must load last
 import '../styles/section-headers.css'; // one section-header identity — must load after the page CSS
+import './testimonial-marquee.js'; // shared "Words From Our Couples" marquee above the enquiry form (dashboard-driven)
 
 // ── Libraries ──
 import Lenis from '@studio-freight/lenis';

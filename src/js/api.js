@@ -195,7 +195,20 @@ export async function loadTestimonials(stockPhotos = []) {
  * marquee card keeps its image.
  */
 export async function loadWeddingsTestimonials(stockPhotos = []) {
-  const data = await fetchFromAPI('testimonials.php?weddings=1');
+  return loadFlaggedTestimonials('weddings', stockPhotos);
+}
+
+/**
+ * Load testimonials flagged for the shared marquee that sits above the
+ * enquiry form on every page except home + weddings, or null.
+ * Same card shape as loadWeddingsTestimonials.
+ */
+export async function loadPageMarqueeTestimonials(stockPhotos = []) {
+  return loadFlaggedTestimonials('pages', stockPhotos);
+}
+
+async function loadFlaggedTestimonials(flag, stockPhotos) {
+  const data = await fetchFromAPI(`testimonials.php?${flag}=1`);
   if (!data || !Array.isArray(data.testimonials) || data.testimonials.length === 0) return null;
 
   return data.testimonials.map((t, i) => ({

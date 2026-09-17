@@ -14,6 +14,7 @@ import '../styles/content-pages.css';
 import '../styles/sections/inquiry.css';
 import '../styles/buttons.css';
 import '../styles/section-headers.css'; // one section-header identity — must load after the page CSS
+import './testimonial-marquee.js'; // shared "Words From Our Couples" marquee above the enquiry form (dashboard-driven)
 
 import { fetchFromAPI, assetUrl } from './api.js';
 import {

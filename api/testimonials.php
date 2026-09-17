@@ -35,6 +35,7 @@ switch ($method) {
 
         $featured = isset($_GET['featured']) ? (int)$_GET['featured'] : null;
         $weddings = isset($_GET['weddings']) ? (int)$_GET['weddings'] : null;
+        $pages = isset($_GET['pages']) ? (int)$_GET['pages'] : null;
         $activeOnly = !isset($_GET['all']);
 
         $where = [];
@@ -42,6 +43,8 @@ switch ($method) {
         if ($activeOnly) { $where[] = 'is_active = 1'; }
         if ($featured !== null) { $where[] = 'is_featured = ?'; $params[] = $featured; }
         if ($weddings !== null) { $where[] = 'show_on_weddings = ?'; $params[] = $weddings; }
+        // Shared marquee above the enquiry form on every other page
+        if ($pages !== null) { $where[] = 'show_on_pages = ?'; $params[] = $pages; }
 
         $whereSQL = $where ? 'WHERE ' . implode(' AND ', $where) : '';
         $stmt = $db->prepare("SELECT * FROM testimonials {$whereSQL} ORDER BY sort_order ASC, created_at DESC");
@@ -95,8 +98,8 @@ switch ($method) {
 
         $db = getDB();
         $stmt = $db->prepare(
-            'INSERT INTO testimonials (client_name, event_type, event_date, review_text, rating, photo_path, city, is_featured, show_on_weddings, marquee_row, is_active, sort_order)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            'INSERT INTO testimonials (client_name, event_type, event_date, review_text, rating, photo_path, city, is_featured, show_on_weddings, show_on_pages, marquee_row, is_active, sort_order)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         );
         $stmt->execute([
             $clientName,
@@ -108,6 +111,7 @@ switch ($method) {
             sanitize($_POST['city'] ?? ''),
             (int)($_POST['is_featured'] ?? 0),
             (int)($_POST['show_on_weddings'] ?? 0),
+            (int)($_POST['show_on_pages'] ?? 0),
             min(2, max(1, (int)($_POST['marquee_row'] ?? 1))),
             1,
             (int)($_POST['sort_order'] ?? 0)
@@ -135,7 +139,7 @@ switch ($method) {
         $fields = [];
         $params = [];
 
-        $updatable = ['client_name', 'event_type', 'event_date', 'review_text', 'rating', 'city', 'is_featured', 'show_on_weddings', 'marquee_row', 'is_active', 'sort_order'];
+        $updatable = ['client_name', 'event_type', 'event_date', 'review_text', 'rating', 'city', 'is_featured', 'show_on_weddings', 'show_on_pages', 'marquee_row', 'is_active', 'sort_order'];
         foreach ($updatable as $f) {
             if (array_key_exists($f, $body)) {
                 $value = is_string($body[$f]) ? sanitize($body[$f]) : $body[$f];

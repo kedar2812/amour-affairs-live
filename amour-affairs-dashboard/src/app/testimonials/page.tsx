@@ -4,7 +4,7 @@ import React, { useState, useCallback } from "react";
 import { Search, Plus, Trash2, Star, X, Loader2, Edit3, Upload, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/Drawer";
-import { testimonialsAPI, assetUrl } from "@/lib/api";
+import { testimonialsAPI, settingsAPI, assetUrl } from "@/lib/api";
 import { decodeEntities } from "@/lib/utils";
 
 const MAX_PHOTO_SIZE = 64 * 1024 * 1024; // 64MB
@@ -20,6 +20,7 @@ interface Testimonial {
   city: string;
   is_featured: number;
   show_on_weddings: number;
+  show_on_pages: number;
   marquee_row: number;
   is_active: number;
   sort_order: number;
@@ -31,6 +32,11 @@ interface Testimonial {
    row 2 right, and so on. Keeping it derived (never stored) means
    adding or emptying rows can never break the pattern. */
 const rowDirection = (row: number) => (row % 2 === 1 ? "scrolls left" : "scrolls right");
+
+/* One heading for every enquiry-form marquee on the website (all pages
+   with a form except Home + Weddings). Mirrors MARQUEE_DEFAULTS in
+   src/js/testimonial-marquee.js — *word* renders gold italic. */
+const MARQUEE_DEFAULTS = { eyebrow: "Loved By Couples", heading: "Words From *Our Couples*" };
 
 export default function TestimonialsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -48,11 +54,38 @@ export default function TestimonialsPage() {
   const [formCity, setFormCity] = useState("");
   const [formFeatured, setFormFeatured] = useState(false);
   const [formWeddings, setFormWeddings] = useState(false);
+  const [formPages, setFormPages] = useState(false);
   const [formRow, setFormRow] = useState(1);
   const [formDate, setFormDate] = useState("");
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Enquiry-form marquee heading (settings-backed, shared by every page)
+  const [marqueeEyebrow, setMarqueeEyebrow] = useState(MARQUEE_DEFAULTS.eyebrow);
+  const [marqueeHeading, setMarqueeHeading] = useState(MARQUEE_DEFAULTS.heading);
+  const [marqueeSaving, setMarqueeSaving] = useState(false);
+  const [marqueeSaved, setMarqueeSaved] = useState(false);
+
+  React.useEffect(() => {
+    settingsAPI.getGroup("site_content").then((res) => {
+      const s = (res as { settings: Record<string, string> }).settings || {};
+      if (s.site_testi_marquee_eyebrow) setMarqueeEyebrow(decodeEntities(s.site_testi_marquee_eyebrow));
+      if (s.site_testi_marquee_heading) setMarqueeHeading(decodeEntities(s.site_testi_marquee_heading));
+    }).catch(() => { /* defaults stay */ });
+  }, []);
+
+  const saveMarqueeCopy = async () => {
+    setMarqueeSaving(true); setMarqueeSaved(false); setError("");
+    try {
+      await settingsAPI.update({
+        site_testi_marquee_eyebrow: marqueeEyebrow.trim() || MARQUEE_DEFAULTS.eyebrow,
+        site_testi_marquee_heading: marqueeHeading.trim() || MARQUEE_DEFAULTS.heading,
+      });
+      setMarqueeSaved(true);
+    } catch (err) { setError(err instanceof Error ? err.message : "Save failed"); }
+    finally { setMarqueeSaving(false); }
+  };
 
   const fetchTestimonials = useCallback(async () => {
     setIsLoading(true);
@@ -92,7 +125,7 @@ export default function TestimonialsPage() {
   const openCreate = () => {
     setEditingId(null);
     setFormName(""); setFormText(""); setFormType("Wedding");
-    setFormCity(""); setFormFeatured(false); setFormWeddings(false); setFormDate("");
+    setFormCity(""); setFormFeatured(false); setFormWeddings(false); setFormPages(false); setFormDate("");
     setFormRow(1);
     setPhotoFile(null); setPhotoPreview("");
     setShowForm(true);
@@ -102,7 +135,8 @@ export default function TestimonialsPage() {
     setEditingId(t.id);
     setFormName(t.client_name); setFormText(t.review_text); setFormType(t.event_type);
     setFormCity(t.city || ""); setFormFeatured(!!t.is_featured);
-    setFormWeddings(!!t.show_on_weddings);
+    setFormWeddings(!!Number(t.show_on_weddings));
+    setFormPages(!!Number(t.show_on_pages));
     setFormRow(Number(t.marquee_row) || 1);
     setFormDate(t.event_date || "");
     setPhotoFile(null);
@@ -128,6 +162,7 @@ export default function TestimonialsPage() {
           client_name: formName, review_text: formText, event_type: formType,
           city: formCity, is_featured: formFeatured ? 1 : 0,
           show_on_weddings: formWeddings ? 1 : 0,
+          show_on_pages: formPages ? 1 : 0,
           marquee_row: formRow,
           event_date: formDate || null,
         });
@@ -145,6 +180,7 @@ export default function TestimonialsPage() {
         formData.append("city", formCity);
         formData.append("is_featured", formFeatured ? "1" : "0");
         formData.append("show_on_weddings", formWeddings ? "1" : "0");
+        formData.append("show_on_pages", formPages ? "1" : "0");
         formData.append("marquee_row", String(formRow));
         if (formDate) formData.append("event_date", formDate);
         if (photoFile) formData.append("photo", photoFile);
@@ -186,6 +222,35 @@ export default function TestimonialsPage() {
             <Plus className="h-4 w-4 mr-2" /> Add Testimonial
           </Button>
         </div>
+      </div>
+
+      <div className="dash-card p-5 flex flex-col gap-4">
+        <div>
+          <p className="text-[15px] font-semibold text-foreground">Enquiry-Form Marquee</p>
+          <p className="text-[12px] text-muted-foreground mt-0.5">
+            One scrolling testimonial strip sits above the enquiry form on About, Films, Couple Shoots, Premium Albums,
+            Contact, Guides and Case Studies. Tick &ldquo;Show in the enquiry-form marquees&rdquo; on a testimonial to include it
+            &mdash; every page updates together. Wrap a word in *asterisks* to make it gold italic.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-3 items-end">
+          <div>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2 block">Eyebrow</label>
+            <input type="text" value={marqueeEyebrow} onChange={(e) => { setMarqueeEyebrow(e.target.value); setMarqueeSaved(false); }}
+              className="w-full h-10 px-3 bg-muted/30 border border-border/50 rounded-lg text-sm text-foreground focus:outline-none focus:border-primary/50" />
+          </div>
+          <div>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2 block">Heading</label>
+            <input type="text" value={marqueeHeading} onChange={(e) => { setMarqueeHeading(e.target.value); setMarqueeSaved(false); }}
+              className="w-full h-10 px-3 bg-muted/30 border border-border/50 rounded-lg text-sm text-foreground focus:outline-none focus:border-primary/50" />
+          </div>
+          <Button onClick={saveMarqueeCopy} disabled={marqueeSaving} className="h-10 px-4 rounded-xl bg-primary text-primary-foreground border-none">
+            {marqueeSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : marqueeSaved ? "Saved" : "Save Heading"}
+          </Button>
+        </div>
+        <p className="text-[12px] text-muted-foreground">
+          {testimonials.filter(t => Number(t.show_on_pages) && Number(t.is_active)).length} testimonial(s) currently in the marquee.
+        </p>
       </div>
 
       {error && (
@@ -230,7 +295,8 @@ export default function TestimonialsPage() {
                   <span className="text-[10px] font-bold uppercase bg-primary/10 text-primary px-2 py-0.5 rounded-full" title={`Marquee row ${Number(t.marquee_row) || 1} (${rowDirection(Number(t.marquee_row) || 1)})`}>
                     Row {Number(t.marquee_row) || 1}
                   </span>
-                  {t.show_on_weddings ? <span className="text-[10px] font-bold uppercase bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded-full">Weddings</span> : null}
+                  {Number(t.show_on_weddings) ? <span className="text-[10px] font-bold uppercase bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded-full">Weddings</span> : null}
+                  {Number(t.show_on_pages) ? <span className="text-[10px] font-bold uppercase bg-sky-500/10 text-sky-500 px-2 py-0.5 rounded-full" title="Shown in the marquee above the enquiry form on the other pages">Pages</span> : null}
                   {t.is_featured ? <span className="text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded-full">Featured</span> : null}
                 </div>
               </div>
@@ -299,6 +365,13 @@ export default function TestimonialsPage() {
             <input type="checkbox" checked={formWeddings} onChange={(e) => setFormWeddings(e.target.checked)} className="rounded border-border" />
             <span className="text-sm font-medium text-foreground">Showcase on the Weddings page</span>
           </label>
+          <label className="flex items-start gap-2 cursor-pointer">
+            <input type="checkbox" checked={formPages} onChange={(e) => setFormPages(e.target.checked)} className="rounded border-border mt-1" />
+            <span className="text-sm font-medium text-foreground">
+              Show in the enquiry-form marquees
+              <span className="block text-[11px] font-normal text-muted-foreground">About, Films, Couple Shoots, Premium Albums, Contact, Guides &amp; Case Studies</span>
+            </span>
+          </label>
           <div>
             <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2 block">Couple Photo (optional)</label>
             <label className="block cursor-pointer">
@@ -314,7 +387,7 @@ export default function TestimonialsPage() {
               </div>
               <input type="file" accept="image/*" className="hidden" onChange={handlePhotoSelect} />
             </label>
-            <p className="text-[11px] text-muted-foreground mt-1.5">Shown on the Testimonials page and the Weddings-page marquee. Leave empty to use a stock couple photo.</p>
+            <p className="text-[11px] text-muted-foreground mt-1.5">Shown on the Testimonials page and in the website marquees. Leave empty to use a stock couple photo.</p>
           </div>
           <Button onClick={handleSubmit} disabled={isSubmitting} className="w-full h-10 rounded-xl bg-primary text-primary-foreground font-bold">
             {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Saving...</> : editingId ? "Save Changes" : "Add Testimonial"}

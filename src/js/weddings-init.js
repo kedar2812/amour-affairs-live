@@ -17,6 +17,7 @@ import '../styles/sections/contact.css';
 import '../styles/service-pages.css';
 import '../styles/testimonials-page.css'; // reuse the exact testimonial card + marquee design
 import '../styles/weddings-page.css';
+import '../styles/testimonial-marquee.css'; // marquee section shell — shared with the other pages
 import '../styles/package-cards.css'; // Collections cards — shared with couple shoots
 import '../styles/buttons.css'; // unified button identity — must load last
 import '../styles/section-headers.css'; // one section-header identity — must load after the page CSS

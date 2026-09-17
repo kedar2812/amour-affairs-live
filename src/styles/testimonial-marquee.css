@@ -1,0 +1,60 @@
+/* ============================================================
+   TESTIMONIAL-MARQUEE.CSS — "Words From Our Couples" marquee
+   Amour Affairs · Premium Wedding Photography
+
+   One section design for the weddings-page marquee and the shared
+   marquee above the enquiry form on the other pages. The card +
+   track styling itself comes from testimonials-page.css
+   (.tpage-marquee-wrap / .tpage-row / .tcard-page).
+   ============================================================ */
+
+/* ══════════════════════════════════════
+   SECTION SHELL
+   ══════════════════════════════════════ */
+
+.wpage-testi {
+  padding: clamp(64px, 9vw, 120px) 0;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.wpage-testi__header {
+  text-align: center;
+  margin-bottom: clamp(36px, 5vw, 60px);
+  padding: 0 var(--container-gutter);
+}
+
+.wpage-testi__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+
+.wpage-testi__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #3D2010;
+}
+
+.wpage-testi__heading em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* The marquee itself reuses the testimonials-page design:
+   .tpage-marquee-wrap / .tpage-row / .tcard-page (see testimonials-page.css),
+   rendered by weddings-init.js / testimonial-marquee.js so the cards match exactly — couple photo,
+   quote icon, text and author row included. */
+
+@media (prefers-reduced-motion: reduce) {
+  .wpage-testi .tpage-row__track {
+    animation: none;
+  }
+}

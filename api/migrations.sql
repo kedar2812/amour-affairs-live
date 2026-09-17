@@ -482,3 +482,11 @@ ALTER TABLE `families` ADD COLUMN `album_given` TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE `families` ADD COLUMN `album_given_at` DATE DEFAULT NULL;
 ALTER TABLE `families` ADD COLUMN `testimonial_given` TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE `families` ADD COLUMN `testimonial_given_at` DATE DEFAULT NULL;
+
+-- ────────────────────────────────────────────────────────────
+-- testimonials.show_on_pages — the shared testimonial marquee above the
+-- enquiry form on every page except home + weddings (2026-09-17).
+-- Starts as a copy of the weddings selection so both marquees open identical.
+-- ────────────────────────────────────────────────────────────
+ALTER TABLE `testimonials` ADD COLUMN `show_on_pages` TINYINT(1) NOT NULL DEFAULT 0 AFTER `show_on_weddings`;
+UPDATE `testimonials` SET `show_on_pages` = `show_on_weddings`;

@@ -151,6 +151,8 @@ CREATE TABLE IF NOT EXISTS `testimonials` (
   `city` VARCHAR(100) DEFAULT NULL,
   `is_featured` TINYINT(1) NOT NULL DEFAULT 0,
   `show_on_weddings` TINYINT(1) NOT NULL DEFAULT 0,
+  -- Shared marquee above the enquiry form on every page except home/weddings
+  `show_on_pages` TINYINT(1) NOT NULL DEFAULT 0,
   -- Testimonials-page marquee row (1, 2, 3, ...). 0 = not yet assigned;
   -- scroll direction is derived from row position, never stored.
   `marquee_row` TINYINT UNSIGNED NOT NULL DEFAULT 0,
@@ -692,6 +694,9 @@ INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_group`) 
 
 -- Surface the seeded reviews in the weddings-page marquee by default
 UPDATE `testimonials` SET `show_on_weddings` = 1 WHERE `is_active` = 1;
+
+-- …and in the shared enquiry-form marquee on the other pages
+UPDATE `testimonials` SET `show_on_pages` = 1 WHERE `is_active` = 1;
 
 -- Spread unassigned reviews evenly across the three testimonials-page
 -- marquee rows (0 = unassigned, so curated rows are never reshuffled)
