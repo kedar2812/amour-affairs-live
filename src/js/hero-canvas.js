@@ -314,27 +314,55 @@ export async function initHeroCanvas() {
 /* ─── Text layer state machine ───────────────────────────── */
 let textState = -1;
 
-/* Split the <em> inside headline into per-char <span>s for blur shimmer */
+/* Split the headline's second line into per-char <span>s for the blur shimmer.
+   The whole line "we capture the eternal." shimmers in, while only the <em>
+   keyword stays gold — so the split walks every text node inside the reveal
+   span and keeps the <em> wrapper intact. (Splitting only the <em> left
+   "we capture the" without the effect once the gold narrowed to one word.) */
 function splitEmChars(bodyEl) {
-  const em = bodyEl.querySelector('.hero__headline em');
-  if (!em || em.dataset.split) return;
-  em.dataset.split = 'true';
+  const line =
+    bodyEl.querySelector('.hero__headline-reveal') ||
+    bodyEl.querySelector('.hero__headline em');
+  if (!line || line.dataset.split) return;
+  line.dataset.split = 'true';
 
-  const text = em.textContent;
-  em.textContent = '';
-
-  text.split('').forEach((ch) => {
+  const charSpan = (ch) => {
     const span = document.createElement('span');
-    span.className  = 'em-char';
+    span.className = 'em-char';
     span.textContent = ch;
-    // Preserve spaces — inline-block collapses them otherwise
-    span.style.display     = ch === ' ' ? 'inline' : 'inline-block';
-    span.style.whiteSpace  = 'pre';
-    em.appendChild(span);
-  });
+    span.style.display = 'inline-block';
+    span.style.whiteSpace = 'pre';
+    return span;
+  };
+
+  const splitTextNode = (node) => {
+    const frag = document.createDocumentFragment();
+    // Words stay unbreakable (nowrap wrapper); spaces stay real, breakable text
+    node.textContent.split(/(\s+)/).forEach((part) => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+      const word = document.createElement('span');
+      word.style.display = 'inline-block';
+      word.style.whiteSpace = 'nowrap';
+      part.split('').forEach((ch) => word.appendChild(charSpan(ch)));
+      frag.appendChild(word);
+    });
+    node.replaceWith(frag);
+  };
+
+  const walk = (el) => {
+    [...el.childNodes].forEach((child) => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        if (child.textContent.trim()) splitTextNode(child);
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        walk(child);
+      }
+    });
+  };
+  walk(line);
 
   // Set initial blur state
-  gsap.set(em.querySelectorAll('.em-char'), { opacity: 0, filter: 'blur(12px)' });
+  gsap.set(line.querySelectorAll('.em-char'), { opacity: 0, filter: 'blur(12px)' });
 }
 
 function setupTextLayerAnimations(bodyEl) {
