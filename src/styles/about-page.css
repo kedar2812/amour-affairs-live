@@ -391,6 +391,39 @@
   margin: 0 0 1.5rem;
 }
 
+/* Quiet text link through to the founder's own entity page, /taher-husain/.
+   Deliberately not a gold pill: the section already ends on a statement, and
+   a button here would compete with the page's real CTA further down. */
+.founder__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158, 122, 78, 0.3);
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.founder__more:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.founder__more-arrow {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.founder__more:hover .founder__more-arrow {
+  transform: translateX(4px);
+}
+
 .founder__signature {
   font-family: 'Dancing Script', cursive;
   font-size: 2rem;

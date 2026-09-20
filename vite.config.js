@@ -39,6 +39,7 @@ export default defineConfig({
         guideArticle:       resolve(__dirname, 'guides/_post/index.html'),
         caseStudies:        resolve(__dirname, 'case-studies/index.html'),
         caseStudy:          resolve(__dirname, 'case-studies/_story/index.html'),
+        taherHusain:        resolve(__dirname, 'taher-husain/index.html'),
       }
     }
   },

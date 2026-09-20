@@ -84,6 +84,7 @@ $core = array(
     array('/premium-albums/',        'monthly', '0.8', array(array('loc' => '/services/albums.png', 'title' => 'Premium Wedding Albums — Amour Affairs'))),
     array('/testimonials/',          'weekly',  '0.8', array()),
     array('/about/',                 'monthly', '0.7', array(array('loc' => '/founder.jpeg', 'title' => 'About Amour Affairs'))),
+    array('/taher-husain/',          'monthly', '0.6', array(array('loc' => '/founder.jpeg', 'title' => 'Taher Husain, founder of Amour Affairs in Pune'))),
     array('/guides/',                'weekly',  '0.8', array()),
     array('/case-studies/',          'weekly',  '0.8', array()),
     array('/faqs/',                  'monthly', '0.6', array()),

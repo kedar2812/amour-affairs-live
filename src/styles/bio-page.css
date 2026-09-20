@@ -1,0 +1,515 @@
+/* ============================================================
+   BIO-PAGE.CSS — Founder Entity Page  (/taher-husain/)
+   Amour Affairs · Premium Wedding Photography
+
+   A single-person profile page: who Taher Husain is, what he
+   does, where he works and which profiles are actually his.
+   Built for entity recognition (ProfilePage + Person schema),
+   so the layout is deliberately plain and factual.
+
+   Design language follows the films / testimonials reference:
+   centred text hero on warm beige, an 1100px content column,
+   white cards at 12px radius with soft shadows and a gentle
+   hover lift, and the gold pill CTA at the foot.
+
+   Typography is NOT defined here — the eyebrow / heading /
+   sub / card tiers all come from section-headers.css via the
+   --sh-* tokens. This file owns layout, surface and motion.
+   ============================================================ */
+
+
+/* ── Page background ── */
+.bpage {
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+
+/* ══════════════════════════════════════
+   HERO — breadcrumb + name + role
+   ══════════════════════════════════════ */
+
+.bpage-hero {
+  padding: clamp(130px, 17vh, 190px) var(--container-gutter) clamp(36px, 5vw, 60px);
+  text-align: center;
+}
+
+.bpage-hero__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Visible breadcrumb trail — Home / About / Taher Husain.
+   Mirrors the BreadcrumbList JSON-LD in the page head. */
+.bpage-crumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 26px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.bpage-crumbs__link {
+  color: var(--color-text-dim);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.bpage-crumbs__link:hover {
+  color: var(--color-accent);
+}
+
+.bpage-crumbs__sep {
+  color: rgba(158, 122, 78, 0.45);
+}
+
+.bpage-crumbs__current {
+  color: var(--color-accent);
+}
+
+.bpage-hero__eyebrow {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.bpage-hero__title {
+  margin: 0 0 18px;
+}
+
+.bpage-hero__sub {
+  margin: 0 auto;
+}
+
+
+/* ══════════════════════════════════════
+   PROFILE — portrait + about copy
+   ══════════════════════════════════════ */
+
+.bpage-profile {
+  padding: clamp(40px, 5vw, 72px) var(--container-gutter) clamp(60px, 8vw, 100px);
+}
+
+.bpage-profile__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(36px, 5vw, 72px);
+  align-items: start;
+}
+
+/* — Portrait, matted in a white card — */
+.bpage-portrait {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s ease;
+}
+
+.bpage-portrait:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 48px rgba(158, 122, 78, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.bpage-portrait__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.bpage-portrait__img {
+  display: block;
+  width: 100%;
+  /* The <img> carries width/height attributes (they reserve layout space and
+     stop the card jumping as it loads). Those attributes also set a used
+     height, and aspect-ratio only takes over when one axis is auto — without
+     this line the portrait renders at its full 1600px. */
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  /* The source is a 2:3 headshot with headroom above; `top` would crop to
+     empty background, so pull the frame down onto the face. */
+  object-position: center 22%;
+}
+
+/* The same fine gold inner rule the About page uses on its portrait. */
+.bpage-portrait__frame::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1px solid var(--color-accent-light);
+  pointer-events: none;
+}
+
+.bpage-portrait__caption {
+  display: block;
+  margin: 14px 4px 4px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* — About copy — */
+.bpage-bio {
+  padding-top: 6px;
+}
+
+.bpage-bio__eyebrow {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.bpage-bio__heading {
+  margin: 0 0 26px;
+}
+
+.bpage-bio__body {
+  font-family: var(--font-body);
+  color: var(--color-text-dim);
+  margin: 0 0 1.4em;
+  max-width: 40em;
+}
+
+.bpage-bio__body:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ══════════════════════════════════════
+   PROFESSIONAL INFORMATION — fact card
+   ══════════════════════════════════════ */
+
+.bpage-facts {
+  padding: clamp(60px, 8vw, 100px) var(--container-gutter);
+  background: var(--color-bg-alt);
+}
+
+.bpage-facts__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.bpage-facts__header {
+  text-align: center;
+  margin-bottom: clamp(32px, 4vw, 52px);
+}
+
+.bpage-facts__eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.bpage-facts__heading {
+  margin: 0;
+}
+
+/* The card itself — one white surface holding the fact list. */
+.bpage-facts__card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  padding: clamp(24px, 3vw, 40px);
+}
+
+.bpage-facts__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+}
+
+.bpage-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 28px;
+  border-bottom: 1px solid rgba(158, 122, 78, 0.14);
+}
+
+/* Left column keeps a hairline between the two halves. */
+.bpage-fact:nth-child(odd) {
+  border-right: 1px solid rgba(158, 122, 78, 0.14);
+}
+
+/* The last row carries no rule under it. */
+.bpage-fact:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.bpage-fact__term {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.bpage-fact__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--color-text);
+  margin: 0;
+}
+
+
+/* ══════════════════════════════════════
+   VERIFIED PROFILES
+   ══════════════════════════════════════ */
+
+.bpage-links {
+  padding: clamp(60px, 8vw, 100px) var(--container-gutter);
+}
+
+.bpage-links__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.bpage-links__header {
+  text-align: center;
+  margin-bottom: clamp(32px, 4vw, 52px);
+}
+
+.bpage-links__eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.bpage-links__heading {
+  margin: 0 0 16px;
+}
+
+.bpage-links__sub {
+  margin: 0 auto;
+}
+
+/* 280px min gives three across in the 1100px column, so the six cards fill
+   two clean rows instead of leaving a 4 + 2 orphan. */
+.bpage-links__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.bpage-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s ease;
+}
+
+.bpage-link:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 48px rgba(158, 122, 78, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.bpage-link__icon {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(158, 122, 78, 0.10);
+  color: var(--color-accent);
+}
+
+.bpage-link__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bpage-link__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.bpage-link__label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.bpage-link__handle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+
+/* ══════════════════════════════════════
+   CTA — gold pill, same as every page foot
+   ══════════════════════════════════════ */
+
+.bpage-cta {
+  text-align: center;
+  padding: clamp(60px, 8vw, 100px) var(--container-gutter) clamp(80px, 10vw, 130px);
+  background: var(--color-bg-alt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bpage-cta__label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.bpage-cta__heading {
+  margin: 0 auto 32px;
+}
+
+.bpage-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 10px 28px;
+  border-radius: 50px;
+  background: var(--color-btn);
+  color: #FAF7F4;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.bpage-cta__btn:hover {
+  transform: scale(1.03);
+  background: var(--color-btn-hover);
+}
+
+.bpage-cta__btn-arrow {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.bpage-cta__btn:hover .bpage-cta__btn-arrow {
+  transform: translateX(5px);
+}
+
+/* Quiet secondary link back to the studio story. */
+.bpage-cta__back {
+  display: inline-block;
+  margin-top: 22px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158, 122, 78, 0.3);
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.bpage-cta__back:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 900px)
+   ══════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .bpage-profile__inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* The portrait would otherwise stretch the full column width. */
+  .bpage-portrait {
+    max-width: 420px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .bpage-bio {
+    padding-top: 0;
+  }
+
+  .bpage-bio__body {
+    max-width: none;
+  }
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 600px)
+   ══════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .bpage-crumbs {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    gap: 8px;
+  }
+
+  .bpage-facts__list {
+    grid-template-columns: 1fr;
+  }
+
+  /* One column — no vertical rule, and the second-to-last row gets its
+     hairline back (the :nth-last-child(-n+2) rule above assumes two
+     columns, i.e. that the last two cells share the final row). */
+  .bpage-fact:nth-child(odd) {
+    border-right: none;
+  }
+
+  .bpage-fact:nth-last-child(2) {
+    border-bottom: 1px solid rgba(158, 122, 78, 0.14);
+  }
+
+  .bpage-fact {
+    padding: 18px 4px;
+  }
+
+  .bpage-portrait,
+  .bpage-link {
+    border-radius: 10px;
+  }
+
+  .bpage-link {
+    padding: 16px 18px;
+  }
+}

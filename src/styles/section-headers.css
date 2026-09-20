@@ -48,6 +48,7 @@
    and keep their own sizes.
    ══════════════════════════════════════════════════ */
 :root .about-hero__eyebrow,
+:root .bpage-hero__eyebrow,
 :root .contact-hero__eyebrow,
 :root .cp-hero__eyebrow,
 :root .cpage-hero__eyebrow,
@@ -59,6 +60,10 @@
 :root .shop__eyebrow,
 :root .sp-eyebrow,
 :root .wpage-hero__eyebrow,
+:root .bpage-bio__eyebrow,
+:root .bpage-cta__label,
+:root .bpage-facts__eyebrow,
+:root .bpage-links__eyebrow,
 :root .contact-formwrap__label,
 :root .cpage-album__eyebrow,
 :root .cpage-archive__eyebrow,
@@ -101,6 +106,9 @@
 
 /* — Section headings: the reference size — */
 :root .about-cta__heading,
+:root .bpage-cta__heading,
+:root .bpage-facts__heading,
+:root .bpage-links__heading,
 :root .cpage-album__title,
 :root .cpage-archive__heading,
 :root .cpage-session__heading,
@@ -142,6 +150,7 @@
    else (a form, the globe, a paragraph). At full section size these broke
    into 3–6 lines in their half-width columns. */
 :root .about__headline,
+:root .bpage-bio__heading,
 :root .contact-aside__heading,
 :root .contact-formwrap__title,
 :root .inquiry__title,
@@ -163,6 +172,7 @@
    It takes the case, colour and gold-keyword treatment below, but keeps
    its own tuned size. */
 :root .about-hero__title,
+:root .bpage-hero__title,
 :root .contact-hero__title,
 :root .cp-hero__title,
 :root .cpage-hero__title,
@@ -250,6 +260,11 @@
 :root .about__headline em,
 :root .about-cta__heading em,
 :root .about-hero__title em,
+:root .bpage-bio__heading em,
+:root .bpage-cta__heading em,
+:root .bpage-facts__heading em,
+:root .bpage-hero__title em,
+:root .bpage-links__heading em,
 :root .contact-aside__heading em,
 :root .contact-formwrap__title em,
 :root .contact-hero__title em,
@@ -321,6 +336,8 @@
    ══════════════════════════════════════════════════ */
 :root .about__text,
 :root .about-hero__sub,
+:root .bpage-hero__sub,
+:root .bpage-links__sub,
 :root .contact-hero__sub,
 :root .cp-hero__sub,
 :root .cpage-album__desc,
@@ -359,6 +376,7 @@
    some of these sit on dark ground and keep their
    own colour.
    ══════════════════════════════════════════════════ */
+:root .bpage-bio__body,
 :root .contact-aside__text,
 :root .founder__body,
 :root .gift__text,
@@ -398,6 +416,7 @@
    hence margin-inline: auto — a narrowed block would otherwise sit flush
    left. Vertical margins are untouched. */
 :root .about-hero__title,
+:root .bpage-hero__title,
 :root .contact-hero__title,
 :root .cp-hero__title,
 :root .cpage-hero__title,
@@ -414,6 +433,9 @@
 
 :root .about__headline,
 :root .about-cta__heading,
+:root .bpage-bio__heading,
+:root .bpage-facts__heading,
+:root .bpage-links__heading,
 :root .contact-aside__heading,
 :root .contact-formwrap__title,
 :root .cpage-archive__heading,
@@ -445,6 +467,7 @@
 /* Centred call-to-action headings were capped at 600px, so a six-word line
    stacked into three. */
 :root .about-cta__heading,
+:root .bpage-cta__heading,
 :root .fpage-cta__heading,
 :root .ipage-cta__heading,
 :root .ppage-cta__heading,
@@ -454,6 +477,7 @@
 }
 
 :root .about-hero__eyebrow,
+:root .bpage-hero__eyebrow,
 :root .contact-hero__eyebrow,
 :root .cp-hero__eyebrow,
 :root .fpage-hero__eyebrow,
@@ -464,6 +488,8 @@
 }
 
 :root .about-hero__sub,
+:root .bpage-hero__sub,
+:root .bpage-links__sub,
 :root .contact-hero__sub,
 :root .cp-hero__sub,
 :root .cpage-hero__sub,

@@ -30,6 +30,7 @@
 .cpage-cta__btn,
 .tpage-cta__btn,
 .ppage-cta__btn,
+.bpage-cta__btn,
 .wpage-album__next,
 .cpage-album__next,
 .ppage-album__next,
@@ -68,6 +69,7 @@
 .cpage-cta__btn:hover,
 .tpage-cta__btn:hover,
 .ppage-cta__btn:hover,
+.bpage-cta__btn:hover,
 .wpage-album__next:hover,
 .cpage-album__next:hover,
 .ppage-album__next:hover,
@@ -96,6 +98,7 @@
 .cpage-cta__btn:hover .cpage-cta__btn-arrow,
 .tpage-cta__btn:hover .tpage-cta__btn-arrow,
 .ppage-cta__btn:hover .ppage-cta__btn-arrow,
+.bpage-cta__btn:hover .bpage-cta__btn-arrow,
 .testi__read-more:hover .testi__read-more-arrow,
 .footer__cta:hover .footer__cta-arrow,
 .inquiry__submit:hover:not(:disabled) .inquiry__submit-arrow {
