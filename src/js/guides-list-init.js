@@ -25,13 +25,30 @@ import { initLeadForm } from './lead-form.js';
 
 const SITE = 'https://www.amouraffairs.in';
 
+// Hand-built article pages that live outside the Guides CMS (their own
+// static URL). Listed first so the Guides index links to them too.
+const STATIC_GUIDES = [
+  {
+    href: '/wedding-photography-pune-venues/',
+    title: 'Wedding Photography at The Orchid Hotel Pune, Oxford Golf & The Corinthians',
+    excerpt: 'Photography ideas and practical planning tips for three Pune wedding venues — and for capturing authentic moments wherever you celebrate.',
+    category: 'Pune Wedding Venues',
+    read_minutes: 8,
+    cover: '/wedding-photography-pune-venues/couple-portrait-natural-light.webp',
+    cover_alt: 'Bride and groom smiling together beneath a floral mandap in soft evening light',
+  },
+];
+
+const guideHref = (g) => g.href || `/guides/${encodeURIComponent(g.slug)}/`;
+
 function cardMarkup(g) {
-  const cover = g.cover_path
-    ? `<div class="cp-card__media"><img src="${assetUrl(g.cover_path)}" alt="${escapeHtml(g.title)}" loading="lazy"></div>`
+  const coverSrc = g.cover || (g.cover_path ? assetUrl(g.cover_path) : '');
+  const cover = coverSrc
+    ? `<div class="cp-card__media"><img src="${coverSrc}" alt="${escapeHtml(g.cover_alt || g.title)}" loading="lazy"></div>`
     : '';
   const meta = [g.category, g.read_minutes ? `${g.read_minutes} min read` : ''].filter(Boolean).join(' · ');
   return `
-    <a class="cp-card cp-reveal" href="/guides/${encodeURIComponent(g.slug)}/">
+    <a class="cp-card cp-reveal" href="${guideHref(g)}">
       ${cover}
       <div class="cp-card__body">
         <span class="cp-card__meta">${escapeHtml(meta)}</span>
@@ -48,7 +65,8 @@ async function renderGuides() {
   if (!grid) return;
 
   const data = await fetchFromAPI('guides.php');
-  const guides = data && Array.isArray(data.guides) ? decodeDeep(data.guides) : [];
+  const cmsGuides = data && Array.isArray(data.guides) ? decodeDeep(data.guides) : [];
+  const guides = STATIC_GUIDES.concat(cmsGuides);
 
   if (guides.length === 0) {
     grid.style.display = 'none';
@@ -66,7 +84,7 @@ async function renderGuides() {
     itemListElement: guides.map((g, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `${SITE}/guides/${g.slug}/`,
+      url: `${SITE}${guideHref(g)}`,
       name: g.title,
     })),
   });

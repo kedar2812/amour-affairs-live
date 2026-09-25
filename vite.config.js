@@ -40,6 +40,7 @@ export default defineConfig({
         caseStudies:        resolve(__dirname, 'case-studies/index.html'),
         caseStudy:          resolve(__dirname, 'case-studies/_story/index.html'),
         taherHusain:        resolve(__dirname, 'taher-husain/index.html'),
+        puneVenues:         resolve(__dirname, 'wedding-photography-pune-venues/index.html'),
       }
     }
   },
