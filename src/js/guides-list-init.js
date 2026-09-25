@@ -29,6 +29,15 @@ const SITE = 'https://www.amouraffairs.in';
 // static URL). Listed first so the Guides index links to them too.
 const STATIC_GUIDES = [
   {
+    href: '/20-questions-wedding-photographer-pune/',
+    title: '20 Questions Every Couple Asks a Wedding Photographer',
+    excerpt: 'Style, pricing, coverage, albums, contracts and delivery: what to ask a wedding photographer in Pune before you book.',
+    category: 'Wedding Planning',
+    read_minutes: 12,
+    cover: '/20-questions-wedding-photographer-pune/groom-first-look-at-mandap.webp',
+    cover_alt: 'Candid wedding photography in Pune by Amour Affairs: the groom smiling as he sees his bride at the mandap',
+  },
+  {
     href: '/wedding-photography-pune-venues/',
     title: 'Wedding Photography at The Orchid Hotel Pune, Oxford Golf & The Corinthians',
     excerpt: 'Photography ideas and practical planning tips for three Pune wedding venues — and for capturing authentic moments wherever you celebrate.',

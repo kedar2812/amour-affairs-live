@@ -85,7 +85,9 @@ export function initAnchorScroll(lenis) {
     const target = document.getElementById(id);
     if (!target) return;
     e.preventDefault();
-    if (lenis) lenis.scrollTo(target, { offset: -20, duration: 1.2 });
+    // Clear the fixed nav so a jumped-to heading isn't hidden under it
+    const navH = document.getElementById('nav')?.offsetHeight || 0;
+    if (lenis) lenis.scrollTo(target, { offset: -(navH + 20), duration: 1.2 });
     else target.scrollIntoView({ behavior: 'smooth' });
   });
 }

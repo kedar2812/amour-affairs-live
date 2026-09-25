@@ -337,9 +337,34 @@
 }
 .cp-prose .cp-cta__btn { color: #FAF7F4; text-decoration: none; }
 .cp-cta__btn-arrow { display: inline-block; transition: transform 0.4s ease; }
+.cp-prose .cp-cta__heading { margin: 0 0 0.6em; }
+
+/* "In this article" jump list for long, question-led articles */
+.cp-toc {
+  margin: 0 0 clamp(32px, 4vw, 48px);
+  padding: clamp(20px, 3vw, 32px);
+  background: #FFFDF9;
+  border: var(--border-subtle);
+  border-radius: 16px;
+}
+.cp-prose .cp-toc__label {
+  margin: 0 0 0.8rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.cp-prose .cp-toc ol { margin: 0; columns: 2; column-gap: 2rem; }
+.cp-prose .cp-toc li { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.45em; break-inside: avoid; }
+.cp-prose .cp-toc a { color: var(--color-text); text-decoration: none; }
+.cp-prose .cp-toc a:hover { color: var(--color-accent); text-decoration: underline; }
+/* Jump targets clear the fixed nav */
+.cp-prose h2[id] { scroll-margin-top: 110px; }
 
 @media (max-width: 560px) {
   .cp-figure--pair { grid-template-columns: 1fr; }
+  .cp-prose .cp-toc ol { columns: 1; }
 }
 
 /* ── Lead magnets (free downloadable guides) ── */
