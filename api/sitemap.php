@@ -88,6 +88,7 @@ $core = array(
     array('/guides/',                'weekly',  '0.8', array()),
     array('/20-questions-wedding-photographer-pune/', 'monthly', '0.7', array(array('loc' => '/20-questions-wedding-photographer-pune/groom-first-look-at-mandap.webp', 'title' => 'Candid wedding photography in Pune by Amour Affairs'))),
     array('/wedding-photography-pune-venues/', 'monthly', '0.7', array(array('loc' => '/wedding-photography-pune-venues/couple-portrait-natural-light.webp', 'title' => 'Wedding photography at Pune venues — Amour Affairs'))),
+    array('/maharashtra-destination-wedding-photography/', 'monthly', '0.7', array(array('loc' => '/maharashtra-destination-wedding-photography/couple-portrait-garden-embrace.webp', 'title' => 'Maharashtra destination wedding photography — Amour Affairs'))),
     array('/case-studies/',          'weekly',  '0.8', array()),
     array('/faqs/',                  'monthly', '0.6', array()),
     array('/contact/',               'monthly', '0.7', array()),

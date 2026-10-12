@@ -42,6 +42,7 @@ export default defineConfig({
         taherHusain:        resolve(__dirname, 'taher-husain/index.html'),
         puneVenues:         resolve(__dirname, 'wedding-photography-pune-venues/index.html'),
         twentyQuestions:    resolve(__dirname, '20-questions-wedding-photographer-pune/index.html'),
+        maharashtraDest:    resolve(__dirname, 'maharashtra-destination-wedding-photography/index.html'),
       }
     }
   },

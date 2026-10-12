@@ -30,6 +30,15 @@ const SITE = 'https://www.amouraffairs.in';
 // static URL). Listed first so the Guides index links to them too.
 const STATIC_GUIDES = [
   {
+    href: '/maharashtra-destination-wedding-photography/',
+    title: 'The Maharashtra Wedding Escape: Seven Beautiful Destinations to Say “I Do”',
+    excerpt: 'Mahabaleshwar, Panchgani, Lonavala, Khandala, Alibaug, Mumbai or Pune: how to choose, and how to plan your photography around it.',
+    category: 'Wedding Photography',
+    read_minutes: 8,
+    cover: '/maharashtra-destination-wedding-photography/couple-portrait-garden-embrace.webp',
+    cover_alt: "Candid couple portrait by Amour Affairs: the groom kissing the bride's forehead among tall pine trees",
+  },
+  {
     href: '/20-questions-wedding-photographer-pune/',
     title: '20 Questions Every Couple Asks a Wedding Photographer',
     excerpt: 'Style, pricing, coverage, albums, contracts and delivery: what to ask a wedding photographer in Pune before you book.',
