@@ -20,14 +20,26 @@ SEO 100 and Best Practices 100 on every page. "After" was measured on a local co
 live host's ~0.5–0.7 s server response time adds to it); live numbers are re-measured
 after each deploy.
 
-## Real Chrome, throttled phone
+## Live site after deploy (2026-11-18)
 
-| Homepage | Before | After |
+| Page | Performance | LCP | FCP | CLS | Page weight |
+|---|---|---|---|---|---|
+| Home | **81** (was 60) | **2.4 s** (was 7.5 s) | 2.0 s | 0 | 3.3 MB (was 8.3 MB) |
+| Weddings | **85** (was 70) | 3.1 s (was 5.4 s) | 2.3 s | 0 | 0.8 MB |
+| About | **74** (was 62) | 4.5 s (was 7.4 s) | 2.6 s | 0 | 1.6 MB |
+| Films | **84** (was 67) | 3.3 s (was 6.0 s) | 2.4 s | 0 | 2.0 MB |
+
+SEO 100 and Best Practices 100 on all four.
+
+## Real Chrome, throttled phone (homepage, live)
+
+| | Before | After |
 |---|---|---|
-| Slow 3G — page visible | 26 s | measured after deploy |
-| Slow 3G — fully loaded | 173 s (~3 min) | — |
-| Fast 4G — largest content painted | 5.1 s | 2.7 s |
-| Fast 4G — page visible | 8.9 s | 3.6 s |
+| Slow 3G — page visible | 26 s | **9.3 s** |
+| Slow 3G — fully loaded | 173 s (~3 min) | **71 s** (the rest is hero frames streaming in the background) |
+| Fast 4G — largest content painted | 5.1 s | **1.5 s** |
+| Fast 4G — page visible | 8.9 s | **2.7 s** |
+| Fast 4G — everything loaded | 11.8 s | **5.5 s** |
 
 The "1–2 minute" load the agency saw was real on slow connections: the homepage
 downloaded 8.3 MB, all at once, before its scripts could run.
@@ -52,5 +64,8 @@ downloaded 8.3 MB, all at once, before its scripts could run.
 * **Server response time** (~0.6–1.0 s from India — the host is in the UK). Putting a CDN
   with Indian edge locations (e.g. Cloudflare's free plan) in front of the site would cut
   this the most. It is a DNS change for the domain owner; `/api/` must not be cached.
+* About page: the bundled founder photo is replaced by the dashboard's photo once the
+  CMS answers, so the largest image effectively loads twice (LCP 4.5 s). Serving the CMS
+  photo directly in the page would fix it.
 * Colour contrast of a few small gold-on-beige labels (Lighthouse accessibility 93–97) is
   a brand-palette decision.
