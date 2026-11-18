@@ -1,0 +1,183 @@
+/* ============================================================
+   CONSENT.CSS — Cookie / analytics consent banner
+   Amour Affairs · Premium Wedding Photography
+
+   A quiet, editorial card rather than a full-width bar: warm linen
+   surface, gold hairline, Cormorant title over Montserrat copy —
+   the same vocabulary as the notice bar and the inquiry cards.
+
+   Sits bottom-centre so it clears the floating WhatsApp (bottom-left)
+   and the availability badge (bottom-right), and lifts above a
+   bottom announcement bar via --notice-hb.
+   ============================================================ */
+
+.aa-consent {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--notice-hb, 0px) + clamp(16px, 3vw, 28px));
+  z-index: 1006; /* above nav (1000) and the announcement bar (1005) */
+  width: min(640px, calc(100vw - 2 * clamp(16px, 4vw, 32px)));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 26px);
+  padding: clamp(16px, 2vw, 22px) clamp(18px, 2.4vw, 26px);
+
+  background: rgba(245, 237, 226, 0.94); /* --color-bg, softened */
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  border: 1px solid rgba(158, 122, 78, 0.28);
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(44, 36, 32, 0.20);
+
+  /* Entrance — mirrors the availability badge's rise */
+  opacity: 0;
+  transform: translateX(-50%) translateY(18px);
+  transition: opacity 0.6s ease,
+              transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.aa-consent.is-in {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.aa-consent.is-out {
+  opacity: 0;
+  transform: translateX(-50%) translateY(18px);
+  pointer-events: none;
+}
+
+/* ── Copy ── */
+.aa-consent__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.aa-consent__title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.5vw, 1.32rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+}
+
+.aa-consent__spark {
+  color: var(--color-accent-light);
+  font-size: 0.62rem;
+  opacity: 0.9;
+  transform: translateY(-0.18em);
+}
+
+.aa-consent__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.795rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+  color: var(--color-text-dim);
+}
+
+.aa-consent__link {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158, 122, 78, 0.45);
+  padding-bottom: 1px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.aa-consent__link:hover {
+  color: var(--color-btn-hover);
+  border-color: var(--color-btn-hover);
+}
+
+/* ── Actions ── */
+.aa-consent__actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The gold pill itself comes from buttons.css (opt-in selector list) —
+   only size and type styling live here. */
+.aa-consent__btn {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 11px 22px;
+  cursor: pointer;
+}
+
+/* Decline stays a quiet ghost so "Accept" reads as the primary path
+   without the two looking like the same control. */
+.aa-consent__btn--decline {
+  background: transparent;
+  color: var(--color-text-dim);
+  border: 1px solid rgba(158, 122, 78, 0.32);
+  border-radius: 999px;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.aa-consent__btn--decline:hover {
+  color: var(--color-text);
+  border-color: rgba(158, 122, 78, 0.6);
+  background: rgba(158, 122, 78, 0.07);
+}
+
+/* ── Phones — stack, and lift the floating buttons out of the way ── */
+@media (max-width: 620px) {
+  .aa-consent {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .aa-consent__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .aa-consent__btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 10px;
+  }
+
+  /* While the card is up it would cover the corner floats. The badge steps
+     aside; WhatsApp — the studio's main enquiry channel — must stay
+     reachable, so it rises above the card instead of disappearing. */
+  html.aa-consent-open .aa-notice-badge {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  /* `translate` (not `bottom`): moving a fixed element by layout counts as
+     a layout shift; a transform doesn't. */
+  html.aa-consent-open .floating-whatsapp {
+    translate: 0 calc(-1 * (var(--aa-consent-h, 180px) + 10px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-consent {
+    transition: opacity 0.3s ease;
+    transform: translateX(-50%);
+  }
+  .aa-consent.is-in,
+  .aa-consent.is-out { transform: translateX(-50%); }
+}

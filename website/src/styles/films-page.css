@@ -1,0 +1,593 @@
+/* ============================================================
+   FILMS-PAGE.CSS — Dedicated Films Page
+   Amour Affairs · Premium Wedding Photography
+
+   Design: Cinematic editorial showcase — hero text, featured
+   video embed, curated gallery grid, YouTube CTA.
+   ============================================================ */
+
+
+/* ── Page background ── */
+.fpage {
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+
+/* ══════════════════════════════════════
+   HERO HEADER
+   ══════════════════════════════════════ */
+
+.fpage-hero {
+  padding: clamp(140px, 18vh, 200px) var(--container-gutter) clamp(40px, 6vw, 72px);
+  text-align: center;
+  position: relative;
+}
+
+.fpage-hero__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.fpage-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.63rem, 6.1vw, 5.15rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: #3D2010;
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.fpage-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.fpage-hero__sub {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--color-text-dim);
+  line-height: 1.65;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+
+/* ══════════════════════════════════════
+   FEATURED FILM — HERO VIDEO
+   ══════════════════════════════════════ */
+
+.fpage-featured {
+  padding: clamp(40px, 5vw, 72px) var(--container-gutter) clamp(80px, 10vw, 120px);
+}
+
+.fpage-featured__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* "Now Showing" label */
+.fpage-featured__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+}
+
+.fpage-featured__label-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: fpage-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fpage-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* 16:9 responsive embed wrapper */
+.fpage-featured__embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1A1410;
+  box-shadow:
+    0 8px 40px rgba(158, 122, 78, 0.12),
+    0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.fpage-featured__embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Click-to-play poster (the player itself loads on click) */
+.fpage-featured__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.fpage-featured__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+.fpage-featured__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
+  transition: transform 0.3s ease;
+}
+
+.fpage-featured__poster:hover img,
+.fpage-featured__poster:focus-visible img { transform: scale(1.03); filter: brightness(0.92); }
+.fpage-featured__poster:hover .fpage-featured__play,
+.fpage-featured__poster:focus-visible .fpage-featured__play { transform: translate(-50%, -50%) scale(1.08); }
+.fpage-featured__poster:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -4px; }
+
+/* Film title + couple below the embed */
+.fpage-featured__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 0 4px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fpage-featured__film-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text);
+}
+
+.fpage-featured__film-type {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+
+/* ══════════════════════════════════════
+   GALLERY — MORE LOVE STORIES
+   ══════════════════════════════════════ */
+
+.fpage-gallery {
+  padding: clamp(60px, 8vw, 100px) var(--container-gutter);
+  background: var(--color-bg-alt);
+}
+
+.fpage-gallery__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fpage-gallery__header {
+  text-align: center;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.fpage-gallery__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.fpage-gallery__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.88rem, 3.75vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #3D2010;
+  margin: 0;
+}
+
+.fpage-gallery__heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+/* Grid */
+.fpage-gallery__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Individual card */
+.fpage-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s ease;
+}
+
+.fpage-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 48px rgba(158, 122, 78, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Thumbnail wrapper — force exact 16:9 via padding hack for consistency */
+.fpage-card__thumb {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  background: #1A1410;
+}
+
+.fpage-card__thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fpage-card:hover .fpage-card__thumb img {
+  transform: scale(1.05);
+}
+
+/* Dark gradient overlay at bottom of thumbnail */
+.fpage-card__thumb::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(26, 20, 16, 0.35) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Play icon centered on thumbnail */
+.fpage-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 2;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, background 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.fpage-card__play svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--color-accent);
+  margin-left: 3px; /* optical centering for play triangle */
+}
+
+.fpage-card:hover .fpage-card__play {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Card body — title + caption */
+.fpage-card__body {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fpage-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  color: #3D2010;
+  line-height: 1.3;
+}
+
+.fpage-card__caption {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+}
+
+/* Cards are clickable */
+.fpage-card {
+  cursor: pointer;
+}
+
+
+/* ══════════════════════════════════════
+   VIDEO MODAL OVERLAY
+   ══════════════════════════════════════ */
+
+.fpage-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.fpage-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.fpage-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 14, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.fpage-modal__content {
+  position: relative;
+  width: 75vw;
+  max-width: 900px;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fpage-modal.is-open .fpage-modal__content {
+  transform: scale(1) translateY(0);
+}
+
+.fpage-modal__close {
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.fpage-modal__close:hover {
+  background: rgba(0, 0, 0, 0.75);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.12);
+}
+
+.fpage-modal__embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+}
+
+.fpage-modal__embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+
+/* ══════════════════════════════════════
+   YOUTUBE CTA
+   ══════════════════════════════════════ */
+
+.fpage-cta {
+  text-align: center;
+  padding: clamp(60px, 8vw, 100px) var(--container-gutter) clamp(80px, 10vw, 130px);
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fpage-cta__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.fpage-cta__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.88rem, 3.75vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #3D2010;
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+.fpage-cta__heading em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.fpage-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  white-space: nowrap;
+  padding: 10px 28px;
+  border-radius: 50px;
+  background: var(--color-btn);
+  color: #FAF7F4;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.fpage-cta__btn:hover {
+  transform: scale(1.03);
+  background: var(--color-btn-hover);
+}
+
+.fpage-cta__btn-arrow {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.fpage-cta__btn:hover .fpage-cta__btn-arrow {
+  transform: translateX(5px);
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 900px)
+   ══════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .fpage-gallery__grid {
+    gap: 20px;
+  }
+
+  .fpage-card__play {
+    width: 56px;
+    height: 56px;
+  }
+
+  .fpage-card__play svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 600px)
+   ══════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .fpage-gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .fpage-featured__embed {
+    border-radius: 10px;
+  }
+
+  .fpage-featured__meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .fpage-card {
+    border-radius: 10px;
+  }
+
+  .fpage-card__play {
+    width: 52px;
+    height: 52px;
+  }
+
+  .fpage-card__play svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .fpage-card__body {
+    padding: 16px 20px 20px;
+  }
+}

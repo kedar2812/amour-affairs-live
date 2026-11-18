@@ -78,10 +78,10 @@ function sm_url($base, $path, $lastmod, $changefreq, $priority, $images = array(
 // [path, changefreq, priority, [images]]
 $core = array(
     array('/',                       'weekly',  '1.0', array(array('loc' => '/logo-full.png', 'title' => 'Amour Affairs — Luxury Wedding Photography & Films, Pune'))),
-    array('/weddings/',              'weekly',  '0.9', array(array('loc' => '/services/weddings-opt.jpg', 'title' => 'Wedding Photography — Amour Affairs'))),
-    array('/couple-shoots/',         'weekly',  '0.9', array(array('loc' => '/services/couple-shoot-opt.jpg', 'title' => 'Pre-Wedding & Couple Shoots — Amour Affairs'))),
-    array('/films/',                 'weekly',  '0.9', array(array('loc' => '/services/films.jpg', 'title' => 'Wedding Films & Cinematography — Amour Affairs'))),
-    array('/premium-albums/',        'monthly', '0.8', array(array('loc' => '/services/albums.png', 'title' => 'Premium Wedding Albums — Amour Affairs'))),
+    array('/weddings/',              'weekly',  '0.9', array(array('loc' => '/services/weddings-1400.webp', 'title' => 'Wedding Photography — Amour Affairs'))),
+    array('/couple-shoots/',         'weekly',  '0.9', array(array('loc' => '/services/couple-shoots-1400.webp', 'title' => 'Pre-Wedding & Couple Shoots — Amour Affairs'))),
+    array('/films/',                 'weekly',  '0.9', array(array('loc' => '/services/films-1400.webp', 'title' => 'Wedding Films & Cinematography — Amour Affairs'))),
+    array('/premium-albums/',        'monthly', '0.8', array(array('loc' => '/services/premium-albums-1254.webp', 'title' => 'Premium Wedding Albums — Amour Affairs'))),
     array('/testimonials/',          'weekly',  '0.8', array()),
     array('/about/',                 'monthly', '0.7', array(array('loc' => '/founder.jpeg', 'title' => 'About Amour Affairs'))),
     array('/taher-husain/',          'monthly', '0.6', array(array('loc' => '/founder.jpeg', 'title' => 'Taher Husain, founder of Amour Affairs in Pune'))),

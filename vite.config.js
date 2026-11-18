@@ -1,49 +1,80 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
-import { resolve } from 'path';
+import { resolve, relative, sep } from 'path';
+import { readdirSync, existsSync } from 'fs';
+
+/* ============================================================
+   Amour Affairs website — Vite multi-page build
+   ------------------------------------------------------------
+   Source lives in website/ (one folder per URL, each with its
+   own index.html). Every index.html found there is a page, so a
+   new page only needs a folder — no list to keep in sync here.
+   Output: dist/ (deployed as-is to the web root).
+   ============================================================ */
+
+const SITE = resolve(__dirname, 'website');
+const SKIP = new Set(['public', 'src', 'node_modules']);
+
+function findPages(dir, depth = 0) {
+  const pages = [];
+  if (existsSync(resolve(dir, 'index.html'))) pages.push(resolve(dir, 'index.html'));
+  if (depth > 2) return pages;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isDirectory() || SKIP.has(entry.name) || entry.name.startsWith('.')) continue;
+    pages.push(...findPages(resolve(dir, entry.name), depth + 1));
+  }
+  return pages;
+}
+
+// Rollup entry names: "main" for the homepage, otherwise the folder path
+// ("guides/_post" → "guides-_post"). Names only affect chunk file names.
+const input = Object.fromEntries(
+  findPages(SITE).map((file) => {
+    const rel = relative(SITE, resolve(file, '..')).split(sep).join('/');
+    return [rel ? rel.replace(/\//g, '-') : 'main', file];
+  }),
+);
+
+/**
+ * Preload the two web-font files every page renders its first screen with
+ * (latin, upright). Text then paints in the final font instead of swapping in
+ * a moment later, which avoids a visible reflow (layout shift). The file names
+ * carry content hashes, so they are looked up in the finished bundle.
+ */
+function preloadCriticalFonts() {
+  const CRITICAL = [/cormorant-garamond-latin-wght-normal-.*\.woff2$/, /montserrat-latin-wght-normal-.*\.woff2$/];
+  return {
+    name: 'aa-preload-critical-fonts',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (!ctx.bundle) return html; // dev server: nothing hashed to point at
+        const files = Object.keys(ctx.bundle).filter((f) => CRITICAL.some((re) => re.test(f)));
+        return files.map((f) => ({
+          tag: 'link',
+          attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: `/${f}`, crossorigin: '' },
+          injectTo: 'head-prepend',
+        }));
+      },
+    },
+  };
+}
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [preloadCriticalFonts()],
+  root: SITE,
+  envDir: SITE,
+  publicDir: resolve(SITE, 'public'),
   css: {
-    postcss: {
-      plugins: [
-        autoprefixer(),
-      ],
-    },
+    postcss: { plugins: [autoprefixer()] },
   },
-  server: {
-    port: 3000,
-    open: true,
-  },
+  server: { port: 3000, open: true },
+  preview: { port: 4173 },
   build: {
+    outDir: resolve(__dirname, 'dist'),
+    emptyOutDir: true,
     minify: 'terser',
     cssMinify: true,
-    rollupOptions: {
-      input: {
-        main:               resolve(__dirname, 'index.html'),
-        about:              resolve(__dirname, 'about/index.html'),
-        shop:               resolve(__dirname, 'shop/index.html'),
-        weddings:           resolve(__dirname, 'weddings/index.html'),
-        films:              resolve(__dirname, 'films/index.html'),
-        coupleShoots:       resolve(__dirname, 'couple-shoots/index.html'),
-        premiumAlbums:      resolve(__dirname, 'premium-albums/index.html'),
-        privacyPolicy:      resolve(__dirname, 'privacy-policy/index.html'),
-        disclaimer:         resolve(__dirname, 'disclaimer/index.html'),
-        careers:            resolve(__dirname, 'careers/index.html'),
-        termsAndConditions: resolve(__dirname, 'terms-and-conditions/index.html'),
-        faqs:               resolve(__dirname, 'faqs/index.html'),
-        contact:            resolve(__dirname, 'contact/index.html'),
-        testimonials:       resolve(__dirname, 'testimonials/index.html'),
-        guides:             resolve(__dirname, 'guides/index.html'),
-        guideArticle:       resolve(__dirname, 'guides/_post/index.html'),
-        caseStudies:        resolve(__dirname, 'case-studies/index.html'),
-        caseStudy:          resolve(__dirname, 'case-studies/_story/index.html'),
-        taherHusain:        resolve(__dirname, 'taher-husain/index.html'),
-        puneVenues:         resolve(__dirname, 'wedding-photography-pune-venues/index.html'),
-        twentyQuestions:    resolve(__dirname, '20-questions-wedding-photographer-pune/index.html'),
-        maharashtraDest:    resolve(__dirname, 'maharashtra-destination-wedding-photography/index.html'),
-      }
-    }
+    rollupOptions: { input },
   },
 });

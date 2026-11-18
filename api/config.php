@@ -264,6 +264,9 @@ function setJSONHeaders(): void {
     header('X-Frame-Options: DENY');
     header('X-XSS-Protection: 1; mode=block');
     header('Referrer-Policy: strict-origin-when-cross-origin');
+    // Crawlers may fetch the public feeds to render pages (robots.txt allows
+    // them), but raw API responses must never appear in search results.
+    header('X-Robots-Tag: noindex, nofollow');
 }
 
 

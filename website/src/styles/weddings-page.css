@@ -1,0 +1,864 @@
+/* ============================================================
+   WEDDINGS-PAGE.CSS — Dedicated Weddings Page
+   Amour Affairs · Premium Wedding Photography
+
+   Design: The Wedding Archive — one folder per couple. Hero
+   text, folder card grid, full-page album view, photo lightbox.
+   ============================================================ */
+
+
+/* ── Page background ── */
+.wpage {
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+
+/* ══════════════════════════════════════
+   HERO HEADER
+   ══════════════════════════════════════ */
+
+.wpage-hero {
+  padding: clamp(140px, 18vh, 200px) var(--container-gutter) clamp(40px, 6vw, 72px);
+  text-align: center;
+  position: relative;
+}
+
+.wpage-hero__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.wpage-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.63rem, 6.1vw, 5.15rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: #3D2010;
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.wpage-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.wpage-hero__sub {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--color-text-dim);
+  line-height: 1.65;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+
+/* ══════════════════════════════════════
+   THE ARCHIVE — FOLDER GRID
+   ══════════════════════════════════════ */
+
+.wpage-archive {
+  padding: clamp(40px, 5vw, 72px) var(--container-gutter) clamp(80px, 10vw, 120px);
+}
+
+.wpage-archive__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.wpage-archive__header {
+  text-align: center;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.wpage-archive__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.wpage-archive__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.88rem, 3.75vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #3D2010;
+  margin: 0;
+}
+
+.wpage-archive__heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+/* "FROM OUR COLLECTION" — same display serif as the old heading, set in caps
+   with a touch of tracking so the all-caps serif keeps its poise. */
+.wpage-archive__heading--caps {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Grid */
+.wpage-archive__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Folder card */
+.wpage-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s ease;
+}
+
+.wpage-card:hover,
+.wpage-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 48px rgba(158, 122, 78, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.wpage-card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Thumbnail — 4:3 via padding hack for consistency */
+.wpage-card__thumb {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%;
+  overflow: hidden;
+  background: #1A1410;
+}
+
+.wpage-card__thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wpage-card:hover .wpage-card__thumb img {
+  transform: scale(1.05);
+}
+
+/* Dark gradient overlay at bottom of thumbnail */
+.wpage-card__thumb::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(26, 20, 16, 0.35) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* "Open Folder" hint — bottom-right of thumbnail, shown on hover */
+.wpage-card__open {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3D2010;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.wpage-card:hover .wpage-card__open,
+.wpage-card:focus-visible .wpage-card__open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card body — couple + meta */
+.wpage-card__body {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wpage-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  color: #3D2010;
+  line-height: 1.3;
+}
+
+.wpage-card__title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.wpage-card__caption {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+}
+
+
+/* ══════════════════════════════════════
+   ALBUM VIEW — THE OPENED FOLDER
+   ══════════════════════════════════════ */
+
+.wpage-album {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--color-bg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+.wpage-album.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wpage-album__scroll {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 0 var(--container-gutter) 60px;
+}
+
+.wpage-album__bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 0;
+  background: linear-gradient(to bottom, var(--color-bg) 65%, rgba(245, 237, 226, 0));
+}
+
+.wpage-album__close {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #3D2010;
+  background: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.wpage-album__close:hover {
+  background: var(--color-accent);
+  color: #FAF7F4;
+  transform: scale(1.04);
+}
+
+.wpage-album__head {
+  text-align: center;
+  max-width: 760px;
+  margin: clamp(24px, 5vh, 56px) auto 0;
+}
+
+.wpage-album__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 18px;
+}
+
+.wpage-album__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 5.2vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #3D2010;
+  margin: 0 0 16px;
+}
+
+.wpage-album__title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.wpage-album__meta {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 20px;
+}
+
+.wpage-album__desc {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--color-text-dim);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Ritual filters (Haldi, Mehendi, Sangeet…) — hidden for folders with no
+   sections, so an unsectioned archive looks exactly as it always did. */
+.wpage-album__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 1100px;
+  margin: clamp(30px, 5vh, 52px) auto 0;
+  padding: 0 var(--container-gutter);
+}
+
+.wpage-album__filters[hidden] { display: none; }
+
+.wpage-album__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  background: transparent;
+  border: 1px solid rgba(158, 122, 78, 0.28);
+  border-radius: 50px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.wpage-album__filter:hover {
+  color: var(--color-accent);
+  border-color: rgba(158, 122, 78, 0.55);
+}
+
+.wpage-album__filter.is-active {
+  color: #FAF7F4;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.wpage-album__filter-count {
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+}
+
+/* Masonry of photographs */
+.wpage-album__masonry {
+  columns: 3;
+  column-gap: 24px;
+  max-width: 1100px;
+  margin: clamp(36px, 6vh, 64px) auto 0;
+}
+
+/* The filter row already supplies the gap above the photographs */
+.wpage-album__filters:not([hidden]) + .wpage-album__masonry {
+  margin-top: clamp(24px, 4vh, 40px);
+}
+
+.wpage-album__photo {
+  display: block;
+  width: 100%;
+  margin: 0 0 24px;
+  border: none;
+  padding: 0;
+  break-inside: avoid;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: zoom-in;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s ease;
+}
+
+.wpage-album__photo:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 48px rgba(158, 122, 78, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.wpage-album__photo img {
+  width: 100%;
+  display: block;
+}
+
+/* Next folder footer */
+.wpage-album__footer {
+  text-align: center;
+  padding: clamp(56px, 9vh, 90px) 0 30px;
+}
+
+.wpage-album__footer-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 16px;
+}
+
+.wpage-album__next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 10px 28px;
+  border-radius: 50px;
+  background: var(--color-accent);
+  color: #FAF7F4;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.wpage-album__next:hover {
+  transform: scale(1.03);
+  background: var(--color-accent-light);
+}
+
+
+/* ══════════════════════════════════════
+   PHOTO LIGHTBOX
+   ══════════════════════════════════════ */
+
+.wpage-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.wpage-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wpage-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 14, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.wpage-lightbox__img {
+  position: relative;
+  z-index: 2;
+  max-width: min(1000px, 84vw);
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+  transform: scale(0.94);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wpage-lightbox.is-open .wpage-lightbox__img {
+  transform: scale(1);
+}
+
+.wpage-lightbox__close {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.wpage-lightbox__close:hover {
+  background: rgba(0, 0, 0, 0.75);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.12);
+}
+
+.wpage-lightbox__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.wpage-lightbox__arrow:hover {
+  background: rgba(0, 0, 0, 0.75);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.wpage-lightbox__arrow--prev { left: clamp(12px, 3vw, 40px); }
+.wpage-lightbox__arrow--next { right: clamp(12px, 3vw, 40px); }
+
+.wpage-lightbox__counter {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 900px)
+   ══════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .wpage-archive__grid {
+    gap: 20px;
+  }
+
+  .wpage-album__masonry {
+    columns: 2;
+    column-gap: 18px;
+  }
+
+  .wpage-album__photo {
+    margin-bottom: 18px;
+  }
+
+  /* Phones: let a long ritual list scroll sideways instead of stacking into
+     four rows of chips that push the photographs off the screen. */
+  .wpage-album__filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .wpage-album__filters::-webkit-scrollbar { display: none; }
+
+  .wpage-album__filter {
+    flex: 0 0 auto;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    padding: 8px 14px;
+  }
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 600px)
+   ══════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .wpage-archive__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .wpage-card {
+    border-radius: 10px;
+  }
+
+  .wpage-card__body {
+    padding: 16px 20px 20px;
+  }
+
+  .wpage-album__masonry {
+    columns: 1;
+  }
+
+  .wpage-lightbox__arrow {
+    width: 44px;
+    height: 44px;
+  }
+
+  .wpage-lightbox__close {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+
+/* ══════════════════════════════════════
+   WEDDING FILM — inside the opened folder
+   ══════════════════════════════════════ */
+
+.wpage-album__film {
+  max-width: 900px;
+  margin: clamp(36px, 6vh, 64px) auto 0;
+  text-align: center;
+}
+
+.wpage-album__film[hidden] { display: none; }
+
+.wpage-album__film-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.wpage-album__film-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #2C2420;
+  box-shadow:
+    0 16px 56px rgba(158, 122, 78, 0.16),
+    0 4px 18px rgba(0, 0, 0, 0.10);
+}
+
+.wpage-album__film-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.5s ease;
+}
+
+.wpage-album__film-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(20, 14, 10, 0.12), rgba(20, 14, 10, 0.40));
+  transition: opacity 0.4s ease;
+}
+
+.wpage-album__film-frame:hover img {
+  transform: scale(1.04);
+  filter: brightness(0.86);
+}
+
+.wpage-album__film-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: clamp(64px, 8vw, 86px);
+  height: clamp(64px, 8vw, 86px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 237, 226, 0.92);
+  color: var(--color-accent);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
+}
+
+.wpage-album__film-frame:hover .wpage-album__film-play {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: #F5EDE2;
+}
+
+.wpage-album__film-play svg {
+  width: 42%;
+  height: 42%;
+  margin-left: 8%; /* optically centre the triangle */
+}
+
+/* Swapped-in player (button → div with iframe) */
+.wpage-album__film-frame--playing {
+  cursor: default;
+}
+
+.wpage-album__film-frame--playing::after { display: none; }
+
+.wpage-album__film-frame--playing iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+
+/* TESTIMONIAL MARQUEE — rules live in testimonial-marquee.css (shared with
+   the enquiry-form marquee on the other pages). */
+
+
+/* ══════════════════════════════════════
+   FOLDER ENQUIRY — inside the opened folder
+   Sits after "Continue Browsing"; reuses the
+   home-page inquiry form design (inquiry.css).
+   ══════════════════════════════════════ */
+
+.wpage-album__enquiry {
+  max-width: 1100px;
+  margin: clamp(40px, 7vh, 80px) auto 0;
+  padding-top: clamp(36px, 5vh, 56px);
+  border-top: 1px solid rgba(158, 122, 78, 0.18);
+  text-align: left;
+}
+
+/* ══════════════════════════════════════════
+   COLLECTIONS — the three wedding packages
+   Section chrome only; the grid and the cards
+   themselves come from package-cards.css,
+   shared with the couple-shoots page.
+   ══════════════════════════════════════════ */
+.wpage-pkg {
+  padding: clamp(64px, 9vw, 120px) var(--container-gutter);
+  background: var(--color-bg-alt);
+}
+
+.wpage-pkg__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.wpage-pkg__header {
+  text-align: center;
+  margin-bottom: clamp(36px, 5vw, 64px);
+}
+
+.wpage-pkg__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.wpage-pkg__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.6vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #3D2010;
+}
+
+.wpage-pkg__heading em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* Until the album cards arrive from the CMS the grid is empty; reserve a
+   screen of height so the sections below don't sit in view and then get
+   shoved down when the cards render (a large layout shift). */
+.wpage-archive__grid:not(:has(*)) {
+  min-height: 100vh;
+  min-height: 100svh;
+}

@@ -1,0 +1,304 @@
+/* ============================================================
+   TYPOGRAPHY.CSS — Font Imports & Type System
+   Amour Affairs · Premium Wedding Photography
+   ============================================================ */
+
+/* Google Fonts preconnect handled in HTML <head> */
+/* Instrument Serif (display/headings) + Inter (body) — loaded via <link> in index.html */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: 1.65;
+  background-color: var(--color-bg);
+}
+
+/* ── Display / Hero Headlines ── */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #FAF7F4; /* always light over photo backgrounds */
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: var(--text-hero-sub);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #FAF7F4;
+}
+
+/* ── Section Headlines ── */
+.heading-section {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.heading-editorial {
+  font-family: var(--font-display);
+  font-size: clamp(1.88rem, 3.75vw, 4.2rem);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.heading-card {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.35vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #FAF7F4; /* cards are over dark photo backgrounds */
+}
+
+/* ── Subheadlines & Labels ── */
+.subheading {
+  font-family: var(--font-body);
+  font-size: var(--text-subhead);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+/* ── Body Text ── */
+.body-text {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-text-dim);
+}
+
+.body-text-light {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-text-dim);
+}
+
+/* ── Quotes ── */
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 1.85vw, 1.55rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+/* ── Step Numbers ── */
+.step-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 4.7vw, 4.7rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.2;
+}
+
+/* ── Utility ── */
+.text-accent { color: var(--color-accent); }
+.text-white  { color: #FAF7F4; }         /* use literal light for photo contexts */
+.text-dark   { color: var(--color-text); } /* for UI sections */
+.text-dim    { color: var(--color-text-dim); }
+.italic      { font-style: italic; }
+.uppercase   { text-transform: uppercase; }
+.ls-wide     { letter-spacing: 0.3em; }
+.ls-wider    { letter-spacing: 0.4em; }
+
+
+/* ══════════════════════════════════════════════════
+   "BLACK & GOLDEN" STATEMENT HEADINGS
+   Convention: a display statement split into a dark
+   main part + a golden <em>. Across every page these
+   read as ALL CAPS with only the golden fragment
+   italic. The golden <em> already carries
+   font-style: italic + accent colour in each page's
+   own stylesheet; here we uniformly capitalise the
+   whole statement so the treatment is consistent
+   site-wide. Colours & fonts are left untouched.
+   (Hero titles also set this inline alongside their
+   own font-size; listed here too as the canonical
+   reference for the convention.)
+   ══════════════════════════════════════════════════ */
+.wpage-hero__title,
+.cpage-hero__title,
+.fpage-hero__title,
+.tpage-hero__title,
+.ipage-hero__title,
+.ppage-hero__title,
+.about-hero__title,
+.contact-hero__title,
+.cp-hero__title,
+.hero__headline,
+.testimonials__title,
+.press__headline,
+.process__title,
+.inquiry__title,
+.footer__tagline,
+.team-section__title,
+.wpage-archive__heading,
+.wpage-pkg__heading,
+.wpage-testi__heading,
+.wpage-card__title,
+.wpage-album__title,
+.cpage-archive__heading,
+.cpage-session__heading,
+.cpage-card__title,
+.cpage-album__title,
+.ppage-archive__heading,
+.ppage-craft__heading,
+.ppage-cta__heading,
+.ppage-card__title,
+.ppage-album__title,
+.fpage-gallery__heading,
+.fpage-cta__heading,
+.ipage-split__heading,
+.ipage-cta__heading,
+.lm-heading,
+.contact-aside__heading,
+.contact-formwrap__title,
+.page-hero__headline,
+.sp-heading,
+.sp-cta-strip__title {
+  text-transform: uppercase;
+}
+
+
+/* ══════════════════════════════════════════════════
+   FLOATING WHATSAPP BUTTON — every page, bottom-left
+   WhatsApp is the studio's main enquiry channel, so the button
+   uses WhatsApp's own green (instantly recognisable) and carries
+   a "Chat with us" label on larger screens. It never hides: the
+   cookie card lifts it (consent.css) rather than covering it.
+   ══════════════════════════════════════════════════ */
+.floating-whatsapp {
+  --wa-green: #25D366;
+  --wa-green-dark: #128C7E;
+  position: fixed;
+  bottom: calc(var(--notice-hb, 0px) + 28px);
+  left: 28px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+  padding: 0 8px 0 0;
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--wa-green) 0%, var(--wa-green-dark) 100%);
+  box-shadow: 0 10px 26px rgba(18, 140, 126, 0.35), 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease,
+              opacity 0.4s ease, visibility 0.4s ease, translate 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.floating-whatsapp__icon {
+  position: relative;
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+}
+
+/* Soft pulse behind the icon */
+.floating-whatsapp__icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--wa-green);
+  z-index: -1;
+  opacity: 0.45;
+  animation: wa-pulse 2.6s infinite;
+}
+
+.floating-whatsapp svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.floating-whatsapp__label {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+
+.floating-whatsapp:hover {
+  color: #fff;
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(18, 140, 126, 0.45), 0 3px 8px rgba(0, 0, 0, 0.14);
+}
+
+.floating-whatsapp:active { transform: scale(0.96); }
+
+.floating-whatsapp:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Hidden only while the brief first-visit preloader is on screen */
+body.is-loading .floating-whatsapp {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.8) translateY(20px);
+  pointer-events: none;
+}
+
+@keyframes wa-pulse {
+  0%   { transform: scale(1);   opacity: 0.45; }
+  70%  { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+/* Phones & tablets: icon only, so it never crowds the content */
+@media (max-width: 1023px) {
+  .floating-whatsapp {
+    left: 18px;
+    bottom: calc(var(--notice-hb, 0px) + 18px);
+    height: 56px;
+    padding: 0;
+  }
+  .floating-whatsapp__icon { flex-basis: 56px; width: 56px; height: 56px; }
+  .floating-whatsapp__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-whatsapp__icon::before { animation: none; }
+}

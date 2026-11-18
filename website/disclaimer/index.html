@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google tag (gtag.js) — Amour Affairs GA4 · G-F9MZ2ZETYL (alias GT-57Z7KGW) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2 — nothing is stored until the visitor accepts. A returning
+    // visitor's answer is restored here, before the first page_view is sent.
+    // The banner itself lives in src/js/consent.js.
+    var aaConsent = 'denied';
+    try { if (localStorage.getItem('aa_consent') === 'granted') aaConsent = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: aaConsent,
+      wait_for_update: 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F9MZ2ZETYL');
+  </script>
+  <!-- Meta Pixel Code — Amour Affairs · ID 1981706796122968 -->
+  <script>
+    // Standard Meta stub: calls queue up here and the Meta library replays
+    // them when the deferred loader below fetches it.
+    !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
+    // Same cookie banner as the Google tag above: nothing is sent to Meta
+    // until the visitor accepts (src/js/consent.js grants it on Accept).
+    fbq('consent', aaConsent === 'granted' ? 'grant' : 'revoke');
+    fbq('init', '1981706796122968');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
+  <script>
+    // Analytics libraries (~260 KB) load once the page itself is ready, or on
+    // the visitor's first tap/scroll — whichever is sooner — so they never
+    // compete with the site's own code for a phone's bandwidth. Every gtag()
+    // / fbq() call made before then is queued above and replayed, so no
+    // page view or event is lost.
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        ['https://www.googletagmanager.com/gtag/js?id=G-F9MZ2ZETYL',
+         'https://connect.facebook.net/en_US/fbevents.js'].forEach(function (src) {
+          var s = document.createElement('script'); s.async = true; s.src = src;
+          document.head.appendChild(s);
+        });
+      }
+      function idle() { 'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 200); }
+      if (document.readyState === 'complete') idle(); else addEventListener('load', idle);
+      ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (e) { addEventListener(e, load, { once: true, passive: true }); });
+      setTimeout(load, 5000);
+    })();
+  </script>
+  <title>Disclaimer | Amour Affairs</title>
+  <meta name="description" content="Read the disclaimer for Amour Affairs — accuracy, liability, intellectual property and applicable law.">
+  <link rel="canonical" href="https://www.amouraffairs.in/disclaimer/">
+
+
+  <script type="module" src="/src/js/info-page-init.js"></script>
+</head>
+<body class="is-loading ipage">
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <img src="/logo-emblem.webp" alt="Amour Affairs Logo" class="preloader__logo-svg" />
+    <div class="preloader__progress">
+      <div class="preloader__progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ NAVIGATION ═══════════ -->
+  <nav class="nav" id="nav">
+    <a href="/" class="nav__logo">
+      <img src="/logo-full.webp" alt="Amour Affairs" class="nav__logo-img" />
+    </a>
+    <div class="nav__links hide-mobile">
+      <a href="/" class="nav__link">Home</a>
+      <a href="/weddings/" class="nav__link">Weddings</a>
+      <a href="/couple-shoots/" class="nav__link">Couples</a>
+      <a href="/films/" class="nav__link">Films</a>
+      <a href="/about/" class="nav__link">About</a>
+      <a href="/testimonials/" class="nav__link">Testimonials</a>
+      <a href="/shop/" class="nav__link">Shop</a>
+      <a href="/contact/" class="nav__link">Contact</a>
+      <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="btn--nav-book nav__book hide-mobile">Book Now</a>
+    </div>
+    <div class="nav__hamburger hide-desktop" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav__mobile-menu" id="mobileMenu">
+    <a href="/" class="nav__mobile-link">Home</a>
+    <a href="/weddings/" class="nav__mobile-link">Weddings</a>
+    <a href="/couple-shoots/" class="nav__mobile-link">Couples</a>
+    <a href="/films/" class="nav__mobile-link">Films</a>
+    <a href="/about/" class="nav__mobile-link">About</a>
+    <a href="/testimonials/" class="nav__mobile-link">Testimonials</a>
+    <a href="/shop/" class="nav__mobile-link">Shop</a>
+    <a href="/contact/" class="nav__mobile-link">Contact</a>
+    <div class="nav__mobile-footer">
+      <a href="https://www.instagram.com/amouraffairs/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://vimeo.com/amouraffairs" target="_blank" rel="noopener">Vimeo</a>
+    </div>
+  </div>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="ipage-hero">
+    <span class="ipage-hero__eyebrow">Legal</span>
+    <h1 class="ipage-hero__title">Website <em>Disclaimer</em></h1>
+    <p class="ipage-hero__sub">By continuing to view this website you agree to the following terms.</p>
+  </section>
+
+  <!-- ═══════════ CONTENT ═══════════ -->
+  <main class="ipage-main">
+    <div class="ipage-main__inner">
+
+      <p class="ipage-quote ipage-reveal">
+        "On continuing to view this website you are agreeing to be bound to the following terms and conditions of use."
+      </p>
+
+      <div class="ipage-grid">
+        <div class="ipage-block ipage-reveal">
+          <div class="ipage-block__label">Accuracy &amp; Liability</div>
+          <p>Every effort has been taken to ensure that the most current, correct, and clearly expressed information is provided. Nevertheless, inadvertent errors in information may occur. Amour Affairs disclaims any responsibility for typographical errors and accuracy of the information. Your use of any information or materials on this website is entirely at your own risk.</p>
+        </div>
+        <div class="ipage-block ipage-reveal">
+          <div class="ipage-block__label">Reliability</div>
+          <p>Amour Affairs makes no representations or warranties regarding the condition or functionality of this website, its suitability for use, or that this website would be uninterrupted or error-free.</p>
+        </div>
+        <div class="ipage-block ipage-reveal">
+          <div class="ipage-block__label">Intellectual Content</div>
+          <p>Amour Affairs owns the rights for all content found on this website including but not limited to the text, layout, appearance, look, and the creative content (photographs and films). Reproduction of any content is strictly prohibited, and is subject to the Copyright laws of India.</p>
+        </div>
+        <div class="ipage-block ipage-reveal">
+          <div class="ipage-block__label">Electronic Communications</div>
+          <p>When contacting Amour Affairs you consent to receive communications from us electronically.</p>
+        </div>
+        <div class="ipage-block ipage-block--wide ipage-reveal">
+          <div class="ipage-block__label">Applicable Law</div>
+          <p>By visiting this website you implicitly agree to be bound by the laws of Pune (India), under the jurisdiction of the District Court of India (Pune, Maharashtra).</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══════════ MINIMAL FOOTER ═══════════ -->
+  <footer class="ipage-footer" id="contact">
+    <a href="/" class="nav__logo ipage-footer__logo">
+      <img src="/logo-full.webp" alt="Amour Affairs" class="nav__logo-img" />
+    </a>
+    <nav class="ipage-footer__links">
+      <a href="/privacy-policy/" class="ipage-footer__link">Privacy Policy</a>
+      <a href="/disclaimer/" class="ipage-footer__link ipage-footer__link--active">Disclaimer</a>
+      <a href="/terms-and-conditions/" class="ipage-footer__link">Terms &amp; Conditions</a>
+      <a href="/faqs/" class="ipage-footer__link">FAQs</a>
+      <a href="/careers/" class="ipage-footer__link">Careers</a>
+      <a href="#" class="ipage-footer__link" data-consent-open>Cookie Preferences</a>
+    </nav>
+    <span class="ipage-footer__copy">&copy; 2011&ndash;<span class="dynamic-year">2026</span> Amour Affairs. All rights reserved.</span>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.dynamic-year').forEach(el => el.textContent = new Date().getFullYear());
+  </script>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/919921000052?text=Hi%20Amour%20Affairs!%20I%27d%20love%20to%20know%20more%20about%20your%20wedding%20photography." class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat with Amour Affairs on WhatsApp">
+    <span class="floating-whatsapp__icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.397 0 0 5.397 0 12.031c0 2.115.553 4.181 1.606 6.002L.15 23.363l5.485-1.439a11.967 11.967 0 006.396 1.834h.005c6.634 0 12.03-5.398 12.03-12.032C24.066 5.397 18.665 0 12.031 0zm0 21.758c-1.782 0-3.528-.48-5.06-1.388l-.363-.214-3.766.988.995-3.674-.235-.373A9.972 9.972 0 012.001 12.03c0-5.526 4.498-10.024 10.03-10.024 5.525 0 10.024 4.497 10.024 10.024 0 5.526-4.499 10.028-10.024 10.028zm5.508-7.531c-.302-.152-1.785-.882-2.062-.982-.277-.101-.48-.152-.682.152-.202.304-.78 .982-.956 1.185-.177.202-.353.227-.655.076-2.04-.982-3.414-1.92-4.636-3.992-.126-.214.126-.202.417-.783.101-.202.05-.38-.025-.532-.076-.152-.682-1.643-.933-2.25-.246-.593-.497-.512-.682-.522-.177-.01-.38-.01-.583-.01-.202 0-.53.076-.807.38-.277.303-1.06 1.036-1.06 2.527s1.085 2.932 1.236 3.134c.152.202 2.138 3.264 5.176 4.573.722.311 1.285.497 1.724.636.724.23 1.384.197 1.905.12.584-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.177-1.436-.076-.126-.277-.202-.579-.354z"/></svg></span>
+    <span class="floating-whatsapp__label">Chat with us</span>
+  </a>
+</body>
+</html>

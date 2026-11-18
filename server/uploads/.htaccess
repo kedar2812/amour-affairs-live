@@ -1,0 +1,20 @@
+# ============================================================
+# AMOUR AFFAIRS — /uploads (client photos & PDFs)
+# Deployed by scripts/deploy.sh server. Never delete the folder.
+# ============================================================
+
+Options -Indexes
+
+# The dashboard (admin.amouraffairs.in) downloads these files to build the
+# full-site backup ZIP. They are public images either way; this only lets a
+# script on another origin read them.
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Uploads are data, never code: refuse to run or serve anything executable,
+# even if one were ever slipped in.
+<FilesMatch "\.(php[0-9]?|phtml|phar|pl|py|cgi|sh|shtml|htaccess|user\.ini)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>

@@ -1,36 +1,36 @@
+# ── Dependencies & build output ──────────────────────────────
 node_modules/
-.DS_Store
 dist/
-.env
-api/config.secrets.php
 .vite/
-3d model/
-*.mp4
-*.txt
-*.ps1
-!scripts/*.ps1
-uploads/
-amouraffairs_details_IMP.txt
-hero section background video frames/
-services cover photos/
-2nd section photos/
 
-# One-time migration runners carry a hardcoded shared-secret token and are
-# deleted from the server the moment they've run. The schema they apply is
-# documented in api/migrations.sql, so keeping them out of a public repo
-# costs nothing. (api/_migrate_seo.php predates this rule and is already
-# tracked; removing it now would not scrub it from history anyway.)
-api/_migrate_crm.php
-api/_migrate_crm2.php
-api/_migrate_crm_emoji_fix.php
-api/_migrate_sections.php
+# ── Local environment & editor noise ─────────────────────────
+.DS_Store
+Thumbs.db
+.env
+.env.local
+*.log
 
-# Local-only: server backups (contain real secrets) and hosting credentials.
-# Never commit these — config.secrets.php.live + handover_report.md hold live
-# JWT/DB/FTP secrets.
-_deploy/
+# ── Secrets: NEVER commit (this repository is public) ────────
+api/config.secrets.php
 hosting details (ignore in github)/
 
-# Runtime-only: enquiry spool (unsent leads) and PHP error log. Never committed.
+# ── Local-only material ──────────────────────────────────────
+# _local/  source photos, 3D renders, client documents, archived one-off
+#          scripts and migration runners (they carry access tokens)
+# _deploy/ server backups and deploy logs (contain live secrets)
+_local/
+_deploy/
+
+# Local test uploads (the live uploads exist only on the server)
+/uploads/
+
+# ── API runtime data (server only) ───────────────────────────
 api/spool/
 api/logs/
+
+# One-time migration runners carry a hardcoded access token; they are run
+# once on the server and deleted. Keep them in _local/migration-runners/.
+api/_migrate_*.php
+
+# Backup restore staging + safety snapshots (server runtime data)
+api/backups/

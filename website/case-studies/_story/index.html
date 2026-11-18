@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google tag (gtag.js) — Amour Affairs GA4 · G-F9MZ2ZETYL (alias GT-57Z7KGW) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2 — nothing is stored until the visitor accepts. A returning
+    // visitor's answer is restored here, before the first page_view is sent.
+    // The banner itself lives in src/js/consent.js.
+    var aaConsent = 'denied';
+    try { if (localStorage.getItem('aa_consent') === 'granted') aaConsent = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: aaConsent,
+      wait_for_update: 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F9MZ2ZETYL');
+  </script>
+  <!-- Meta Pixel Code — Amour Affairs · ID 1981706796122968 -->
+  <script>
+    // Standard Meta stub: calls queue up here and the Meta library replays
+    // them when the deferred loader below fetches it.
+    !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
+    // Same cookie banner as the Google tag above: nothing is sent to Meta
+    // until the visitor accepts (src/js/consent.js grants it on Accept).
+    fbq('consent', aaConsent === 'granted' ? 'grant' : 'revoke');
+    fbq('init', '1981706796122968');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
+  <script>
+    // Analytics libraries (~260 KB) load once the page itself is ready, or on
+    // the visitor's first tap/scroll — whichever is sooner — so they never
+    // compete with the site's own code for a phone's bandwidth. Every gtag()
+    // / fbq() call made before then is queued above and replayed, so no
+    // page view or event is lost.
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        ['https://www.googletagmanager.com/gtag/js?id=G-F9MZ2ZETYL',
+         'https://connect.facebook.net/en_US/fbevents.js'].forEach(function (src) {
+          var s = document.createElement('script'); s.async = true; s.src = src;
+          document.head.appendChild(s);
+        });
+      }
+      function idle() { 'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 200); }
+      if (document.readyState === 'complete') idle(); else addEventListener('load', idle);
+      ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (e) { addEventListener(e, load, { once: true, passive: true }); });
+      setTimeout(load, 5000);
+    })();
+  </script>
+  <title>Real Wedding | Amour Affairs</title>
+  <meta name="description" content="A real wedding story photographed by Amour Affairs.">
+
+
+  <script type="module" src="/src/js/case-study-init.js"></script>
+</head>
+<body class="is-loading cpage">
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <img src="/logo-emblem.webp" alt="Amour Affairs Logo" class="preloader__logo-svg" />
+    <div class="preloader__progress"><div class="preloader__progress-fill"></div></div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <a href="/" class="nav__logo"><img src="/logo-full.webp" alt="Amour Affairs" class="nav__logo-img" /></a>
+    <div class="nav__links hide-mobile">
+      <a href="/" class="nav__link">Home</a>
+      <a href="/weddings/" class="nav__link">Weddings</a>
+      <a href="/couple-shoots/" class="nav__link">Couples</a>
+      <a href="/films/" class="nav__link">Films</a>
+      <a href="/guides/" class="nav__link">Guides</a>
+      <a href="/case-studies/" class="nav__link">Stories</a>
+      <a href="/about/" class="nav__link">About</a>
+      <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="btn--nav-book nav__book hide-mobile">Book Now</a>
+    </div>
+    <div class="nav__hamburger hide-desktop" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav__mobile-menu" id="mobileMenu">
+    <a href="/" class="nav__mobile-link">Home</a>
+    <a href="/weddings/" class="nav__mobile-link">Weddings</a>
+    <a href="/couple-shoots/" class="nav__mobile-link">Couples</a>
+    <a href="/films/" class="nav__mobile-link">Films</a>
+    <a href="/guides/" class="nav__mobile-link">Guides</a>
+    <a href="/case-studies/" class="nav__mobile-link">Stories</a>
+    <a href="/about/" class="nav__mobile-link">About</a>
+    <a href="/testimonials/" class="nav__mobile-link">Testimonials</a>
+    <div class="nav__mobile-footer">
+      <a href="https://www.instagram.com/amouraffairs/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://vimeo.com/amouraffairs" target="_blank" rel="noopener">Vimeo</a>
+    </div>
+  </div>
+
+  <!-- STORY (rendered from the CMS) -->
+  <main class="cp-main">
+    <article class="cp-article" id="cpArticle"></article>
+  </main>
+
+  <!-- ENQUIRY / LEAD CAPTURE -->
+  <section class="inquiry" id="enquire">
+    <div class="container">
+      <div class="inquiry__inner">
+
+        <div class="inquiry__info">
+          <span class="inquiry__label">Begin Your Story</span>
+          <h2 class="inquiry__title">Your Story <em>Next?</em></h2>
+          <p class="inquiry__text">Loved this celebration? Tell us about yours and we&rsquo;ll get back to you within 24 hours &mdash; with ideas, availability and a fair quote.</p>
+          <div class="inquiry__contacts">
+            <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="inquiry__contact-link">+91 9921000052</a>
+            <a href="mailto:info@amouraffairs.in" class="inquiry__contact-link">info@amouraffairs.in</a>
+          </div>
+        </div>
+
+        <form class="inquiry__form" id="inquiryForm" data-source="Website (Case Studies)" novalidate>
+          <!-- Honeypot — humans never see or fill this -->
+          <div class="inquiry__hp" aria-hidden="true">
+            <label>Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqName">Your Name *</label>
+              <input class="inquiry__input" type="text" id="inqName" name="client_name" autocomplete="name" maxlength="200" required>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqPhone">Phone *</label>
+              <input class="inquiry__input" type="tel" id="inqPhone" name="phone" autocomplete="tel" maxlength="20" placeholder="+91">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqEmail">Email</label>
+              <input class="inquiry__input" type="email" id="inqEmail" name="email" autocomplete="email" maxlength="255">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqEventType">Occasion</label>
+              <select class="inquiry__input inquiry__select" id="inqEventType" name="event_type">
+                <option value="Wedding">Wedding</option>
+                <option value="Pre-Wedding">Pre-Wedding</option>
+                <option value="Couple Shoot">Couple Shoot</option>
+                <option value="Engagement">Engagement</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqDate">Event Date <span class="inquiry__optional">(if you have one)</span></label>
+              <input class="inquiry__input" type="date" id="inqDate" name="event_date">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqVenue">Venue / City <span class="inquiry__optional">(optional)</span></label>
+              <input class="inquiry__input" type="text" id="inqVenue" name="venue" autocomplete="off" maxlength="255" placeholder="e.g. Taj, Goa">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqGuests">Guest Count <span class="inquiry__optional">(approx.)</span></label>
+              <select class="inquiry__input inquiry__select" id="inqGuests" name="guest_count">
+                <option value="">Select…</option>
+                <option value="Under 100">Under 100</option>
+                <option value="100–300">100–300</option>
+                <option value="300–500">300–500</option>
+                <option value="500–1000">500–1000</option>
+                <option value="1000+">1000+</option>
+              </select>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqBudget">Budget <span class="inquiry__optional">(optional)</span></label>
+              <select class="inquiry__input inquiry__select" id="inqBudget" name="budget_range">
+                <option value="">Select…</option>
+                <option value="Under ₹1,00,000">Under ₹1,00,000</option>
+                <option value="₹1,00,000 – ₹2,00,000">₹1,00,000 – ₹2,00,000</option>
+                <option value="₹2,00,000 – ₹4,00,000">₹2,00,000 – ₹4,00,000</option>
+                <option value="₹4,00,000 – ₹7,00,000">₹4,00,000 – ₹7,00,000</option>
+                <option value="₹7,00,000+">₹7,00,000+</option>
+              </select>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__field">
+            <label class="inquiry__field-label" for="inqMessage">Tell Us More <span class="inquiry__optional">(your story, plans, anything)</span></label>
+            <textarea class="inquiry__input inquiry__textarea" id="inqMessage" name="message" rows="4" maxlength="2000"></textarea>
+            <span class="inquiry__field-error" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" class="inquiry__submit" id="inquirySubmit">
+            Send Inquiry <span class="inquiry__submit-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+
+          <p class="inquiry__status" id="inquiryStatus" role="status" aria-live="polite"></p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ipage-footer">
+    <a href="/" class="nav__logo ipage-footer__logo"><img src="/logo-full.webp" alt="Amour Affairs" class="nav__logo-img" /></a>
+    <nav class="ipage-footer__links">
+      <a href="/guides/" class="ipage-footer__link">Guides</a>
+      <a href="/case-studies/" class="ipage-footer__link">Real Weddings</a>
+      <a href="/faqs/" class="ipage-footer__link">FAQs</a>
+      <a href="/testimonials/" class="ipage-footer__link">Testimonials</a>
+      <a href="/about/" class="ipage-footer__link">About</a>
+      <a href="#" class="ipage-footer__link" data-consent-open>Cookie Preferences</a>
+    </nav>
+    <span class="ipage-footer__copy">&copy; 2011&ndash;<span class="dynamic-year">2026</span> Amour Affairs. All rights reserved.</span>
+  </footer>
+
+  <script>document.querySelectorAll('.dynamic-year').forEach(el => el.textContent = new Date().getFullYear());</script>
+
+  <a href="https://wa.me/919921000052?text=Hi%20Amour%20Affairs!%20I%27d%20love%20to%20know%20more%20about%20your%20wedding%20photography." class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat with Amour Affairs on WhatsApp">
+    <span class="floating-whatsapp__icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.397 0 0 5.397 0 12.031c0 2.115.553 4.181 1.606 6.002L.15 23.363l5.485-1.439a11.967 11.967 0 006.396 1.834h.005c6.634 0 12.03-5.398 12.03-12.032C24.066 5.397 18.665 0 12.031 0zm0 21.758c-1.782 0-3.528-.48-5.06-1.388l-.363-.214-3.766.988.995-3.674-.235-.373A9.972 9.972 0 012.001 12.03c0-5.526 4.498-10.024 10.03-10.024 5.525 0 10.024 4.497 10.024 10.024 0 5.526-4.499 10.028-10.024 10.028zm5.508-7.531c-.302-.152-1.785-.882-2.062-.982-.277-.101-.48-.152-.682.152-.202.304-.78 .982-.956 1.185-.177.202-.353.227-.655.076-2.04-.982-3.414-1.92-4.636-3.992-.126-.214.126-.202.417-.783.101-.202.05-.38-.025-.532-.076-.152-.682-1.643-.933-2.25-.246-.593-.497-.512-.682-.522-.177-.01-.38-.01-.583-.01-.202 0-.53.076-.807.38-.277.303-1.06 1.036-1.06 2.527s1.085 2.932 1.236 3.134c.152.202 2.138 3.264 5.176 4.573.722.311 1.285.497 1.724.636.724.23 1.384.197 1.905.12.584-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.177-1.436-.076-.126-.277-.202-.579-.354z"/></svg></span>
+    <span class="floating-whatsapp__label">Chat with us</span>
+  </a>
+</body>
+</html>

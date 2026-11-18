@@ -1,35 +1,31 @@
 {
-  "name": "amour-affairs",
+  "name": "amour-affairs-website",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "description": "Amour Affairs public website (Vite multi-page build). The dashboard lives in dashboard/, the PHP API in api/.",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node website/src/js/submit-retry.test.mjs && node website/src/js/album-sections.test.mjs",
+    "images": "node scripts/optimize-images.mjs",
+    "frames": "node scripts/build-hero-frames.mjs"
   },
   "dependencies": {
-    "@paper-design/shaders": "^0.0.76",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.1",
-    "@shadergradient/react": "^2.4.20",
+    "@fontsource-variable/cormorant-garamond": "^5.3.0",
+    "@fontsource-variable/montserrat": "^5.3.0",
     "@studio-freight/lenis": "^1.0.42",
-    "framer-motion": "^12.40.0",
-    "gsap": "^3.15.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "splitting": "^1.1.0",
-    "swiper": "^12.1.3",
-    "three": "^0.184.0",
-    "vite": "^8.0.8"
+    "gsap": "^3.15.0"
   },
   "devDependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
-    "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.5.0",
-    "fluent-ffmpeg": "^2.1.3",
     "postcss": "^8.5.10",
     "sharp": "^0.34.5",
-    "terser": "^5.46.1"
+    "terser": "^5.46.1",
+    "vite": "^8.0.8"
   }
 }

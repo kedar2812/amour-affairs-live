@@ -1,0 +1,360 @@
+/* ============================================================
+   COMPONENTS.CSS — Reusable UI Components
+   Amour Affairs · Premium Wedding Photography
+   ============================================================ */
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-left: var(--container-gutter);
+  padding-right: var(--container-gutter);
+}
+
+/* ── Section Base ── */
+.section {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+  position: relative;
+  overflow: hidden;
+}
+
+.section--dark {
+  background-color: var(--color-bg);
+}
+
+.section--alt {
+  background-color: var(--color-bg-alt);
+}
+
+.section--surface {
+  background-color: var(--color-surface);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  border: 1px solid var(--color-btn);
+  color: var(--color-btn);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-default);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-btn);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+}
+
+.btn:hover {
+  color: #FAF7F4;
+  border-color: var(--color-btn);
+}
+
+.btn:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.btn--pill {
+  border-radius: 50px;
+  padding: 12px 32px;
+}
+
+.btn--small {
+  padding: 10px 24px;
+  font-size: var(--text-caption);
+}
+
+.btn--solid {
+  background: var(--color-btn);
+  color: #FAF7F4;
+}
+
+.btn--solid::before {
+  background: var(--color-btn-hover);
+}
+
+/* Button on photo/dark backgrounds — stays light outline */
+.btn--on-photo {
+  border-color: rgba(250, 247, 244, 0.6);
+  color: #FAF7F4;
+}
+
+.btn--on-photo::before {
+  background: rgba(250, 247, 244, 0.15);
+}
+
+.btn--on-photo:hover {
+  color: #FAF7F4;
+  border-color: #FAF7F4;
+}
+
+.btn .btn-arrow {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(6px);
+}
+
+/* ── Divider ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-accent);
+  opacity: 0.25;
+  margin: var(--gap-lg) 0;
+}
+
+.divider--short {
+  width: 80px;
+  margin: var(--gap-md) 0;
+}
+
+
+
+
+/* ── Overlay ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--color-photo-overlay);
+  z-index: 1;
+}
+
+/* ── Scroll Indicator ── */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: var(--z-hero-text);
+  cursor: pointer;
+}
+
+.scroll-indicator__text {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 244, 0.75);
+}
+
+.scroll-indicator__arrow {
+  width: 1px;
+  height: 40px;
+  background: rgba(250, 247, 244, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-indicator__arrow::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FAF7F4;
+  animation: scrollDown 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollDown {
+  0%   { top: -100%; }
+  50%  { top: 0; }
+  100% { top: 100%; }
+}
+
+/* ── Gold Line Drawing (SVG) ── */
+.line-draw {
+  stroke: var(--color-accent);
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+/* ── Image Container with Hover ── */
+.img-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-reveal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-reveal:hover img {
+  transform: scale(var(--hover-scale));
+}
+
+.img-reveal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 12, 6, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.img-reveal:hover .img-reveal__overlay {
+  opacity: 1;
+}
+
+.img-reveal__label {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #FAF7F4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Loading / Preloader ── */
+body.is-loading {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: #F5EDE2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 120px; /* offset for bottom-pinned progress bar */
+  z-index: 99999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader__logo-svg {
+  width: clamp(260px, 75vw, 750px);
+  max-width: calc(100vw - 40px);
+  object-fit: contain;
+  animation: zoomInLogo 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@media (max-width: 480px) {
+  .preloader__logo-svg {
+    width: 95vw;
+    max-width: none;
+  }
+}
+
+/* Starts partly visible (not 0): browsers don't count an element first
+   painted fully transparent as page content (LCP), so a 0 start would make
+   the first screen look "late" to Google even though the logo is on it. */
+@keyframes zoomInLogo {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.35;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1.08); 
+    opacity: 1;
+  }
+}
+
+.preloader__progress {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 3px;
+  background-color: #E5D3B3;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.preloader__progress-fill {
+  height: 100%;
+  width: 100%;
+  background-color: #C9A96E;
+  border-radius: 9999px;
+  transform: translateX(-100%);
+  transition: transform 0.08s linear;
+}
+
+/* ── Page Reveal after Preloader ── */
+body.page-revealed {
+  animation: pageRevealIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes pageRevealIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ── Responsive Visibility ── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* ── Mobile global tweaks ── */
+@media (max-width: 480px) {
+  /* Tighten section padding on very small screens */
+  .section {
+    padding-top: clamp(48px, 8vw, 80px);
+    padding-bottom: clamp(48px, 8vw, 80px);
+  }
+
+  /* Make standard buttons full-width on tiny screens */
+  .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}

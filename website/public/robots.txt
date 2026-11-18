@@ -1,0 +1,54 @@
+# ============================================================
+# Amour Affairs — robots.txt
+# Luxury Wedding Photography & Cinematography · Pune, India
+# Canonical host: https://www.amouraffairs.in
+# ============================================================
+#
+# One authoritative policy for every crawler. Reputable search and
+# AI-answer engines (Googlebot, Bingbot, GPTBot, ClaudeBot,
+# PerplexityBot, Google-Extended, Applebot, CCBot, …) all read the
+# rules below — we deliberately do NOT block them. A single group is
+# used on purpose: a named user-agent group would *replace* these
+# rules for that bot, so the protections below could be lost. Keeping
+# one group means the gated paths stay protected for everyone.
+
+User-agent: *
+Allow: /
+
+# Photography content images are meant to be found (Google Images).
+Allow: /uploads/
+
+# Application & private areas — no crawl value.
+Disallow: /api/
+Disallow: /amour-admin/
+
+# …except the read-only content feeds the pages render from. Guides, case
+# studies, albums, films, FAQs and testimonials are loaded from these when a
+# page renders; if crawlers may not fetch them, Google sees those pages as
+# empty shells. (The longest matching rule wins, so these Allows beat the
+# /api/ Disallow above. The API itself sends "X-Robots-Tag: noindex", so the
+# feeds are fetched for rendering but never listed in results.)
+Allow: /api/settings.php
+Allow: /api/albums.php
+Allow: /api/films.php
+Allow: /api/testimonials.php
+Allow: /api/guides.php
+Allow: /api/case_studies.php
+Allow: /api/faqs.php
+Allow: /api/team.php
+Allow: /api/lead_magnets.php
+
+# Gated lead-magnet PDFs must stay behind the lead-capture form.
+Disallow: /uploads/lead-magnets/
+Disallow: /downloads/*.pdf$
+
+# Internal template shells used only for clean-URL rewrites.
+Disallow: /guides/_post/
+Disallow: /case-studies/_story/
+
+# Don't waste crawl budget on cache-busting / tracking query strings.
+Disallow: /*?cb=
+Disallow: /*?utm_
+
+# ── Sitemap (dynamic — auto-lists every published guide & case study) ──
+Sitemap: https://www.amouraffairs.in/sitemap.xml

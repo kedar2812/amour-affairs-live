@@ -1,62 +1,54 @@
-# Amour Affairs Photography
+# Amour Affairs — website, dashboard & API
 
-A premium, highly interactive portfolio website for a luxury wedding photography and filmmaking studio based in Pune, India. 
+The public website of **Amour Affairs**, a wedding photography & films studio in Pune
+(<https://www.amouraffairs.in>), the studio's private dashboard (CMS + CRM,
+<https://admin.amouraffairs.in>) and the PHP API both of them talk to.
 
-## Overview
-
-This project delivers a cinematic, award-winning user experience utilizing advanced scroll-driven animations and a custom 3D canvas rendering engine. The core feature is "The Reveal" — a seamless 360-degree interactive 3D model of a dancing couple, rendered frame-by-frame on a HTML5 Canvas synchronized to the user's scroll.
-
-## Architecture & Tech Stack
-
-* **Core Build Tool**: Vite
-* **Frontend Languages**: HTML5, Vanilla JavaScript, Vanilla CSS (Custom Design System with variables)
-* **Animation Engine**: GSAP (GreenSock Animation Platform)
-* **Scroll Physics**: Lenis Smooth Scroll
-* **Scroll Interaction**: GSAP ScrollTrigger combined with a custom `scrollerProxy` to connect Lenis scroll physics with GSAP pinning.
-* **Canvas Rendering**: Custom module `hero-canvas.js` preloads compressed WebP frames and maps browser scroll events directly to a 3D model rotation and scale transformation.
-
-## Key Features
-
-1. **3D Interactive Hero Sequence**:
-   * Uses 120 sequentially pre-rendered frames of a 3D couple.
-   * `mix-blend-mode: multiply` automatically strips away the white environment, placing the model directly into the website's DOM.
-   * Frame scrubbing is tied to `ScrollTrigger` progress, combined with dynamic scaling (1.20 opening scale shrinking to 0.72 display scale).
-   * Sequential fade-ins for typography based on specific scroll-progress milestones.
-
-2. **Custom Typography & Aesthetic System**:
-   * "Bridal/Gallery" aesthetic focusing on large negative space, typography (`Instrument Serif` & `Inter`), and a warm champagne color palette.
-   * Fluid typography bridging `clamp()` functions across all viewpoints.
-
-3. **Performance First**:
-   * High-fidelity PNG sequences compressed to lightweight WebP using Sharp (custom `compress-frames.mjs` script), yielding a 97% reduction in size.
-   * DOM elements pinned without jitter using `anticipatePin` and dedicated Lenis frame synchronization.
-
-## Setup & Development
-
-### Requirements
-* Node.js (v16+ recommended)
-* npm 
-
-### Installation
-
-1. Install dependencies:
-```bash
-npm install
+```
+.
+├── website/      Public website — Vite multi-page site (one folder per URL)
+│   ├── index.html, about/, weddings/, films/, guides/ …   the pages
+│   ├── src/js/       page scripts (one *-init.js entry per page type)
+│   ├── src/styles/   design tokens, shared components, per-page CSS
+│   └── public/       static files copied as-is (frames, images, robots.txt)
+├── dashboard/    Studio dashboard — Next.js static export (CMS, CRM, backups)
+├── api/          PHP REST API (MySQL) used by the website and the dashboard
+│   └── tests/    framework-free PHP tests
+├── database/     schema.sql (fresh installs), migrations.sql (re-runnable), seed.php
+├── server/       Apache config that lives on the host (.htaccess files, admin robots.txt)
+├── scripts/      deploy.sh, image/frame builders, local dev router, checklist PDF
+└── docs/         how things work: architecture, deployment, backup & restore
 ```
 
-2. Start the local development server:
+Everything in `_local/`, `_deploy/` and `hosting details (ignore in github)/` is private
+working material and is never committed.
+
+## Quick start
+
 ```bash
-npm run dev
+npm install                      # website toolchain
+npm run dev                      # website on http://localhost:3000 (content from the bundled fallbacks)
+npm run build                    # → dist/
+npm test                         # website unit tests
+
+cd dashboard && npm install
+npm run build && npm run serve   # dashboard on http://localhost:8081 (static export)
 ```
 
-### Building for Production
+A full local stack (PHP API + MariaDB) is described in [docs/development.md](docs/development.md).
 
-Compile optimized static assets:
-```bash
-npm run build
-```
-This generates a `dist/` directory ready for deployment. Compressed WebP sequences in `/public/frames` are mapped statically without bundling for optimal load performance.
+## How it is built
 
-## License
+| Part | Technology | Hosting |
+|---|---|---|
+| Website | Vite 8, vanilla JS, GSAP + Lenis, self-hosted variable fonts | static files on Apache |
+| Dashboard | Next.js 16 static export, React 19, Tailwind 4 | static files on Apache (`admin.` subdomain) |
+| API | PHP (7.3-compatible) + MySQL, JWT auth | same Apache host (`/api`) |
 
-This is a proprietary website tailored specifically for Amour Affairs. All photography assets, branding, and structural code are reserved.
+Pages always render their bundled content first and apply CMS content from the API on
+top, so the site never waits for — or breaks without — the API.
+
+More detail: [docs/architecture.md](docs/architecture.md) ·
+[docs/deployment.md](docs/deployment.md) ·
+[docs/backup-and-restore.md](docs/backup-and-restore.md) ·
+[docs/performance.md](docs/performance.md)

@@ -1,0 +1,4 @@
+# Amour Affairs — CMS dashboard (admin.amouraffairs.in)
+# Private application. No part of it should ever be indexed.
+User-agent: *
+Disallow: /

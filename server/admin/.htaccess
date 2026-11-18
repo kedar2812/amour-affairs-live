@@ -1,0 +1,27 @@
+# Next.js Static Export on Apache — Amour Affairs Dashboard
+# This OVERRIDES the parent .htaccess completely for this subdomain folder.
+
+RewriteEngine On
+
+# Stop inheriting parent rewrite rules (critical — parent sends everything to index.php)
+RewriteOptions InheritBefore
+
+# Force HTTPS. The API's CORS allow-list only contains https:// origins, so a
+# dashboard loaded over http:// has every API call blocked and looks "dead".
+# Uses SERVER_PORT 80 (the host's proven signal — same as the root .htaccess).
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Serve existing files and directories as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Next.js route: try appending /index.html (e.g. /login -> /login/index.html)
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+)$ $1/index.html [L]
+
+# Final fallback: serve the root index.html for client-side routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.html [L]

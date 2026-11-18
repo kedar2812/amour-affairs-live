@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google tag (gtag.js) — Amour Affairs GA4 · G-F9MZ2ZETYL (alias GT-57Z7KGW) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2 — nothing is stored until the visitor accepts. A returning
+    // visitor's answer is restored here, before the first page_view is sent.
+    // The banner itself lives in src/js/consent.js.
+    var aaConsent = 'denied';
+    try { if (localStorage.getItem('aa_consent') === 'granted') aaConsent = 'granted'; } catch (e) {}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: aaConsent,
+      wait_for_update: 500
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-F9MZ2ZETYL');
+  </script>
+  <!-- Meta Pixel Code — Amour Affairs · ID 1981706796122968 -->
+  <script>
+    // Standard Meta stub: calls queue up here and the Meta library replays
+    // them when the deferred loader below fetches it.
+    !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
+    // Same cookie banner as the Google tag above: nothing is sent to Meta
+    // until the visitor accepts (src/js/consent.js grants it on Accept).
+    fbq('consent', aaConsent === 'granted' ? 'grant' : 'revoke');
+    fbq('init', '1981706796122968');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
+  <script>
+    // Analytics libraries (~260 KB) load once the page itself is ready, or on
+    // the visitor's first tap/scroll — whichever is sooner — so they never
+    // compete with the site's own code for a phone's bandwidth. Every gtag()
+    // / fbq() call made before then is queued above and replayed, so no
+    // page view or event is lost.
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        ['https://www.googletagmanager.com/gtag/js?id=G-F9MZ2ZETYL',
+         'https://connect.facebook.net/en_US/fbevents.js'].forEach(function (src) {
+          var s = document.createElement('script'); s.async = true; s.src = src;
+          document.head.appendChild(s);
+        });
+      }
+      function idle() { 'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 200); }
+      if (document.readyState === 'complete') idle(); else addEventListener('load', idle);
+      ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (e) { addEventListener(e, load, { once: true, passive: true }); });
+      setTimeout(load, 5000);
+    })();
+  </script>
+  <title>Wedding Photography in Pune | Candid &amp; Traditional | Amour Affairs</title>
+  <meta name="description" content="Wedding photography in Pune by Amour Affairs — candid and traditional wedding photography, destination and NRI weddings. Browse real couples' folders from our archive.">
+  <link rel="canonical" href="https://www.amouraffairs.in/weddings/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Amour Affairs">
+  <meta property="og:url" content="https://www.amouraffairs.in/weddings/">
+  <meta property="og:title" content="Wedding Photography in Pune | Amour Affairs">
+  <meta property="og:description" content="Candid and traditional wedding photography in Pune, destination and NRI weddings — real couples' folders from the Amour Affairs archive.">
+  <meta property="og:image" content="https://www.amouraffairs.in/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Service schema — wedding photography -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": "https://www.amouraffairs.in/weddings/#service",
+    "name": "Wedding Photography in Pune",
+    "serviceType": "Wedding Photography",
+    "description": "Candid and traditional wedding photography in Pune, plus destination and NRI wedding coverage across India and abroad.",
+    "provider": { "@id": "https://www.amouraffairs.in/#business" },
+    "areaServed": [
+      { "@type": "City", "name": "Pune" },
+      { "@type": "State", "name": "Maharashtra" },
+      { "@type": "Country", "name": "India" }
+    ],
+    "url": "https://www.amouraffairs.in/weddings/"
+  }
+  </script>
+
+
+  <script type="module" src="/src/js/weddings-init.js"></script>
+</head>
+<body class="is-loading wpage">
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <img src="/logo-emblem.webp" alt="Amour Affairs Logo" class="preloader__logo-svg" />
+    <div class="preloader__progress">
+      <div class="preloader__progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ NAVIGATION ═══════════ -->
+  <nav class="nav" id="nav">
+    <a href="/" class="nav__logo">
+      <img src="/logo-full.webp" alt="Amour Affairs" class="nav__logo-img" />
+    </a>
+    <div class="nav__links hide-mobile">
+      <a href="/" class="nav__link">Home</a>
+      <a href="/weddings/" class="nav__link nav__link--active">Weddings</a>
+      <a href="/couple-shoots/" class="nav__link">Couples</a>
+      <a href="/films/" class="nav__link">Films</a>
+      <a href="/about/" class="nav__link">About</a>
+      <a href="/testimonials/" class="nav__link">Testimonials</a>
+      <a href="/shop/" class="nav__link">Shop</a>
+      <a href="/contact/" class="nav__link">Contact</a>
+      <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="btn--nav-book nav__book hide-mobile">Book Now</a>
+    </div>
+    <div class="nav__hamburger hide-desktop" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav__mobile-menu" id="mobileMenu">
+    <a href="/" class="nav__mobile-link">Home</a>
+    <a href="/weddings/" class="nav__mobile-link">Weddings</a>
+    <a href="/couple-shoots/" class="nav__mobile-link">Couples</a>
+    <a href="/films/" class="nav__mobile-link">Films</a>
+    <a href="/about/" class="nav__mobile-link">About</a>
+    <a href="/testimonials/" class="nav__mobile-link">Testimonials</a>
+    <a href="/shop/" class="nav__mobile-link">Shop</a>
+    <a href="/contact/" class="nav__mobile-link">Contact</a>
+    <div class="nav__mobile-footer">
+      <a href="https://www.instagram.com/amouraffairs/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://vimeo.com/amouraffairs" target="_blank" rel="noopener">Vimeo</a>
+    </div>
+  </div>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="wpage-hero">
+    <!-- Eyebrow doubles as the page h1 (primary keyword); display headline below is decorative -->
+    <h1 class="wpage-hero__eyebrow">Wedding Photography in Pune &middot; The Archive, Since 2011</h1>
+    <p class="wpage-hero__title">Every Love Story,<br>In Its Own <em>Folder.</em></p>
+    <p class="wpage-hero__sub">Each wedding we shoot lives in a folder named after the couple it belongs to &mdash; holding only the keepers. Open one and step into someone's best day.</p>
+  </section>
+
+  <!-- ═══════════ THE ARCHIVE — FOLDER GRID ═══════════ -->
+  <section class="wpage-archive" id="archive">
+    <div class="wpage-archive__inner">
+      <div class="wpage-archive__header">
+        <h2 class="wpage-archive__heading wpage-archive__heading--caps">From Our <em>Collection</em></h2>
+      </div>
+      <div class="wpage-archive__grid" id="archiveGrid">
+        <!-- Folder cards rendered by weddings-init.js from weddings-albums-data.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ COLLECTIONS — the three wedding packages ═══════════ -->
+  <section class="wpage-pkg" aria-label="Wedding photography collections">
+    <div class="wpage-pkg__inner">
+      <div class="wpage-pkg__header">
+        <span class="wpage-pkg__eyebrow" data-wpkg="eyebrow">What We Offer</span>
+        <h2 class="wpage-pkg__heading" data-wpkg="heading">Wedding <em>Collections</em></h2>
+      </div>
+      <!-- Cards rendered by weddings-init.js from site-content.js defaults /
+           dashboard "Website Content → Weddings — Collections" overrides.
+           Baked markup below is the no-JS fallback and is replaced on load.
+           Card design is shared with the couple-shoots session packages
+           (package-cards.css). No pricing is shown. -->
+      <div class="wpage-pkg__grid" id="weddingPackages">
+        <div class="wpage-pkg__card">
+          <div class="wpage-pkg__head">
+            <h3 class="wpage-pkg__name">The Ceremony Collection</h3>
+            <span class="wpage-pkg__tagline">One wedding day</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Coverage</span>
+            <span class="wpage-pkg__value">One wedding day</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Team</span>
+            <span class="wpage-pkg__value">2 photographers</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Deliverables</span>
+            <span class="wpage-pkg__value">400–500 fully edited images</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Turnaround</span>
+            <span class="wpage-pkg__value">6–8 weeks</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Album</span>
+            <span class="wpage-pkg__value">One fine-art album, 30 spreads</span>
+          </div>
+        </div>
+        <div class="wpage-pkg__card">
+          <div class="wpage-pkg__head">
+            <h3 class="wpage-pkg__name">The Celebration Collection</h3>
+            <span class="wpage-pkg__tagline">Photographs + cinematic film</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Coverage</span>
+            <span class="wpage-pkg__value">Up to 3 functions</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Team</span>
+            <span class="wpage-pkg__value">2 photographers + 1 cinematographer</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Deliverables</span>
+            <span class="wpage-pkg__value">700–900 images + a 5–7 minute film</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Turnaround</span>
+            <span class="wpage-pkg__value">8–10 weeks</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Album</span>
+            <span class="wpage-pkg__value">One fine-art album, 40 spreads</span>
+          </div>
+        </div>
+        <div class="wpage-pkg__card">
+          <div class="wpage-pkg__head">
+            <h3 class="wpage-pkg__name">The Heirloom Collection</h3>
+            <span class="wpage-pkg__tagline">Every function, start to finish</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Coverage</span>
+            <span class="wpage-pkg__value">All functions, multi-city</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Team</span>
+            <span class="wpage-pkg__value">3 photographers + 2 cinematographers</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Deliverables</span>
+            <span class="wpage-pkg__value">1200+ images, feature film + teaser</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Turnaround</span>
+            <span class="wpage-pkg__value">10–12 weeks</span>
+          </div>
+          <div class="wpage-pkg__row">
+            <span class="wpage-pkg__label">Album</span>
+            <span class="wpage-pkg__value">Two fine-art albums + parent copies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FREE CHECKLIST (lead magnet — popup + email via checklist-cta.js) ═══════════ -->
+  <section class="ckl-band" id="free-checklist" aria-labelledby="cklBandTitle-weddings">
+    <div class="ckl-band__inner">
+      <figure class="ckl-band__cover">
+        <img src="/downloads/checklist-cover.webp" alt="Cover of The Ultimate Pune Wedding Photography Checklist by Amour Affairs" width="520" height="736" loading="lazy" decoding="async">
+      </figure>
+      <div class="ckl-band__copy">
+        <span class="ckl-band__eyebrow">Free Download</span>
+        <h2 class="ckl-band__title" id="cklBandTitle-weddings">Planning Your <em>Pune Wedding?</em>&nbsp;&#129293;</h2>
+        <p class="ckl-band__text">Download our free <strong>Pune Wedding Photography Checklist</strong> and make sure you don&rsquo;t miss the important photography moments on your big day.</p>
+        <button type="button" class="ckl-band__btn" data-checklist-open="weddings">Get My Free Checklist <span class="ckl-band__btn-arrow" aria-hidden="true">&#8594;</span></button>
+        <p class="ckl-band__note">8 pages &middot; PDF &middot; sent straight to your inbox</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TESTIMONIAL MARQUEE ═══════════ -->
+  <section class="wpage-testi" id="weddingsTestimonials" aria-label="What couples say">
+    <div class="wpage-testi__header">
+      <span class="wpage-testi__eyebrow">Loved By Couples</span>
+      <h2 class="wpage-testi__heading">Words From <em>Our Couples</em></h2>
+    </div>
+    <div class="wpage-testi__marquee" id="weddingsTestiMarquee" aria-hidden="false">
+      <!-- Track(s) rendered by weddings-init.js -->
+    </div>
+  </section>
+
+  <!-- ═══════════ ENQUIRY ═══════════ -->
+  <!-- Page-foot enquiry — submits to the same lead pipeline as the home-page
+       form (leads.php → dashboard). Kept independent of the folder-overlay
+       form: unique field IDs, its own submit + status. -->
+  <section class="section section--alt inquiry" id="enquire">
+    <div class="container">
+      <div class="inquiry__inner">
+
+        <!-- Left: invitation copy + direct contacts -->
+        <div class="inquiry__info">
+          <span class="inquiry__label">Your Folder Awaits</span>
+          <h2 class="inquiry__title">The Next <em>Wedding</em> Could Be Yours</h2>
+          <p class="inquiry__text">Tell us about your celebration and we&rsquo;ll get back within 24 hours &mdash; with ideas, availability and a fair quote.</p>
+          <div class="inquiry__contacts">
+            <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="inquiry__contact-link">+91 9921000052</a>
+            <a href="mailto:info@amouraffairs.in" class="inquiry__contact-link">info@amouraffairs.in</a>
+          </div>
+        </div>
+
+        <!-- Right: the form -->
+        <form class="inquiry__form" id="weddingInquiryForm" data-source="Website (Weddings)" novalidate>
+
+          <!-- Honeypot — humans never see or fill this -->
+          <div class="inquiry__hp" aria-hidden="true">
+            <label>Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqName">Your Name *</label>
+              <input class="inquiry__input" type="text" id="wInqName" name="client_name" autocomplete="name" maxlength="200" required>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqPhone">Phone *</label>
+              <input class="inquiry__input" type="tel" id="wInqPhone" name="phone" autocomplete="tel" maxlength="20" placeholder="+91">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqEmail">Email</label>
+              <input class="inquiry__input" type="email" id="wInqEmail" name="email" autocomplete="email" maxlength="255">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqEventType">Occasion</label>
+              <select class="inquiry__input inquiry__select" id="wInqEventType" name="event_type">
+                <option value="Wedding">Wedding</option>
+                <option value="Pre-Wedding">Pre-Wedding</option>
+                <option value="Couple Shoot">Couple Shoot</option>
+                <option value="Engagement">Engagement</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqDate">Event Date <span class="inquiry__optional">(if you have one)</span></label>
+              <input class="inquiry__input" type="date" id="wInqDate" name="event_date">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqVenue">Venue / City <span class="inquiry__optional">(optional)</span></label>
+              <input class="inquiry__input" type="text" id="wInqVenue" name="venue" autocomplete="off" maxlength="255" placeholder="e.g. Taj, Goa">
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__row">
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqGuests">Guest Count <span class="inquiry__optional">(approx.)</span></label>
+              <select class="inquiry__input inquiry__select" id="wInqGuests" name="guest_count">
+                <option value="">Select…</option>
+                <option value="Under 100">Under 100</option>
+                <option value="100–300">100–300</option>
+                <option value="300–500">300–500</option>
+                <option value="500–1000">500–1000</option>
+                <option value="1000+">1000+</option>
+              </select>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="wInqBudget">Budget <span class="inquiry__optional">(optional)</span></label>
+              <select class="inquiry__input inquiry__select" id="wInqBudget" name="budget_range">
+                <option value="">Select…</option>
+                <option value="Under ₹1,00,000">Under ₹1,00,000</option>
+                <option value="₹1,00,000 – ₹2,00,000">₹1,00,000 – ₹2,00,000</option>
+                <option value="₹2,00,000 – ₹4,00,000">₹2,00,000 – ₹4,00,000</option>
+                <option value="₹4,00,000 – ₹7,00,000">₹4,00,000 – ₹7,00,000</option>
+                <option value="₹7,00,000+">₹7,00,000+</option>
+              </select>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="inquiry__field">
+            <label class="inquiry__field-label" for="wInqMessage">Tell Us More <span class="inquiry__optional">(your story, plans, anything)</span></label>
+            <textarea class="inquiry__input inquiry__textarea" id="wInqMessage" name="message" rows="4" maxlength="2000"></textarea>
+            <span class="inquiry__field-error" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" class="inquiry__submit" id="weddingInquirySubmit">
+            Send Inquiry <span class="inquiry__submit-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+
+          <p class="inquiry__status" id="weddingInquiryStatus" role="status" aria-live="polite"></p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ALBUM OVERLAY (opened folder) ═══════════ -->
+  <div class="wpage-album" id="albumOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Wedding album">
+    <div class="wpage-album__scroll" id="albumOverlayScroll" data-lenis-prevent>
+      <div class="wpage-album__bar">
+        <button class="wpage-album__close" id="overlayClose" aria-label="Close album">Close &#10005;</button>
+      </div>
+      <header class="wpage-album__head">
+        <span class="wpage-album__eyebrow">From The Archive</span>
+        <h2 class="wpage-album__title" id="overlayTitle"></h2>
+        <p class="wpage-album__meta" id="overlayMeta"></p>
+        <p class="wpage-album__desc" id="overlayDesc"></p>
+      </header>
+      <div class="wpage-album__masonry" id="albumMasonry"></div>
+      <section class="wpage-album__film" id="overlayFilm" hidden></section>
+      <footer class="wpage-album__footer">
+        <span class="wpage-album__footer-label">Continue Browsing</span>
+        <button class="wpage-album__next" id="overlayNext"></button>
+      </footer>
+
+      <!-- Folder enquiry — same pipeline as the home-page form;
+           copy is editable from the dashboard (Website Content) -->
+      <section class="wpage-album__enquiry" id="overlayEnquiry">
+        <div class="inquiry__inner">
+          <div class="inquiry__info">
+            <span class="inquiry__label" data-enq="label">Begin Your Story</span>
+            <h2 class="inquiry__title" data-enq="title">Book Your <em>Wedding</em></h2>
+            <p class="inquiry__text" data-enq="text">Loved what you found in this folder? Tell us about your celebration and we&rsquo;ll get back within 24 hours &mdash; with ideas, availability and a fair quote.</p>
+            <div class="inquiry__contacts">
+              <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="inquiry__contact-link">+91 9921000052</a>
+              <a href="mailto:info@amouraffairs.in" class="inquiry__contact-link">info@amouraffairs.in</a>
+            </div>
+          </div>
+
+          <form class="inquiry__form" id="inquiryForm" data-source="Website (Weddings)" novalidate>
+            <!-- Honeypot — humans never see or fill this -->
+            <div class="inquiry__hp" aria-hidden="true">
+              <label>Website
+                <input type="text" name="website" tabindex="-1" autocomplete="off">
+              </label>
+            </div>
+
+            <div class="inquiry__row">
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqName">Your Name *</label>
+                <input class="inquiry__input" type="text" id="inqName" name="client_name" autocomplete="name" maxlength="200" required>
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqPhone">Phone *</label>
+                <input class="inquiry__input" type="tel" id="inqPhone" name="phone" autocomplete="tel" maxlength="20" placeholder="+91">
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="inquiry__row">
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqEmail">Email</label>
+                <input class="inquiry__input" type="email" id="inqEmail" name="email" autocomplete="email" maxlength="255">
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqEventType">Occasion</label>
+                <select class="inquiry__input inquiry__select" id="inqEventType" name="event_type">
+                  <option value="Wedding">Wedding</option>
+                  <option value="Pre-Wedding">Pre-Wedding</option>
+                  <option value="Couple Shoot">Couple Shoot</option>
+                  <option value="Engagement">Engagement</option>
+                  <option value="Corporate">Corporate</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="inquiry__row">
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqDate">Event Date <span class="inquiry__optional">(if you have one)</span></label>
+                <input class="inquiry__input" type="date" id="inqDate" name="event_date">
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqVenue">Venue / City <span class="inquiry__optional">(optional)</span></label>
+                <input class="inquiry__input" type="text" id="inqVenue" name="venue" autocomplete="off" maxlength="255" placeholder="e.g. Taj, Goa">
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="inquiry__row">
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqGuests">Guest Count <span class="inquiry__optional">(approx.)</span></label>
+                <select class="inquiry__input inquiry__select" id="inqGuests" name="guest_count">
+                  <option value="">Select…</option>
+                  <option value="Under 100">Under 100</option>
+                  <option value="100–300">100–300</option>
+                  <option value="300–500">300–500</option>
+                  <option value="500–1000">500–1000</option>
+                  <option value="1000+">1000+</option>
+                </select>
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+              <div class="inquiry__field">
+                <label class="inquiry__field-label" for="inqBudget">Budget <span class="inquiry__optional">(optional)</span></label>
+                <select class="inquiry__input inquiry__select" id="inqBudget" name="budget_range">
+                  <option value="">Select…</option>
+                  <option value="Under ₹1,00,000">Under ₹1,00,000</option>
+                  <option value="₹1,00,000 – ₹2,00,000">₹1,00,000 – ₹2,00,000</option>
+                  <option value="₹2,00,000 – ₹4,00,000">₹2,00,000 – ₹4,00,000</option>
+                  <option value="₹4,00,000 – ₹7,00,000">₹4,00,000 – ₹7,00,000</option>
+                  <option value="₹7,00,000+">₹7,00,000+</option>
+                </select>
+                <span class="inquiry__field-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="inquiry__field">
+              <label class="inquiry__field-label" for="inqMessage">Tell Us More <span class="inquiry__optional">(your story, plans, anything)</span></label>
+              <textarea class="inquiry__input inquiry__textarea" id="inqMessage" name="message" rows="4" maxlength="2000"></textarea>
+              <span class="inquiry__field-error" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="inquiry__submit" id="inquirySubmit">
+              Send Inquiry <span class="inquiry__submit-arrow" aria-hidden="true">&#8594;</span>
+            </button>
+
+            <p class="inquiry__status" id="inquiryStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ═══════════ PHOTO LIGHTBOX ═══════════ -->
+  <div class="wpage-lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photograph viewer">
+    <div class="wpage-lightbox__backdrop"></div>
+    <button class="wpage-lightbox__close" id="lightboxClose" aria-label="Close photograph">&times;</button>
+    <button class="wpage-lightbox__arrow wpage-lightbox__arrow--prev" id="lightboxPrev" aria-label="Previous photograph">&#8592;</button>
+    <img class="wpage-lightbox__img" id="lightboxImg" src="" alt="">
+    <button class="wpage-lightbox__arrow wpage-lightbox__arrow--next" id="lightboxNext" aria-label="Next photograph">&#8594;</button>
+    <span class="wpage-lightbox__counter" id="lightboxCounter"></span>
+  </div>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer" id="contact">
+    <!-- Top Band: Tagline + CTA -->
+    <div class="footer__top">
+      <div class="container">
+        <h2 class="footer__tagline fade-up">Let's Create Something <em>Beautiful</em></h2>
+        <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="footer__cta fade-up">
+          Book Your Date
+          <span class="footer__cta-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Accent Divider -->
+    <div class="footer__accent-line"></div>
+
+    <!-- Main Grid -->
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Column 1: Contact -->
+        <div class="footer__col fade-up">
+          <a href="/" class="nav__logo footer__logo">
+      <img src="/logo-full-white.webp" alt="Amour Affairs" class="nav__logo-img" />
+    </a>
+          <span class="footer__col-label">Get In Touch</span>
+          <address class="footer__address">
+            Rowshni Bungalow,<br>
+            5, Finance Road,<br>
+            Opp. Ministry of Defence,<br>
+            Agarkar Nagar,<br>
+            Pune, Maharashtra &mdash; 411001,<br>
+            India
+          </address>
+          <div class="footer__contact-links">
+            <a href="https://wa.me/919921000052" target="_blank" rel="noopener" class="footer__link">+91 9921000052</a>
+            <a href="mailto:info@amouraffairs.in" class="footer__link">info@amouraffairs.in</a>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="footer__col fade-up">
+          <span class="footer__col-label">Explore</span>
+          <nav class="footer__nav-links">
+            <a href="/" class="footer__nav-link">Home</a>
+            <a href="/weddings/" class="footer__nav-link">Weddings</a>
+            <a href="/couple-shoots/" class="footer__nav-link">Couple Shoots</a>
+            <a href="/films/" class="footer__nav-link">Films</a>
+            <a href="/premium-albums/" class="footer__nav-link">Premium Albums</a>
+            <a href="/guides/" class="footer__nav-link">Wedding Guides</a>
+            <a href="/case-studies/" class="footer__nav-link">Real Weddings</a>
+            <a href="/about/" class="footer__nav-link">About</a>
+            <a href="/shop/" class="footer__nav-link">Shop</a>
+          </nav>
+        </div>
+
+        <!-- Column 3: Social -->
+        <div class="footer__col fade-up">
+          <span class="footer__col-label">Follow Us</span>
+          <div class="footer__social-links">
+            <a href="https://www.instagram.com/amouraffairs/" target="_blank" rel="noopener" class="footer__social-link">
+              <svg class="footer__social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.facebook.com/memoriesbyamouraffairs/" target="_blank" rel="noopener" class="footer__social-link">
+              <svg class="footer__social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              Facebook
+            </a>
+            <a href="https://www.youtube.com/channel/UCYGQScVZ25nK3Ti-O-Xuo4g" target="_blank" rel="noopener" class="footer__social-link">
+              <svg class="footer__social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube
+            </a>
+            <a href="https://in.pinterest.com/amouraffairs/" target="_blank" rel="noopener" class="footer__social-link">
+              <svg class="footer__social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"/></svg>
+              Pinterest
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 4: Map -->
+        <div class="footer__col fade-up">
+          <span class="footer__col-label">Find Us</span>
+          <iframe
+            class="footer__map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.2!2d73.87461!3d18.5248108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c0f8213bba83%3A0x12965147119b443c!2sAmour%20Affairs%20Photography%2C%20Since%202011!5e0!3m2!1sen!2sin!4v1"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Amour Affairs office location in Pune"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Footer Bar -->
+      <div class="footer__bar">
+        <span class="footer__copyright">&copy; 2011&ndash;<span class="dynamic-year">2026</span> Amour Affairs. All rights reserved.</span>
+        <div class="footer__bar-links">
+          <a href="/privacy-policy/" class="footer__bar-link">Privacy Policy</a>
+          <a href="/disclaimer/" class="footer__bar-link">Disclaimer</a>
+          <a href="/terms-and-conditions/" class="footer__bar-link">Terms &amp; Conditions</a>
+          <a href="/faqs/" class="footer__bar-link">FAQs</a>
+          <a href="/careers/" class="footer__bar-link">Careers</a>
+          <a href="#" class="footer__bar-link" data-consent-open>Cookie Preferences</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.dynamic-year').forEach(el => el.textContent = new Date().getFullYear());
+  </script>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/919921000052?text=Hi%20Amour%20Affairs!%20I%27d%20love%20to%20know%20more%20about%20your%20wedding%20photography." class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat with Amour Affairs on WhatsApp">
+    <span class="floating-whatsapp__icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.397 0 0 5.397 0 12.031c0 2.115.553 4.181 1.606 6.002L.15 23.363l5.485-1.439a11.967 11.967 0 006.396 1.834h.005c6.634 0 12.03-5.398 12.03-12.032C24.066 5.397 18.665 0 12.031 0zm0 21.758c-1.782 0-3.528-.48-5.06-1.388l-.363-.214-3.766.988.995-3.674-.235-.373A9.972 9.972 0 012.001 12.03c0-5.526 4.498-10.024 10.03-10.024 5.525 0 10.024 4.497 10.024 10.024 0 5.526-4.499 10.028-10.024 10.028zm5.508-7.531c-.302-.152-1.785-.882-2.062-.982-.277-.101-.48-.152-.682.152-.202.304-.78 .982-.956 1.185-.177.202-.353.227-.655.076-2.04-.982-3.414-1.92-4.636-3.992-.126-.214.126-.202.417-.783.101-.202.05-.38-.025-.532-.076-.152-.682-1.643-.933-2.25-.246-.593-.497-.512-.682-.522-.177-.01-.38-.01-.583-.01-.202 0-.53.076-.807.38-.277.303-1.06 1.036-1.06 2.527s1.085 2.932 1.236 3.134c.152.202 2.138 3.264 5.176 4.573.722.311 1.285.497 1.724.636.724.23 1.384.197 1.905.12.584-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.177-1.436-.076-.126-.277-.202-.579-.354z"/></svg></span>
+    <span class="floating-whatsapp__label">Chat with us</span>
+  </a>
+</body>
+</html>

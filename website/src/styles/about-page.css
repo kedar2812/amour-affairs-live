@@ -1,0 +1,832 @@
+/* ============================================================
+   ABOUT-PAGE.CSS — About Page Styles
+   Amour Affairs · Premium Wedding Photography
+   ============================================================ */
+
+/* ── Page Base ── */
+.about-page {
+  background: #F5EDE2;
+  color: #2C2420;
+  min-height: 100vh;
+}
+
+/* ── Nav — always dark since hero is removed ── */
+.about-page .nav {
+  background: transparent;
+}
+
+.about-page .nav .nav__logo {
+  color: #000000 !important;
+}
+
+.about-page .nav .nav__logo .logo-amour,
+.about-page .nav .nav__logo .logo-affairs {
+  color: #3D2010;
+}
+
+.about-page .nav .nav__logo sup {
+  color: #000000;
+}
+
+.about-page .nav .nav__logo-img {
+  filter: none;
+  opacity: 0.85;
+}
+
+.about-page .nav .nav__link {
+  color: #6F6F6F;
+}
+
+.about-page .nav .nav__link--active {
+  color: var(--color-accent) !important;
+}
+
+.about-page .nav .nav__link--active::after {
+  width: 100%;
+}
+
+.about-page .nav .nav__link:hover {
+  color: #1A1410;
+}
+
+.about-page .nav .nav__link::after {
+  background: var(--color-accent);
+}
+
+.about-page .nav .nav__hamburger span {
+  background: #1A1410;
+}
+
+/* ── Scrolled state — frosted glass ── */
+.about-page .nav.scrolled {
+  background: rgba(245, 237, 226, 0.92);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 1px 0 rgba(158, 122, 78, 0.1);
+}
+
+/* ── Dark state (footer visible) — override about-page nav colors ── */
+.about-page .nav.nav--dark .nav__link {
+  color: rgba(250, 247, 244, 0.65) !important;
+}
+
+.about-page .nav.nav--dark .nav__link:hover {
+  color: #FAF7F4 !important;
+}
+
+/* Active link must stay gold in BOTH normal and dark nav states */
+.about-page .nav .nav__link--active,
+.about-page .nav.nav--dark .nav__link--active,
+.about-page .nav.scrolled .nav__link--active {
+  color: var(--color-accent) !important;
+}
+
+.about-page .nav .nav__link--active::after,
+.about-page .nav.nav--dark .nav__link--active::after {
+  width: 100% !important;
+}
+
+.about-page .nav.nav--dark .logo-amour,
+.about-page .nav.nav--dark .logo-affairs {
+  color: #FAF7F4 !important;
+}
+
+.about-page .nav.nav--dark .nav__logo-img {
+  filter: brightness(0) invert(1) !important;
+  opacity: 0.85 !important;
+}
+
+.about-page .nav.nav--dark .nav__hamburger span {
+  background: #FAF7F4 !important;
+}
+
+
+/* ══════════════════════════════════════════════════
+   1. INTRO HERO — ENTERING TEXT ON LOAD
+   Beige / warm palette, matches films & testimonials
+   ══════════════════════════════════════════════════ */
+
+.about-hero {
+  position: relative;
+  width: 100%;
+  /* Compact top-padded hero — matches the Testimonials page height
+     so the title sits slightly down from the nav, not screen-centred. */
+  padding: clamp(140px, 18vh, 200px) var(--container-gutter) clamp(48px, 7vw, 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5EDE2;
+  overflow: hidden;
+}
+
+/* The full-screen-only flourishes don't belong on a compact hero. */
+.about-hero__numeral,
+.about-hero__scroll {
+  display: none;
+}
+
+/* Oversized "est. 2011" watermark, gold and barely-there */
+.about-hero__numeral {
+  position: absolute;
+  bottom: 4%;
+  right: 4%;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 13rem);
+  font-style: italic;
+  font-weight: 400;
+  color: #9E7A4E;
+  opacity: 0;
+  line-height: 0.8;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.about-hero__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  /* Wide enough for the title and eyebrow to sit on their own lines; the
+     title and sub carry their own measures (section-headers.css). */
+  max-width: 1200px;
+  padding: 0 var(--container-gutter);
+}
+
+.about-hero__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #9E7A4E;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.about-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.63rem, 6.1vw, 5.15rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #3D2010;
+  line-height: 1.1;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.about-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.about-hero__line {
+  display: block;
+  width: 64px;
+  height: 1px;
+  background: #9E7A4E;
+  margin: 32px auto;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+.about-hero__sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #7A6A5A;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Scroll cue */
+.about-hero__scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 1;
+  opacity: 0;
+}
+
+.about-hero__scroll-label {
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #9E7A4E;
+}
+
+.about-hero__scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, #9E7A4E 0%, rgba(158, 122, 78, 0) 100%);
+  transform-origin: top;
+  animation: about-scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes about-scroll-pulse {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+  50%      { transform: scaleY(1);   opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero__scroll-line { animation: none; }
+}
+
+
+/* ══════════════════════════════════════════════════
+   2. FOUNDER SECTION — SPLIT EDITORIAL
+   ══════════════════════════════════════════════════ */
+
+.founder {
+  background: #F5EDE2;
+  padding: 60px var(--container-gutter) 120px;
+}
+
+.founder__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 100px);
+  align-items: start;
+}
+
+
+/* ── LEFT COLUMN — Photo ── */
+
+.founder__photo-col {
+  position: relative;
+}
+
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-frame::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid #C9A97C;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.photo-frame.frame-revealed::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.founder__img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Film grain overlay */
+.photo-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+.founder__photo-caption {
+  display: none;
+}
+
+
+/* ── RIGHT COLUMN — Text ── */
+
+.founder__text-col {
+  padding-top: 20px;
+}
+
+.founder__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.88rem, 3.75vw, 3.3rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #3D2010;
+  margin: 0 0 0.25em;
+  line-height: 1.15;
+}
+
+.founder__role {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #9E7A4E;
+  margin-bottom: 2rem;
+}
+
+.founder__pullquote {
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 2.05vw, 1.45rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #7A6A5A;
+  border-left: 2px solid #9E7A4E;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  line-height: 1.65;
+}
+
+.founder__body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #7A6A5A;
+  margin: 0 0 1.5rem;
+}
+
+.founder__body em {
+  font-style: italic;
+  color: #9E7A4E;
+}
+
+.founder__philosophy-quote {
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 2.05vw, 1.55rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #9E7A4E;
+  line-height: 1.65;
+  margin: 0 0 1.5rem;
+}
+
+/* Quiet text link through to the founder's own entity page, /taher-husain/.
+   Deliberately not a gold pill: the section already ends on a statement, and
+   a button here would compete with the page's real CTA further down. */
+.founder__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158, 122, 78, 0.3);
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.founder__more:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.founder__more-arrow {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.founder__more:hover .founder__more-arrow {
+  transform: translateX(4px);
+}
+
+
+
+/* ══════════════════════════════════════════════════
+   3. TEAM MARQUEE SECTION
+   ══════════════════════════════════════════════════ */
+
+.team-section {
+  background: #F5EDE2;
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.team-section__header {
+  text-align: center;
+  padding: 0 var(--container-gutter);
+  margin-bottom: 64px;
+}
+
+.team-section__label {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #9E7A4E;
+  margin-bottom: 20px;
+}
+
+.team-section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.88rem, 3.75vw, 3rem);
+  font-weight: 400;
+  color: #3D2010;
+  line-height: 1.15;
+  margin: 0 0 20px;
+}
+
+.team-section__title em {
+  font-style: italic;
+  font-weight: 300;
+  color: #9E7A4E;
+}
+
+.team-section__sub {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #7A6A5A;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Marquee wrapper ── */
+.team-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.team-marquee__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 160px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.team-marquee__fade--left {
+  left: 0;
+  background: linear-gradient(to right, #F5EDE2 0%, transparent 100%);
+}
+
+.team-marquee__fade--right {
+  right: 0;
+  background: linear-gradient(to left, #F5EDE2 0%, transparent 100%);
+}
+
+/* ── Scrolling track ── */
+@keyframes team-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.team-marquee__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: team-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.team-marquee:hover .team-marquee__track {
+  animation-play-state: paused;
+}
+
+/* ── Individual card ── */
+.team-card {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+}
+
+.team-card__img-wrap {
+  position: relative;
+  width: 220px;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #EDE8E1;
+}
+
+.team-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: grayscale(100%);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.team-card:hover .team-card__img {
+  filter: grayscale(0%);
+  transform: scale(1.04);
+}
+
+.team-card__info {
+  padding: 14px 4px 0;
+}
+
+.team-card__name {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: #3D2010;
+  letter-spacing: 0.02em;
+}
+
+.team-card__role {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #9E7A4E;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .team-card {
+    flex: 0 0 180px;
+  }
+  .team-card__img-wrap {
+    width: 180px;
+    height: 240px;
+  }
+  .team-marquee__fade {
+    width: 60px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════
+   4. PHILOSOPHY STRIP
+   ══════════════════════════════════════════════════ */
+
+.philosophy {
+  background: #231C16;
+  padding: 100px var(--container-gutter);
+}
+
+.philosophy__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+
+.philosophy__block {
+  text-align: center;
+  flex: 0 1 auto;
+}
+
+.philosophy__numeral {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.73rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  color: #9E7A4E;
+  margin-bottom: 0.5rem;
+}
+
+.philosophy__word {
+  font-family: var(--font-display);
+  font-size: clamp(1.32rem, 2.8vw, 1.88rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  margin: 0 0 12px;
+}
+
+.philosophy__desc {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: #7A6A5A;
+  max-width: 180px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.65;
+}
+
+.philosophy__divider {
+  width: 1px;
+  height: 60px;
+  background: #9E7A4E;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+
+/* ══════════════════════════════════════════════════
+   5. CTA SECTION
+   ══════════════════════════════════════════════════ */
+
+.about-cta {
+  background: #F5EDE2;
+  padding: 80px var(--container-gutter);
+  text-align: center;
+}
+
+.about-cta__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #9E7A4E;
+  margin-bottom: 1rem;
+}
+
+.about-cta__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.75vw, 2.8rem);
+  font-weight: 400;
+  color: #3D2010;
+  margin: 0 0 2rem;
+  line-height: 1.15;
+}
+
+.about-cta__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.about-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.about-cta__btn--primary {
+  background: #9E7A4E;
+  color: #FFFFFF;
+  border: 1px solid #9E7A4E;
+}
+
+.about-cta__btn--primary:hover {
+  background: transparent;
+  color: #9E7A4E;
+}
+
+.about-cta__btn--secondary {
+  background: transparent;
+  color: #9E7A4E;
+  border: 1px solid #9E7A4E;
+}
+
+.about-cta__btn--secondary:hover {
+  background: #9E7A4E;
+  color: #FFFFFF;
+}
+
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 900px)
+   ══════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .about-hero__title {
+    font-size: clamp(2.35rem, 7vw, 4rem);
+  }
+
+  .founder__inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .founder {
+    padding: 80px var(--container-gutter);
+  }
+
+  .founder__text-col {
+    padding-top: 0;
+  }
+
+  .philosophy__inner {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .philosophy__divider {
+    width: 60px;
+    height: 1px;
+  }
+
+  .philosophy__desc {
+    max-width: 280px;
+  }
+
+  .about-cta__heading {
+    font-size: clamp(1.5rem, 3.75vw, 2.25rem);
+  }
+}
+
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 600px)
+   ══════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .about-hero__title {
+    font-size: clamp(2rem, 8.5vw, 3rem);
+    letter-spacing: 0.01em;
+  }
+
+  .about-hero__eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 20px;
+  }
+
+  .about-hero__sub {
+    font-size: 0.98rem;
+  }
+
+  .about-hero__line {
+    margin: 24px auto;
+  }
+
+  .founder {
+    padding: 60px var(--container-gutter);
+  }
+
+  .founder__name {
+    font-size: clamp(1.7rem, 6.5vw, 2.35rem);
+  }
+
+  .founder__pullquote {
+    font-size: 1rem;
+  }
+
+  .founder__body {
+    font-size: 0.95rem;
+  }
+
+  .philosophy {
+    padding: 60px var(--container-gutter);
+  }
+
+  .about-cta {
+    padding: 60px var(--container-gutter);
+  }
+
+  .about-cta__buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-cta__btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

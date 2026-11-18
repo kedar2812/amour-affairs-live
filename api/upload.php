@@ -294,6 +294,21 @@ function processDocumentUpload(string $fieldName, string $subdir): array {
 
 
 /**
+ * Remove the responsive copies api/img.php made of an upload
+ * (/uploads/_w/<width>/<path>), so deleted photos leave nothing behind.
+ */
+function deleteSizedCopies(?string $filePath): void {
+    if (!$filePath || strpos($filePath, UPLOAD_URL_PREFIX) !== 0) return;
+    $rel = substr($filePath, strlen(UPLOAD_URL_PREFIX));
+    if ($rel === '' || strpos($rel, '..') !== false) return;
+    foreach (glob(UPLOAD_DIR . '_w/*', GLOB_ONLYDIR) ?: array() as $sizeDir) {
+        $copy = $sizeDir . '/' . $rel;
+        if (is_file($copy)) @unlink($copy);
+    }
+}
+
+
+/**
  * Delete a stored file (by its /uploads/... URL path) from disk.
  */
 function deleteStoredFile(?string $filePath): void {
@@ -302,6 +317,7 @@ function deleteStoredFile(?string $filePath): void {
     if (is_file($fullPath)) {
         unlink($fullPath);
     }
+    deleteSizedCopies($filePath);
 }
 
 
@@ -317,6 +333,7 @@ function deleteImageFiles(string $filePath, ?string $thumbnailPath = null): void
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
+        deleteSizedCopies($filePath);
     }
 
     if ($thumbnailPath) {
